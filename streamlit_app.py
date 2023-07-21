@@ -6,7 +6,7 @@ import streamlit as st
 
 
 
-file_path = '/workspaces/streamlit-example/bank.csv'
+file_path = 'bank.csv'
 
 
 df = pd.read_csv(file_path)

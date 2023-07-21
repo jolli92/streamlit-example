@@ -25,8 +25,6 @@ if option == 'Étude Statistiques':
     plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
     plt.axis('equal')
     plt.title('Répartition des dépôts')
-    
-    st.pyplot(plt.gcf())
     plt.clf()
     
 
@@ -40,7 +38,6 @@ if option == 'Étude Statistiques':
     fig2 = px.histogram(df, x="age", nbins=20, title="Distribution de l'âge",
                    labels={'age': 'Âge'}, marginal='box')
     st.plotly_chart(fig2)
-    st.pyplot(plt.gcf())
     plt.clf()
 
     st.header('Visualisation de la durée de contact (appel téléphonique)')

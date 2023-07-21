@@ -12,8 +12,9 @@ file_path = 'bank.csv'
 df = pd.read_csv(file_path)
 
 st.title('Analyse de bank marketing')
+df = st.file_uploader("Upload a Dataset", type=['csv', 'txt'])
 if df is not None:
-    data = pd.read_csv(df)
+    df = pd.read_csv(df)
     st.dataframe(df.head())
     if st.button("Show summary"):
         st.write(df.describe())

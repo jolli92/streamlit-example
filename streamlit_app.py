@@ -29,7 +29,7 @@ if option == 'Étude Statistiques':
     plt.clf()
     col1, col2 = st.columns(2)
     col1.plotly_chart(fig)
-    col1.plotly_chart(fig2)
+    col2.plotly_chart(fig2)
     
     st.header("Exploration des relations entre les attributs numériques à l'aide d'une matrice de corrélation")
     numeric_columns = df.select_dtypes(include=[np.number])

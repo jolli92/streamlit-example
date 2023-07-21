@@ -14,7 +14,7 @@ st.title('Analyse de bank marketing')
 df_file = st.sidebar.file_uploader("Upload a Dataset", type=['csv', 'txt'])
 if option == 'Étude Statistiques':
     df = pd.read_csv(df_file)
-    st.markdown('Visualisation de la distribution de la variable cible : deposit')        
+    st.header('_Visualisation de la distribution de la variable cible : deposit_')        
     fig1 = px.histogram(df, x="deposit")
     
 

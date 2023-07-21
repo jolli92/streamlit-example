@@ -173,4 +173,4 @@ if df_file is not None:
     axes[1].set_ylabel("Âge")
     plt.tight_layout()
     st.pyplot()
-    plt.clf()
+    plt.clf(plt)

@@ -44,6 +44,7 @@ if option == 'Étude Statistiques':
     plt.clf()
 
     st.header('Visualisation de la durée de contact (appel téléphonique)')
+    df['duration_minutes'] = df['duration'] / 60
     fig = px.histogram(df, x="duration_minutes", nbins=20, title="Distribution de la durée en minutes",
                    labels={'duration_minutes': 'Durée (minutes)'}, marginal='box')
     st.plotly_chart(fig)

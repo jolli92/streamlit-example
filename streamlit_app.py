@@ -3,6 +3,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
+import plotly.express as px
+
+
 option = st.sidebar.selectbox(
     'Quel menu voulez-vous voir ?',
      ('Étude Statistiques', 'Menu 2', 'Menu 3'))
@@ -11,9 +14,8 @@ df_file = st.sidebar.file_uploader("Upload a Dataset", type=['csv', 'txt'])
 if option == 'Étude Statistiques':
     df = pd.read_csv(df_file)
     st.header('Distribution de la variable cible')        
-    sns.countplot(x="deposit", data=df)
-    st.pyplot(plt.gcf())
-    plt.clf()
+    fig = px.histogram(df, x="deposit", title="Distribution de deposit")
+    st.plotly_chart(fig)
 
     deposit_counts = df['deposit'].value_counts()
     labels = deposit_counts.index

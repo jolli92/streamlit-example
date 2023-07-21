@@ -15,18 +15,20 @@ df_file = st.sidebar.file_uploader("Upload a Dataset", type=['csv', 'txt'])
 if option == 'Étude Statistiques':
     df = pd.read_csv(df_file)
     st.header('Visualisation de la distribution de la variable cible : deposit')        
-    fig = px.histogram(df, x="deposit", title="Distribution de deposit")
-    st.plotly_chart(fig)
+    fig1 = px.histogram(df, x="deposit", title="Distribution de deposit")
     plt.clf()
 
 
     deposit_counts = df['deposit'].value_counts()
     labels = deposit_counts.index
     sizes = deposit_counts.values
-    plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
+    fig2 = plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
     plt.axis('equal')
     plt.title('Répartition des dépôts')
     plt.clf()
+    col1, col2 = st.columns(2)
+    col1.plotly_chart(fig1)
+    col2.plotly_chart(fig2)
     
     st.header("Exploration des relations entre les attributs numériques à l'aide d'une matrice de corrélation")
     numeric_columns = df.select_dtypes(include=[np.number])

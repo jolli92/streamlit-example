@@ -16,10 +16,11 @@ if option == 'Étude Statistiques':
     df = pd.read_csv(df_file)
     st.header('Visualisation de la distribution de la variable cible : deposit')        
     fig = px.histogram(df, x="deposit", title="Distribution de deposit")
+    
     deposit_counts = df['deposit'].value_counts()
     labels = deposit_counts.index
     sizes = deposit_counts.values
-    fig2 = go.Figure(data=go.Pie(labels=labels, values=sizes, autopct='%1.1f%%', startangle=90))
+    fig2 = go.Figure(data=go.Pie(labels=labels, values=sizes, textinfo='percent+label', insidetextorientation='radial'))
     fig2.update_layout(title='Répartition des dépôts')
 
     # Créer les subplots avec plotly

@@ -174,7 +174,7 @@ if option == 'Étude Statistiques':
 
         
 elif option == 'Menu 2':
-    print('soon')
+    st.write('soon')
 
 elif option == 'Menu 3':
-    print('soon')
+    st.write('soon')

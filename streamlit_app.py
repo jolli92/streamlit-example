@@ -172,5 +172,5 @@ if df_file is not None:
     axes[1].set_xlabel("Prêt immobilier")
     axes[1].set_ylabel("Âge")
     plt.tight_layout()
-    st.pyplot(plt.gcf)
+    st.pyplot(plt.gcf())
     plt.clf()

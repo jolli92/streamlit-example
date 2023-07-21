@@ -78,13 +78,13 @@ if option == 'Étude Statistiques':
     variables = ["default", "housing", "loan"]
     for variable in variables:
         counts = df[variable].value_counts()
-         labels = counts.index
-         sizes = counts.values
-         plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
-         plt.axis('equal')
-         plt.title(f"Répartition de la variable '{variable}'")
-         st.pyplot(plt.gcf())
-         plt.clf()
+        labels = counts.index
+        sizes = counts.values
+        plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
+        plt.axis('equal')
+        plt.title(f"Répartition de la variable '{variable}'")
+        st.pyplot(plt.gcf())
+        plt.clf()
 
     contact_counts = df['contact'].value_counts()
     labels = contact_counts.index

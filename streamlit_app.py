@@ -46,9 +46,10 @@ if option == 'Étude Statistiques':
                    labels={'duration_minutes': 'Durée (minutes)'}, marginal='box')
     st.plotly_chart(fig)
 
-    sns.kdeplot(x=df['pdays'],label='pdays')
-    st.pyplot(plt.gcf())
-    plt.clf()
+    st.header('Distribution du nombre de jours passés entre deux contacts de campagnes différentes')
+    fig = px.histogram(df, x="pdays", nbins=20, title="Distribution de pdays",
+                   labels={'pdays': 'pdays'}, marginal='box')
+    st.pyplot(fig)
 
     sns.countplot(x="job", data=df)
     plt.xticks(rotation=45)

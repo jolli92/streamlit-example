@@ -86,7 +86,6 @@ if option == 'Étude Statistiques':
     sizes = education_counts.values
     plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
     plt.axis('equal')
-    plt.title('Répartition des niveaux d\'éducation')
     st.pyplot(plt.gcf())
     plt.clf()
 

@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
 import plotly.express as px
+import plotly.graph_objects as go
 
 
 option = st.sidebar.selectbox(
@@ -42,14 +43,14 @@ if option == 'Étude Statistiques':
 
     st.header('Visualisation de la durée de contact (appel téléphonique)')
     df['duration_minutes'] = df['duration'] / 60
-    fig = px.histogram(df, x="duration_minutes", nbins=20, title="Distribution de la durée en minutes",
+    fig3 = px.histogram(df, x="duration_minutes", nbins=20, title="Distribution de la durée en minutes",
                    labels={'duration_minutes': 'Durée (minutes)'}, marginal='box')
-    st.plotly_chart(fig)
+    st.plotly_chart(fig3)
 
     st.header('Distribution du nombre de jours passés entre deux contacts de campagnes différentes')
-    fig3 = go.Figure(data=go.Histogram(x=df['pdays'], nbinsx=20))
-    fig3.update_layout(title="Distribution de pdays", xaxis_title="pdays")
-    st.plotly_chart(fig3)
+    fig4 = go.Figure(data=go.Histogram(x=df['pdays'], nbinsx=20))
+    fig4.update_layout(title="Distribution de pdays", xaxis_title="pdays")
+    st.plotly_chart(fig4)
     plt.clf()
 
     sns.countplot(x="job", data=df)

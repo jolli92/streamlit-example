@@ -53,11 +53,11 @@ if option == 'Étude Statistiques':
     st.plotly_chart(fig4)
     plt.clf()
 
-    sns.countplot(x="job", data=df)
-    plt.xticks(rotation=45)
-    st.pyplot(plt.gcf())
-    plt.clf()
-    st.write()
+    fig = go.Figure(data=go.Bar(x=df['job'].value_counts().index, y=df['job'].value_counts().values))
+    fig.update_layout(title="Répartition des emplois", xaxis_title="Emploi", yaxis_title="Nombre de clients")
+    fig.update_xaxes(tickangle=45)
+    st.plotly_chart(fig)
+    st.write(df['job'].value_counts())
     st.write("*Les clients ayant des emplois de gestion et des emplois d'ouvrier qualifié sont les plus nombreux dans la banque.")
     st.write("*Il y a très peu d'étudiants parmi les clients de la banque.")
 

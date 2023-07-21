@@ -47,6 +47,9 @@ if option == 'Étude Statistiques':
     plt.xticks(rotation=45)
     st.pyplot(plt.gcf())
     plt.clf()
+    st.write()
+    st.write("*Les clients ayant des emplois de gestion et des emplois d'ouvrier qualifié sont les plus nombreux dans la banque.")
+    st.write("*Il y a très peu d'étudiants parmi les clients de la banque.")
 
     marital_counts = df['marital'].value_counts()
     labels = marital_counts.index

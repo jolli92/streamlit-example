@@ -3,7 +3,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
-
+option = st.sidebar.selectbox(
+    'Quel menu voulez-vous voir ?',
+     ('Menu 1', 'Menu 2', 'Menu 3'))
 st.title('Analyse de bank marketing')
 df_file = st.sidebar.file_uploader("Upload a Dataset", type=['csv', 'txt'])
 if df_file is not None:

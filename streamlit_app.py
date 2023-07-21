@@ -3,7 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
-%matplotlib
 
 
 file_path = 'bank.csv'
@@ -20,5 +19,5 @@ if df is not None:
         st.write(df.describe())
     if st.button("Show Histogram"):
         st.write(sns.histplot(df))
-       
+        st.plt.show()
 

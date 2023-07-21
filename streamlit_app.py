@@ -53,6 +53,7 @@ if option == 'Étude Statistiques':
     st.plotly_chart(fig4)
     plt.clf()
 
+    st.header('Distribution des jobs')
     fig = go.Figure(data=go.Bar(x=df['job'].value_counts().index, y=df['job'].value_counts().values))
     fig.update_layout(title="Répartition des emplois", xaxis_title="Emploi", yaxis_title="Nombre de clients")
     fig.update_xaxes(tickangle=45)
@@ -61,14 +62,15 @@ if option == 'Étude Statistiques':
     st.write("*Les clients ayant des emplois de gestion et des emplois d'ouvrier qualifié sont les plus nombreux dans la banque.")
     st.write("*Il y a très peu d'étudiants parmi les clients de la banque.")
 
+    st.header('Distribution des états matrimoniaux')
     marital_counts = df['marital'].value_counts()
     labels = marital_counts.index
     sizes = marital_counts.values
-    plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
-    plt.axis('equal')
-    plt.title('Répartition des états matrimoniaux')
-    st.pyplot(plt.gcf())
-    plt.clf()
+    fig = go.Figure(data=go.Pie(labels=labels, values=sizes, hoverinfo='label+percent',
+                            textinfo='percent', insidetextorientation='radial'))
+    fig.update_layout(title='Répartition des états matrimoniaux')
+    st.plotly_chart(fig)
+    st.write(marital_counts)
 
     sns.countplot(x="education", data=df)
     plt.title("Répartition des niveaux d'éducation")

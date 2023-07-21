@@ -5,7 +5,6 @@ import seaborn as sns
 import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
-from plotly.subplots import make_subplots
 
 
 option = st.sidebar.selectbox(
@@ -17,23 +16,17 @@ if option == 'Étude Statistiques':
     df = pd.read_csv(df_file)
     st.header('Visualisation de la distribution de la variable cible : deposit')        
     fig = px.histogram(df, x="deposit", title="Distribution de deposit")
-    
+    st.plotly_chart(fig)
+    plt.clf()
+
+
     deposit_counts = df['deposit'].value_counts()
     labels = deposit_counts.index
     sizes = deposit_counts.values
-    fig2 = go.Figure(data=go.Pie(labels=labels, values=sizes, textinfo='percent+label', insidetextorientation='radial'))
-    fig2.update_layout(title='Répartition des dépôts')
-
-    # Créer les subplots avec plotly
-    fig_combined = make_subplots(rows=1, cols=2, subplot_titles=('Distribution de deposit', 'Répartition des dépôts'))
-    fig_combined.add_trace(fig.data[0], row=1, col=1)
-    fig_combined.add_trace(fig2.data[0], row=1, col=2)
-
-    # Mettre à jour la mise en page des subplots
-    fig_combined.update_layout(showlegend=False)
-
-    # Afficher le subplot combiné
-    st.plotly_chart(fig_combined)
+    plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
+    plt.axis('equal')
+    plt.title('Répartition des dépôts')
+    plt.clf()
     
     st.header("Exploration des relations entre les attributs numériques à l'aide d'une matrice de corrélation")
     numeric_columns = df.select_dtypes(include=[np.number])
@@ -95,8 +88,7 @@ if option == 'Étude Statistiques':
     plt.axis('equal')
     st.pyplot(plt.gcf())
     plt.clf()
-    
-    st.header("Distribution des variables Default, housing et Loan")
+
     variables = ["default", "housing", "loan"]
     for variable in variables:
         counts = df[variable].value_counts()

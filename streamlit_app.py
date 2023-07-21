@@ -5,7 +5,7 @@ import seaborn as sns
 import streamlit as st
 
 st.title('Analyse de bank marketing')
-df_file = st.sidebar.file_uploader("Upload a Dataset", type=['csv', 'txt'])
+df_file = st.file_uploader("Upload a Dataset", type=['csv', 'txt'])
 if df_file is not None:
     df = pd.read_csv(df_file)
     st.sidebar.dataframe(df.head())
@@ -171,4 +171,6 @@ if df_file is not None:
     axes[1].set_title("Distribution de l'âge selon les prêts immobiliers")
     axes[1].set_xlabel("Prêt immobilier")
     axes[1].set_ylabel("Âge")
+    plt.tight_layout()
     st.pyplot(plt.gcf)
+    plt.clf()

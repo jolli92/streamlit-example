@@ -170,5 +170,5 @@ if df_file is not None:
     sns.boxplot(ax=ax, x="housing", y="age", data=df)
     ax.set_title("Distribution de l'âge selon les prêts immobiliers")
     ax.set_xlabel("Prêt immobilier")
-   ax.set_ylabel("Âge")
-   st.pyplot(fig)
+    ax.set_ylabel("Âge")
+    st.pyplot(fig)

@@ -9,8 +9,6 @@ option = st.sidebar.selectbox(
 st.title('Analyse de bank marketing')
 df_file = st.sidebar.file_uploader("Upload a Dataset", type=['csv', 'txt'])
 if option == 'Étude Statistiques':
-    df = pd.read_csv(df_file)
-    st.dataframe(df.head())
     st.header('Distribution de la variable cible')        
     sns.countplot(x="deposit", data=df)
     st.pyplot(plt.gcf())

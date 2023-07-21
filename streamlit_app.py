@@ -74,13 +74,12 @@ if option == 'Étude Statistiques':
     st.plotly_chart(fig)
     st.write(marital_counts)
 
-    sns.countplot(x="education", data=df)
-    plt.title("Répartition des niveaux d'éducation")
-    plt.xlabel("Niveau d'éducation")
-    plt.ylabel("Décompte")
-    plt.xticks(rotation=45)
-    st.pyplot(plt.gcf())
-    plt.clf()
+    st.header("Distribution du niveau d'étude")
+    fig = go.Figure(data=go.Bar(x=df['education'].value_counts().index, y=df['education'].value_counts().values))
+    fig.update_layout(title="Répartition des niveaux d'éducation", xaxis_title="Niveau d'éducation", yaxis_title="Décompte")
+    fig.update_xaxes(tickangle=45)
+    st.plotly_chart(fig)
+    st.write(df['education'].value_counts())
 
     education_counts = df['education'].value_counts()
     labels = education_counts.index

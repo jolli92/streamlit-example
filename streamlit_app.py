@@ -47,9 +47,9 @@ if option == 'Étude Statistiques':
     st.plotly_chart(fig)
 
     st.header('Distribution du nombre de jours passés entre deux contacts de campagnes différentes')
-    fig3 = px.histogram(df, x="pdays", nbins=20, title="Distribution de pdays",
-                   labels={'pdays': 'pdays'}, marginal='box')
-    st.pyplot(fig3)
+    fig3 = go.Figure(data=go.Histogram(x=df['pdays'], nbinsx=20))
+    fig3.update_layout(title="Distribution de pdays", xaxis_title="pdays")
+    st.plotly_chart(fig3)
     plt.clf()
 
     sns.countplot(x="job", data=df)

@@ -22,10 +22,10 @@ if option == 'Étude Statistiques':
     deposit_counts = df['deposit'].value_counts()
     labels = deposit_counts.index
     sizes = deposit_counts.values
-    fig2 = plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
+    plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
     plt.axis('equal')
     plt.title('Répartition des dépôts')
-    st.plotly_chart(fig2)
+    
     st.pyplot(plt.gcf())
     plt.clf()
     
@@ -36,7 +36,9 @@ if option == 'Étude Statistiques':
     st.pyplot(plt)
     plt.clf()
 
-    sns.histplot(x=df['age'],label='Age', kde=True)
+    fig2 = px.histogram(df, x="age", nbins=20, title="Distribution de l'âge",
+                   labels={'age': 'Âge'}, marginal='box')
+    st.plotly_chart(fig2)
     st.pyplot(plt.gcf())
     plt.clf()
 

@@ -16,14 +16,14 @@ if option == 'Étude Statistiques':
     df = pd.read_csv(df_file)
     st.header('Visualisation de la distribution de la variable cible : deposit')        
     fig1 = px.histogram(df, x="deposit", title="Distribution de deposit")
-    fig1.update_layout(margin=dict(l=10, r=10, t=50, b=10))
+    fig1.update_layout(margin=dict(l=0, r=10, t=50, b=10))
 
     deposit_counts = df['deposit'].value_counts()
     labels = deposit_counts.index
     sizes = deposit_counts.values
     fig2 = go.Figure(data=go.Pie(labels=labels, values=sizes, textinfo='percent+label', insidetextorientation='radial'))
     fig2.update_layout(title='Répartition des dépôts')
-    fig2.update_layout(margin=dict(l=10, r=10, t=50, b=10))
+    fig2.update_layout(margin=dict(l=10, r=0, t=50, b=10))
     col1, col2 = st.columns(2)
     col1.plotly_chart(fig1)
     col2.plotly_chart(fig2)

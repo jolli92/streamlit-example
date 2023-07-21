@@ -174,7 +174,7 @@ if df_file is not None:
 
         
     elif option == 'Menu 2':
-        # Put all your code for "Menu 2" here.
+        print(lol)
 
     elif option == 'Menu 3':
-        # Put all your code for "Menu 3" here.
+        print(lol).

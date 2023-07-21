@@ -43,10 +43,10 @@ if option == 'Étude Statistiques':
     st.pyplot(plt.gcf())
     plt.clf()
 
-    df['duration_minutes'] = df['duration'] / 60
-    sns.kdeplot(x=df['duration_minutes'],label='duration_minutes')
-    st.pyplot(plt.gcf())
-    plt.clf()
+    st.header('Visualisation de la durée de contact (appel téléphonique)')
+    fig = px.histogram(df, x="duration_minutes", nbins=20, title="Distribution de la durée en minutes",
+                   labels={'duration_minutes': 'Durée (minutes)'}, marginal='box')
+    st.plotly_chart(fig)
 
     sns.kdeplot(x=df['pdays'],label='pdays')
     st.pyplot(plt.gcf())

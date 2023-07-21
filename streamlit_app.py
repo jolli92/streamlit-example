@@ -6,8 +6,11 @@ import streamlit as st
 
 
 
+file_path = '/workspaces/streamlit-example/bank.csv'
 
-df = pd.read_csv("/workspaces/streamlit-example/bank.csv")
+
+df = pd.read_csv(file_path)
+
 st.title('Analyse de bank marketing')
 df = st.file_uploader("Upload a Dataset", type=['csv', 'txt'])
 if df is not None:

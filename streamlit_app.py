@@ -166,11 +166,11 @@ if df_file is not None:
     axes[0].set_ylabel("Âge")
     st.pyplot(plt.gcf())
     plt.clf()
-
+    
     sns.boxplot(ax=axes[1], x="housing", y="age", data=df)
     axes[1].set_title("Distribution de l'âge selon les prêts immobiliers")
     axes[1].set_xlabel("Prêt immobilier")
     axes[1].set_ylabel("Âge")
     plt.tight_layout()
-    st.pyplot(plt.gcf())
+    st.pyplot()
     plt.clf()

@@ -23,13 +23,13 @@ if option == 'Étude Statistiques':
     deposit_counts = df['deposit'].value_counts()
     labels = deposit_counts.index
     sizes = deposit_counts.values
-    plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
+    fig2 = plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
     plt.axis('equal')
     plt.title('Répartition des dépôts')
     plt.clf()
     col1, col2 = st.columns(2)
     col1.plotly_chart(fig)
-    col2.pyplot(plt.gcf())
+    col2.pyplot(fig2)
     
     st.header("Exploration des relations entre les attributs numériques à l'aide d'une matrice de corrélation")
     numeric_columns = df.select_dtypes(include=[np.number])

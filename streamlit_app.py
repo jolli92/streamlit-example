@@ -15,9 +15,9 @@ st.title('Analyse de bank marketing')
 df = st.file_uploader("Upload a Dataset", type=['csv', 'txt'])
 if df is not None:
     data = pd.read_csv(df)
-    st.dataframe(data.head())
+    st.dataframe(df.head())
     if st.button("Show summary"):
-        st.write(data.describe())
+        st.write(df.describe())
     if st.button("Show Histogram"):
-        st.write(sns.histplot(data))
+        st.write(sns.histplot(df))
         st.pyplot()

@@ -30,6 +30,7 @@ if df_file is not None:
     correlation_matrix = numeric_columns.corr()
     sns.heatmap(correlation_matrix, annot=True)
     st.pyplot(plt)
+    plt.clf()
 
     sns.histplot(x=df['age'],label='Age', kde=True)
     st.pyplot(plt.gcf())

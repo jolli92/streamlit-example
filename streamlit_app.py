@@ -88,7 +88,8 @@ if option == 'Étude Statistiques':
     plt.axis('equal')
     st.pyplot(plt.gcf())
     plt.clf()
-
+    
+    st.header("Distribution des variables Default, housing et Loan")
     variables = ["default", "housing", "loan"]
     for variable in variables:
         counts = df[variable].value_counts()

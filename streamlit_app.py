@@ -13,7 +13,7 @@ st.title('Analyse de bank marketing')
 df_file = st.sidebar.file_uploader("Upload a Dataset", type=['csv', 'txt'])
 if option == 'Étude Statistiques':
     df = pd.read_csv(df_file)
-    st.header('Distribution de la variable cible')        
+    st.header('Visualisation de la distribution de la variable cible : deposit')        
     fig = px.histogram(df, x="deposit", title="Distribution de deposit")
     st.plotly_chart(fig)
     plt.clf()
@@ -35,7 +35,8 @@ if option == 'Étude Statistiques':
     sns.heatmap(correlation_matrix, annot=True)
     st.pyplot(plt)
     plt.clf()
-
+    
+    st.header('Visualisation de la distribution de l"âge')
     fig2 = px.histogram(df, x="age", nbins=20, title="Distribution de l'âge",
                    labels={'age': 'Âge'}, marginal='box')
     st.plotly_chart(fig2)

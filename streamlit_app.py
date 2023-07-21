@@ -35,17 +35,18 @@ if option == 'Étude Statistiques':
     st.write("Aucune corrélation linéaire : Si le coefficient est proche de 0, cela indique une absence de corrélation linéaire entre les variables.")
     st.write("Cependant cela ne signifie pas nécessairement qu'il n'y a aucune relation entre les variables, mais plutôt qu'il n'y a pas de relation linéaire claire.")
     
-    st.header('Visualisation de la distribution de l"âge')
-    fig2 = px.histogram(df, x="age", nbins=20, title="Distribution de l'âge",
+    st.header('_Visualisation de la distribution de l"âge_')
+    fig1 = px.histogram(df, x="age", nbins=20, title="Distribution de l'âge",
                    labels={'age': 'Âge'}, marginal='box')
-    st.plotly_chart(fig2)
-    plt.clf()
+    
 
-    st.header('Visualisation de la durée de contact (appel téléphonique)')
+    st.header('_Visualisation de la durée de contact (appel téléphonique)_')
     df['duration_minutes'] = df['duration'] / 60
-    fig3 = px.histogram(df, x="duration_minutes", nbins=20, title="Distribution de la durée en minutes",
+    fig2 = px.histogram(df, x="duration_minutes", nbins=20, title="Distribution de la durée en minutes",
                    labels={'duration_minutes': 'Durée (minutes)'}, marginal='box')
-    st.plotly_chart(fig3)
+    col1, col2 = st.columns(2)
+    col1.plotly_chart(fig1, use_container_width=True)
+    col2.plotly_chart(fig2, use_container_width=True)
 
     st.header('Distribution du nombre de jours passés entre deux contacts de campagnes différentes')
     fig4 = go.Figure(data=go.Histogram(x=df['pdays'], nbinsx=20))

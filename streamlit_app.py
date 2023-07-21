@@ -27,7 +27,7 @@ if option == 'Étude Statistiques':
     plt.axis('equal')
     plt.title('Répartition des dépôts')
     plt.clf()
-    col1, col2 = st.beta_columns(2)
+    col1, col2 = st.columns(2)
     col1.plotly_chart(fig)
     col2.pyplot(plt.gcf())
     

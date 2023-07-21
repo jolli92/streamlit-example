@@ -173,7 +173,6 @@ if df_file is not None:
         st.pyplot(fig)
 
         
-
     elif option == 'Menu 2':
         # Put all your code for "Menu 2" here.
 

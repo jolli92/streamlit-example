@@ -22,7 +22,6 @@ if option == 'Étude Statistiques':
     labels = deposit_counts.index
     sizes = deposit_counts.values
     fig2 = go.Figure(data=go.Pie(labels=labels, values=sizes, textinfo='percent+label', insidetextorientation='radial'))
-    fig2.update_layout(title='Répartition des dépôts')
     col1, col2 = st.columns(2)
     col1.plotly_chart(fig1, use_container_width=True)
     col2.plotly_chart(fig2, use_container_width=True)

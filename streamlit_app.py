@@ -5,10 +5,10 @@ import seaborn as sns
 import streamlit as st
 
 st.title('Analyse de bank marketing')
-df_file = st.file_uploader("Upload a Dataset", type=['csv', 'txt'])
+df_file = st.sidebar.file_uploader("Upload a Dataset", type=['csv', 'txt'])
 if df_file is not None:
     df = pd.read_csv(df_file)
-    st.sidebar.dataframe(df.head())
+    st.dataframe(df.head())
 
     st.title('Etude statistique')
 

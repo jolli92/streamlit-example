@@ -12,7 +12,7 @@ df = pd.read_csv(file_path)
 
 st.title('Analyse de bank marketing')
 df = st.file_uploader("Upload a Dataset", type=['csv', 'txt'])
-if df_file is not None:
+if df is not None:
     df = pd.read_csv(df_file)
     st.sidebar.dataframe(df.head())
 

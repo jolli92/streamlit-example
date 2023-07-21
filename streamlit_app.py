@@ -28,7 +28,7 @@ if option == 'Étude Statistiques':
     plt.title('Répartition des dépôts')
     plt.clf()
     
-    st.header('Exploration des relations entre les attributs numériques à l'aide d'une matrice de corrélation')
+    st.header("Exploration des relations entre les attributs numériques à l'aide d'une matrice de corrélation")
     numeric_columns = df.select_dtypes(include=[np.number])
     correlation_matrix = numeric_columns.corr()
     sns.heatmap(correlation_matrix, annot=True)

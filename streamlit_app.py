@@ -56,7 +56,7 @@ if option == 'Étude Statistiques':
         fig4 = go.Figure(data=go.Histogram(x=df['pdays'], nbinsx=20))
         fig4.update_layout(title="Distribution de pdays", xaxis_title="pdays")
         st.plotly_chart(fig4)
-        plt.clf()
+        
 
         st.header('Distribution des jobs')
         fig = go.Figure(data=go.Bar(x=df['job'].value_counts().index, y=df['job'].value_counts().values))
@@ -64,6 +64,8 @@ if option == 'Étude Statistiques':
         fig.update_xaxes(tickangle=45)
         st.plotly_chart(fig)
         st.write(df['job'].value_counts())
+        col1.plotly_chart(fig4, use_container_width=True)
+        col2.plotly_chart(fig, use_container_width=True)
         st.write("*Les clients ayant des emplois de gestion et des emplois d'ouvrier qualifié sont les plus nombreux dans la banque.")
         st.write("*Il y a très peu d'étudiants parmi les clients de la banque.")
 

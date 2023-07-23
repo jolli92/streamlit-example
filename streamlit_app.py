@@ -10,9 +10,9 @@ import io
 st.title('Analyse de bank marketing')
 df_file = st.sidebar.file_uploader("Upload a Dataset", type=['csv', 'txt'])
 df = pd.read_csv(df_file)
-option = st.sidebar.selectbox('Quel menu voulez-vous voir ?', ('Etude statistiques', 'Menu X', 'Menu XX'))
+option = st.sidebar.selectbox('Quel menu voulez-vous voir ?', ('Etude statistiques 📈', 'Menu X', 'Menu XX'))
 
-if option == 'Etude statistiques':
+if option == 'Etude statistiques 📈':
     option = st.sidebar.selectbox('Quel menu voulez-vous voir ?', ('Analyse des informations brutes', 'Etude des variables', 'Menu 3'))
 
     if option == 'Analyse des informations brutes':
@@ -273,7 +273,6 @@ Par conséquent, il serait judicieux pour les banques de cibler davantage cette 
         ax.text(i + bar_width, value, f"{value/df.shape[0]:.2%}", ha='center', va='bottom')
     ax.set_xlabel('Mois')
     ax.set_ylabel('Nombre de clients')
-    ax.set_title('Effet du mois sur deposit')
     ax.set_xticks([month + bar_width / 2 for month in months])
     ax.set_xticklabels(count_yes.index)
     ax.legend()

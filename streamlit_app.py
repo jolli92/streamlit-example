@@ -65,6 +65,7 @@ if option == 'Étude Statistiques':
         fig = go.Figure(data=go.Bar(x=df['job'].value_counts().index, y=df['job'].value_counts().values))
         fig.update_layout(title="'Distribution des jobs", xaxis_title="Emploi", yaxis_title="Nombre de clients")
         fig.update_xaxes(tickangle=45)
+        col1, col2 = st.columns(2)
         col1.plotly_chart(fig4, use_container_width=True)
         col2.plotly_chart(fig, use_container_width=True)
         st.write("Les clients ayant des emplois de gestion et des emplois d'ouvrier qualifié sont les plus nombreux dans la banque.")

@@ -390,7 +390,7 @@ En résumé, les tests du Chi-carré pour les variables catégorielles et les te
 """)
 
 
-    st.header(Conclusion)
+    st.header('Conclusion')
     st.write("""
 L'année passée, la plupart des interactions avec les clients de la banque ont eu lieu entre les mois de mai et août. Cependant, le mois de mai, qui a connu le plus grand nombre de contacts, a également vu le moins d'adhésion aux dépôts à terme. Les mois de mars, septembre et décembre ont vu peu de contacts, et il serait bénéfique de privilégier ces périodes pour une meilleure communication.
 

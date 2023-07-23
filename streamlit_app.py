@@ -372,8 +372,16 @@ En revanche, si l'issue est un succès, il y a une forte probabilité que le cli
             _, p, _, _ = chi2_contingency(contingency_table)
             chi2_p_values[feature] = p
     st.write(chi2_p_values)
-    st.table(pd.DataFrame(list(chi2_p_values.items()), columns=['Feature', 'P-Value']))
 
+    st.write('Tests statistiques variable catégorielle : utilisation du test t de student')
+    num_features = ['age', 'balance', 'duration', 'campaign', 'pdays', 'previous']
+    ttest_p_values = {}
+    for feature in num_features:
+        group1 = df[df['deposit'] == 'yes'][feature]
+        group2 = df[df['deposit'] == 'no'][feature]
+        _, p = ttest_ind(group1, group2)
+        ttest_p_values[feature] = p
+     st.write(ttest_p_values)
 
 
 

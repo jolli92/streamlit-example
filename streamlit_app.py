@@ -16,11 +16,11 @@ if option == 'Etude statistiques':
 
     if option == 'Analyse des informations brutes':
         st.write("Informations du DataFrame :")
-        nfo_lines = []
+        info_lines = []
         df.info(buf=lambda x: info_lines.append(x))
         st.write("Informations du DataFrame :")
         for line in info_lines:
-             st.write(line)
+             st.write(line, sep='')
         st.write("Description statistique du DataFrame :")
         st.dataframe(df.describe())
         st.dataframe(df.describe(include=["object"]))

@@ -267,6 +267,10 @@ Par conséquent, il serait judicieux pour les banques de cibler davantage cette 
     fig, ax = plt.subplots(figsize=(10,6))
     bar1 = ax.bar(months, count_yes.values, bar_width, label='Deposit Yes', color='#66B3FF')
     bar2 = ax.bar([month + bar_width for month in months], count_no.values, bar_width, label='Deposit No', color='#FF9999')
+    for i, value in enumerate(count_yes.values):
+        ax.text(i, value, f"{value/df.shape[0]:.2%}", ha='center', va='bottom')
+    for i, value in enumerate(count_no.values):
+        ax.text(i + bar_width, value, f"{value/df.shape[0]:.2%}", ha='center', va='bottom')
     ax.set_xlabel('Mois')
     ax.set_ylabel('Nombre de clients')
     ax.set_title('Effet du mois sur deposit')

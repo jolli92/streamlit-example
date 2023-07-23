@@ -7,7 +7,6 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 st.title('Analyse de bank marketing')
-st.write('Introduction')
 df_file = st.sidebar.file_uploader("Upload a Dataset", type=['csv', 'txt'])
 df = pd.read_csv(df_file)
 option = st.sidebar.selectbox('Quel menu voulez-vous voir ?', ('Etude statistiques', 'Menu X', 'Menu XX'))

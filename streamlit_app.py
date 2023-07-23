@@ -231,7 +231,14 @@ if option == 'Etude statistiques 📈':
         name='Deposit Yes',
         line=dict(color='#66B3FF')
     ))
-    fig.update_layout(xaxis_title="Âge",
+        fig.add_trace(go.Scatter(
+    x=age_counts_no.index, 
+    y=age_counts_no.values, 
+    mode='lines',
+    name='Deposit No',
+    line=dict(color='#FF9999')
+))
+        fig.update_layout(xaxis_title="Âge",
         yaxis_title="Nombre de clients",
         hovermode="x",
         autosize=False,

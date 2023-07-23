@@ -278,6 +278,20 @@ Par conséquent, il serait judicieux pour les banques de cibler davantage cette 
     ax.set_xticklabels(count_yes.index)
     ax.legend()
     st.pyplot(fig)
+    st.write("""
+Les mois de mai, juin, juillet et août de l'année précédente ont été les plus actifs en termes de contacts avec les clients de la banque. C'est également pendant ces périodes que le nombre de souscriptions aux dépôts à terme a été le plus élevé.
+
+Cependant, les mois de septembre, mars et décembre, malgré une moindre activité en matière de contacts, ont vu un taux de souscription aux dépôts à terme supérieur. Il serait donc judicieux de concentrer davantage d'efforts pour contacter les clients pendant ces périodes.
+""")
+
+
+
+
+
+
+
+
+
 elif option == 'Menu X':
     print('soon')
 

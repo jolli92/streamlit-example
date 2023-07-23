@@ -298,6 +298,12 @@ Cependant, les mois de septembre, mars et décembre, malgré une moindre activit
     fig.add_trace(go.Scatter(x=counts_df['Campaign'][counts_df['Deposit'] == 'No'], y=counts_df['Count'][counts_df['Deposit'] == 'No'], mode='lines+markers', name='Deposit No', line=dict(color='#FF9999')))
     fig.update_layout(xaxis_title='Campagne', yaxis_title='Nombre de clients', legend_title='Deposit', autosize=False, width=1000, height=600, margin=dict(l=50, r=50, b=100, t=100, pad=4))
     st.plotly_chart(fig)
+    st.write("""
+Selon notre analyse, plus nous multiplions les contacts avec les clients lors d'une campagne, plus il est probable qu'ils ne souscrivent pas aux dépôts à terme . 
+
+Ainsi, pour augmenter les souscriptions aux dépôts à terme, il serait avantageux de limiter le nombre de contacts avec le client.
+""")
+
 
 
 

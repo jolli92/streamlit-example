@@ -71,7 +71,7 @@ if option == 'Étude Statistiques':
         st.write("Les clients ayant des emplois de gestion et des emplois d'ouvrier qualifié sont les plus nombreux dans la banque.")
         st.write("Il y a très peu d'étudiants parmi les clients de la banque.")
         st.write("Management et blue colar sont les métiers les plus représentés chez les clients de la banque.")
-        st.write("La majorité des clients de la banques sont mariés (56.9%) ou celibataire (31.5%).")
+        st.write("La majorité des clients de la banques sont mariés (56.9%) ou célibataire (31.5%).")
 
         
         marital_counts = df['marital'].value_counts()

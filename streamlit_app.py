@@ -20,10 +20,10 @@ option = st.sidebar.selectbox(
 if option == 'Étude Statistiques':
     option = st.sidebar.selectbox(
         'Quel menu voulez-vous voir ?',
-         ('Menu 1', 'Menu 2', 'Menu 3'))
+         ('Étude des variables', 'Menu 2', 'Menu 3'))
     st.title('Analyse de bank marketing')
     df_file = st.sidebar.file_uploader("Upload a Dataset", type=['csv', 'txt'])
-    if option == 'Menu 1':
+    if option == 'Étude des variables':
         df = pd.read_csv(df_file)
         st.header('_Visualisation de la distribution de la variable cible : deposit_')        
         fig1 = px.histogram(df, x="deposit")

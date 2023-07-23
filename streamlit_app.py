@@ -381,7 +381,7 @@ En revanche, si l'issue est un succès, il y a une forte probabilité que le cli
         group2 = df[df['deposit'] == 'no'][feature]
         _, p = ttest_ind(group1, group2)
         ttest_p_values[feature] = p
-     st.write(ttest_p_values)
+      st.write(ttest_p_values)
 
 
 

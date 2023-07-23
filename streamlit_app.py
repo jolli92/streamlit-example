@@ -282,7 +282,20 @@ Les mois de mai, juin, juillet et août de l'année précédente ont été les p
 
 Cependant, les mois de septembre, mars et décembre, malgré une moindre activité en matière de contacts, ont vu un taux de souscription aux dépôts à terme supérieur. Il serait donc judicieux de concentrer davantage d'efforts pour contacter les clients pendant ces périodes.
 """)
-
+    
+    
+    counts_df_yes = pd.DataFrame(campaign_counts_yes).reset_index()
+    counts_df_yes.columns = ['Campaign', 'Count']
+    counts_df_yes['Deposit'] = 'Yes'
+    counts_df_no = pd.DataFrame(campaign_counts_no).reset_index()
+    counts_df_no.columns = ['Campaign', 'Count']
+    counts_df_no['Deposit'] = 'No'
+    counts_df = pd.concat([counts_df_yes, counts_df_no])
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=counts_df['Campaign'][counts_df['Deposit'] == 'Yes'], y=counts_df['Count'][counts_df['Deposit'] == 'Yes'], mode='lines+markers', name='Deposit Yes', line=dict(color='#66B3FF')))
+    fig.add_trace(go.Scatter(x=counts_df['Campaign'][counts_df['Deposit'] == 'No'], y=counts_df['Count'][counts_df['Deposit'] == 'No'], mode='lines+markers', name='Deposit No', line=dict(color='#FF9999')))
+    fig.update_layout(title='Effet de campaign sur deposit', xaxis_title='Campagne', yaxis_title='Nombre de clients', legend_title='Deposit', autosize=False, width=1000, height=600, margin=dict(l=50, r=50, b=100, t=100, pad=4))
+    st.plotly_chart(fig)
 
 
 

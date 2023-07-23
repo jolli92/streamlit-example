@@ -248,6 +248,13 @@ if option == 'Etude statistiques':
     )
 
     st.plotly_chart(fig)
+    st.write("""
+Selon notre analyse, même si une partie significative des clients d'âge moyen souscrit à des dépôts à terme, il est notable qu'une majorité d'entre eux n'y souscrit pas. 
+
+L'analyse montre aussi que les clients les plus âgés sont plus enclins à souscrire à des dépôts à terme, avec moins d'entre eux qui choisissent de ne pas y souscrire. 
+
+Par conséquent, il serait judicieux pour les banques de cibler davantage cette catégorie d'âge pour augmenter le nombre de souscriptions aux dépôts à terme.
+""")
 
 elif option == 'Menu X':
     print('soon')

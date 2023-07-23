@@ -17,7 +17,6 @@ if option == 'Etude statistiques':
     if option == 'Analyse des informations brutes':
         st.write("Informations du DataFrame :")
         info_str = df.info().to_string()
-        st.write("Informations du DataFrame :")
         st.text(info_str)
         st.write("Description statistique du DataFrame :")
         st.dataframe(df.describe())

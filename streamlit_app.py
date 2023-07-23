@@ -46,7 +46,7 @@ if option == 'Étude Statistiques':
 
     
         df['duration_minutes'] = df['duration'] / 60
-        fig2 = px.histogram(df, x="duration_minutes", nbins=20, title="Visualisation de la durée de contact (appel téléphonique)",
+        fig2 = px.histogram(df, x="duration_minutes", nbins=20, title="Visualisation de la durée de contact (appel tel)",
                        labels={'duration_minutes': 'Durée (minutes)'}, marginal='box')
         col1, col2 = st.columns(2)
         col1.plotly_chart(fig1, use_container_width=True)

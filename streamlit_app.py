@@ -25,6 +25,8 @@ if option == 'Étude Statistiques':
     col1, col2 = st.columns(2)
     col1.plotly_chart(fig1, use_container_width=True)
     col2.plotly_chart(fig2, use_container_width=True)
+    st.write('*47.4% des clients de la banques ont souscrit un compte à terme')
+    st.write('*52.6% des clients de la banques ont souscrit un compte à terme')
     
     st.header("Exploration des relations entre les attributs numériques à l'aide d'une matrice de corrélation")
     numeric_columns = df.select_dtypes(include=[np.number])

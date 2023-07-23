@@ -6,6 +6,7 @@ import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
 import io
+from scipy.stats import chi2_contingency
 
 st.title('Analyse de bank marketing')
 df_file = st.sidebar.file_uploader("Upload a Dataset", type=['csv', 'txt'])
@@ -360,7 +361,16 @@ En revanche, si l'issue est un succès, il y a une forte probabilité que le cli
 """)
 
     st.header('Tests statistiquesx')
+    cat_features = ['job', 'marital', 'education', 'default', 'housing', 'loan', 'contact', 'month', 'poutcome', 'deposit']
 
+    chi2_p_values = {}
+
+    for feature in cat_features:
+        if feature != 'deposit':
+            contingency_table = pd.crosstab(df[feature], df['deposit'])
+            _, p, _, _ = chi2_contingency(contingency_table)
+            chi2_p_values[feature] = p
+    st.table(pd.DataFrame(list(chi2_p_values.items()), columns=['Feature', 'P-Value']))
 
 
 

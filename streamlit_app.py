@@ -92,13 +92,6 @@ if option == 'Etude statistiques':
         col1.plotly_chart(fig4, use_container_width=True)
         col2.plotly_chart(fig, use_container_width=True)
 
-                
-        
-        st.write("Les clients ayant des emplois de gestion et des emplois d'ouvrier qualifié sont les plus nombreux dans la banque.")
-        st.write("Il y a très peu d'étudiants parmi les clients de la banque.")
-        st.write("Management et blue colar sont les métiers les plus représentés chez les clients de la banque.")
-        st.write("La majorité des clients de la banques sont mariés (56.9%) ou célibataire (31.5%).")
-
         marital_counts = df['marital'].value_counts()
         labels = marital_counts.index
         sizes = marital_counts.values
@@ -106,13 +99,17 @@ if option == 'Etude statistiques':
                             textinfo='percent', insidetextorientation='radial'))
         fig1.update_layout(title='Distribution des états matrimoniaux')
 
-        st.header("Distribution du niveau d'étude")
+        
         fig2 = go.Figure(data=go.Bar(x=df['education'].value_counts().index, y=df['education'].value_counts().values))
         fig2.update_layout(title="Distribution du niveau d'étude", xaxis_title="Niveau d'éducation", yaxis_title="Décompte")
         fig2.update_xaxes(tickangle=45)
         col1, col2 = st.columns(2)
         col1.plotly_chart(fig1, use_container_width=True)
         col2.plotly_chart(fig2, use_container_width=True)
+        st.write("Les clients ayant des emplois de gestion et des emplois d'ouvrier qualifié sont les plus nombreux dans la banque.")
+        st.write("Il y a très peu d'étudiants parmi les clients de la banque.")
+        st.write("Management et blue colar sont les métiers les plus représentés chez les clients de la banque.")
+        st.write("La majorité des clients de la banques sont mariés (56.9%) ou célibataire (31.5%).")
 
         variables = ["default", "housing", "loan"]
         for variable in variables:

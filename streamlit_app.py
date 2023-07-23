@@ -329,6 +329,10 @@ Ainsi, pour augmenter les souscriptions aux dépôts à terme, il serait avantag
 )
     fig = go.Figure(data=data, layout=layout)
     st.plotly_chart(fig)
+    st.write("""
+Selon nos observations, plus un client a été contacté avant cette campagne, plus il est susceptible de ne pas souscrire aux dépôt à terme. 
+Pour optimiser les résultats, il serait judicieux de limiter le nombre de contacts à moins de 3.
+""")
 
 
 

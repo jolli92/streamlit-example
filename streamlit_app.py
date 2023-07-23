@@ -6,7 +6,7 @@ import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
 
-st.set_page_config(layout="centered")
+st.set_page_config(layout="wide")
 option = st.sidebar.selectbox(
     'Quel menu voulez-vous voir ?',
      ('Étude Statistiques', 'Menu 2', 'Menu 3'))

@@ -371,7 +371,7 @@ En revanche, si l'issue est un succès, il y a une forte probabilité que le cli
                 contingency_table = pd.crosstab(df[feature], df['deposit'])
                 _, p, _, _ = chi2_contingency(contingency_table)
                 chi2_p_values[feature] = p
-         st.write(chi2_p_values)
+        st.write(chi2_p_values)
 
         st.write('Tests statistiques variable catégorielle : utilisation du test t de student')
         num_features = ['age', 'balance', 'duration', 'campaign', 'pdays', 'previous']

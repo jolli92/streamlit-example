@@ -38,16 +38,7 @@ if option == 'Étude Statistiques':
         col2.plotly_chart(fig2, use_container_width=True)
         st.write('47.4% des clients de la banques ont souscrit un compte à terme')
         st.write("52.6% des clients de la banques n'ont pas souscrit un compte à terme")
-    
-        st.header("Exploration des relations entre les attributs numériques à l'aide d'une matrice de corrélation")
-        numeric_columns = df.select_dtypes(include=[np.number])
-        correlation_matrix = numeric_columns.corr()
-        sns.heatmap(correlation_matrix, annot=True)
-        st.pyplot(plt)
-        plt.clf()
-        st.write("Aucune corrélation linéaire : Si le coefficient est proche de 0, cela indique une absence de corrélation linéaire entre les variables.")
-        st.write("Cependant cela ne signifie pas nécessairement qu'il n'y a aucune relation entre les variables, mais plutôt qu'il n'y a pas de relation linéaire claire.")
-    
+      
     
         fig1 = px.histogram(df, x="age", nbins=20, title="Visualisation de la distribution de l'âge",
                        labels={'age': 'Âge'}, marginal='box')

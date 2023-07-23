@@ -17,8 +17,10 @@ if option == 'Etude statistiques':
 
     if option == 'Analyse des informations brutes':
         st.write("Informations du DataFrame :")
+        info_buffer = io.StringIO()
+        df.info(buf=info_buffer)
         st.write("Informations du DataFrame :")
-        st.write(df.info())
+        st.text(info_buffer.getvalue())
         st.write("Description statistique du DataFrame :")
         st.dataframe(df.describe())
         st.dataframe(df.describe(include=["object"]))

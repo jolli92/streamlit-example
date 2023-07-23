@@ -390,6 +390,23 @@ En résumé, les tests du Chi-carré pour les variables catégorielles et les te
 """)
 
 
+    st.header(Conclusion)
+    st.write("""
+L'année passée, la plupart des interactions avec les clients de la banque ont eu lieu entre les mois de mai et août. Cependant, le mois de mai, qui a connu le plus grand nombre de contacts, a également vu le moins d'adhésion aux dépôts à terme. Les mois de mars, septembre et décembre ont vu peu de contacts, et il serait bénéfique de privilégier ces périodes pour une meilleure communication.
+
+Lorsqu'un client est sollicité par plusieurs campagnes ou est contacté plusieurs fois, il a tendance à se désintéresser des dépôts à terme. Il est donc recommandé de limiter les interactions à deux ou trois tentatives au maximum.
+
+Au niveau des professions, les retraités, les étudiants et les aides ménagères semblent être les plus enclins à opter pour les dépôts à terme. Les retraités, qui dépensent généralement peu, sont plus disposés à investir leur argent dans une institution financière. Les étudiants forment également un groupe privilégié pour la souscription aux dépôts à terme.
+
+Malgré une souscription notable aux dépôts à terme chez les clients d'âge moyen, ils sont plus nombreux à ne pas souscrire. Par contre, les clients âgés adhèrent davantage à ces produits et sont moins nombreux à refuser. Il serait donc profitable pour les banques de concentrer leurs efforts sur la clientèle âgée pour augmenter les souscriptions aux dépôts à terme.
+
+En matière de résultats de campagnes antérieures, un échec conduit à une probabilité de 50% pour le client de ne pas souscrire au dépôt à terme. Par contre, si le résultat de la campagne a été positif, les chances que le client souscrive sont élevées. Précisément, 91,3 % des succès ont abouti à une souscription, contre 8,7 % qui n'ont pas abouti.
+
+Les clients qui n'ont pas d'intérêt pour les prêts immobiliers pourraient être intéressés par les dépôts à terme. De plus, un solde client supérieur à la moyenne est un indicateur positif de souscription à un dépôt à terme.
+""")
+
+
+
 
 elif option == 'Menu X':
     print('soon')

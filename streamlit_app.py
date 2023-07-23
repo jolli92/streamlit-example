@@ -14,6 +14,9 @@ import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
 
+st.title('Analyse de bank marketing')
+    df_file = st.sidebar.file_uploader("Upload a Dataset", type=['csv', 'txt'])
+df = pd.read_csv(df_file)
 option = st.sidebar.selectbox(
     'Quel menu voulez-vous voir ?',
      ('Étude Statistiques', 'Menu X', 'Menu XX'))
@@ -22,9 +25,8 @@ if option == 'Étude Statistiques':
         'Quel menu voulez-vous voir ?',
          ('Étude des variables', 'Menu 2', 'Menu 3'))
     st.title('Analyse de bank marketing')
-    df_file = st.sidebar.file_uploader("Upload a Dataset", type=['csv', 'txt'])
+   
     if option == 'Étude des variables':
-        df = pd.read_csv(df_file)
         st.header('_Visualisation de la distribution de la variable cible : deposit_')        
         fig1 = px.histogram(df, x="deposit")
     

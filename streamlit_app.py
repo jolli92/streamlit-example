@@ -36,7 +36,7 @@ if option == 'Étude Statistiques':
     st.write("Cependant cela ne signifie pas nécessairement qu'il n'y a aucune relation entre les variables, mais plutôt qu'il n'y a pas de relation linéaire claire.")
     
     
-    fig1 = px.histogram(df, x="age", nbins=20, title="Visualisation de la distribution de l"âge",
+    fig1 = px.histogram(df, x="age", nbins=20, title="Visualisation de la distribution de l'âge",
                    labels={'age': 'Âge'}, marginal='box')
     
 

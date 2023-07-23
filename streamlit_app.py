@@ -218,7 +218,37 @@ if option == 'Etude statistiques':
         st.pyplot(fig)
 
     elif option == 'Menu 3':
-        print('soon')
+        age_counts_yes = df[df['deposit'] == 'yes']['age'].value_counts().sort_index()
+        age_counts_no = df[df['deposit'] == 'no']['age'].value_counts().sort_index()
+        fig = go.Figure()
+
+        fig.add_trace(go.Scatter(
+        x=age_counts_yes.index, 
+        y=age_counts_yes.values, 
+        mode='lines',
+        name='Deposit Yes',
+        line=dict(color='#66B3FF')
+    ))
+
+    fig.add_trace(go.Scatter(
+        x=age_counts_no.index, 
+        y=age_counts_no.values, 
+        mode='lines',
+        name='Deposit No',
+        line=dict(color='#FF9999')
+    ))
+
+    fig.update_layout(
+        title_text="Effet de l'âge sur deposit",
+        xaxis_title="Âge",
+        yaxis_title="Nombre de clients",
+        hovermode="x",
+        autosize=False,
+        width=800,
+        height=500,
+    )
+
+    st.plotly_chart(fig)
 
 elif option == 'Menu X':
     print('soon')

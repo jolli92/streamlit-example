@@ -283,7 +283,8 @@ Les mois de mai, juin, juillet et août de l'année précédente ont été les p
 Cependant, les mois de septembre, mars et décembre, malgré une moindre activité en matière de contacts, ont vu un taux de souscription aux dépôts à terme supérieur. Il serait donc judicieux de concentrer davantage d'efforts pour contacter les clients pendant ces périodes.
 """)
     
-    
+    campaign_counts_yes = deposit_yes['campaign'].value_counts().sort_index()
+    campaign_counts_no = deposit_no['campaign'].value_counts().sort_index()
     counts_df_yes = pd.DataFrame(campaign_counts_yes).reset_index()
     counts_df_yes.columns = ['Campaign', 'Count']
     counts_df_yes['Deposit'] = 'Yes'

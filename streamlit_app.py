@@ -5,6 +5,7 @@ import seaborn as sns
 import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
+import io
 
 st.title('Analyse de bank marketing')
 df_file = st.sidebar.file_uploader("Upload a Dataset", type=['csv', 'txt'])
@@ -16,11 +17,10 @@ if option == 'Etude statistiques':
 
     if option == 'Analyse des informations brutes':
         st.write("Informations du DataFrame :")
-        info_lines = []
-        df.info(buf=lambda x: info_lines.append(x))
-        st.write("Informations du DataFrame :")
-        for line in info_lines:
-             st.write(line, sep='')
+        buffer = io.StringIO()
+        df.info(buf=buffer)
+        s = buffer.getvalue()
+        st.text(s)
         st.write("Description statistique du DataFrame :")
         st.dataframe(df.describe())
         st.dataframe(df.describe(include=["object"]))

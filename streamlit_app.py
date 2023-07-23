@@ -255,6 +255,23 @@ L'analyse montre aussi que les clients les plus âgés sont plus enclins à sous
 
 Par conséquent, il serait judicieux pour les banques de cibler davantage cette catégorie d'âge pour augmenter le nombre de souscriptions aux dépôts à terme.
 """)
+    st.header('Effet du mois sur deposit')
+    deposit_yes = df[df['deposit'] == 'yes']
+    deposit_no = df[df['deposit'] == 'no']
+
+    fig = go.Figure()
+    fig.add_trace(go.Histogram(x=deposit_yes['month'], nbinsx=12, name='Deposit Yes', marker_color='#66B3FF'))
+    fig.add_trace(go.Histogram(x=deposit_no['month'], nbinsx=12, name='Deposit No', marker_color='#FF9999'))
+
+    fig.update_layout(barmode='overlay',
+                  title_text='Effet du mois sur deposit',
+                  xaxis_title_text='Mois',
+                  yaxis_title_text='Nombre de clients',
+                  bargap=0.2,
+                  bargroupgap=0.1)
+
+    fig.update_traces(opacity=0.75)
+    st.plotly_chart(fig)
 
 elif option == 'Menu X':
     print('soon')

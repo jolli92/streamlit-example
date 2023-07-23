@@ -370,6 +370,7 @@ En revanche, si l'issue est un succès, il y a une forte probabilité que le cli
             contingency_table = pd.crosstab(df[feature], df['deposit'])
             _, p, _, _ = chi2_contingency(contingency_table)
             chi2_p_values[feature] = p
+    st.write(chi2_p_values)
     st.table(pd.DataFrame(list(chi2_p_values.items()), columns=['Feature', 'P-Value']))
 
 

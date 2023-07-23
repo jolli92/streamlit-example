@@ -38,8 +38,7 @@ if option == 'Etude statistiques':
         st.write("On constate que 50% de l'échantillon n'ont jamais été contacté (previous=0) avant la campagne, ce qui est en cohérence avec le nombre de jour séparant avec le dernier contact (pdays = -1).")
         st.write("Peut-on dire que l'échantillon conntient essentiellement de nouveaux contacts clients ?")
         st.write("et 75% de ceux qui ont été contacté, ont été contacté au bout de 21 jours et n'a eu en générale qu'un seul contact.")
-        st.write("Pour ceux qui ont été régulièrement coontacté (previous=58), ils ne le sont que au bout de plus de deux ans...Ce qui attire notre attention sur la cohérence entre le nombre de fois que le client a été contacté (58) et
-        la durée du dernier contact plus de ans... Peut-on déduire que c'est un client en portefeuille depuis trop longtemps??")
+        st.write("Pour ceux qui ont été régulièrement coontacté (previous=58), ils ne le sont que au bout de plus de deux ans...Ce qui attire notre attention sur la cohérence entre le nombre de fois que le client a été contacté (58) et \nla durée du dernier contact plus de ans... Peut-on déduire que c'est un client en portefeuille depuis trop longtemps??")
         st.write("ou au contraire le client n'a été très solicité puisque il l'a été que au bout de plus de deux ans ...mais dans ce cas le nombre de contact, 58 fois avant la campagne nous pose quelques questions...58 fois")
         st.header("Description des variables")
         st.write("age (quantitative)")

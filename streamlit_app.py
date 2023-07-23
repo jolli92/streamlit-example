@@ -335,6 +335,25 @@ Pour optimiser les résultats, il serait judicieux de limiter le nombre de conta
 """)
 
 
+    def plot_interactive(df):
+        poutcome_unique = df['poutcome'].unique()
+        deposit_yes = df[df['deposit'] == 'yes']
+        deposit_no = df[df['deposit'] == 'no']
+
+        deposit_yes_counts = deposit_yes['poutcome'].value_counts().reindex(poutcome_unique, fill_value=0)
+        deposit_no_counts = deposit_no['poutcome'].value_counts().reindex(poutcome_unique, fill_value=0)
+
+        fig = go.Figure(data=[
+        go.Bar(name='Deposit Yes', x=poutcome_unique, y=deposit_yes_counts, marker_color='#66B3FF', text=[f"{(i / j) * 100:.1f}%" for i, j in zip(deposit_yes_counts, deposit_yes_counts + deposit_no_counts)], textposition='auto'),
+        go.Bar(name='Deposit No', x=poutcome_unique, y=deposit_no_counts, marker_color='#FF9999', text=[f"{(i / j) * 100:.1f}%" for i, j in zip(deposit_no_counts, deposit_yes_counts + deposit_no_counts)], textposition='auto')
+    ])
+        fig.update_layout(barmode='group', title='Effet de Poutcome sur deposit', xaxis_title='Poutcome', yaxis_title='Nombre de clients')
+        return fig
+
+
+    fig = plot_interactive(df)
+    st.plotly_chart(fig)
+
 
 
 

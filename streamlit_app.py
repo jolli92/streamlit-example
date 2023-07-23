@@ -111,7 +111,7 @@ if option == 'Etude statistiques':
         st.write("Management et blue colar sont les métiers les plus représentés chez les clients de la banque.")
         st.write("La majorité des clients de la banques sont mariés (56.9%) ou célibataire (31.5%).")
         st.write("La majorité des clients de la banques sont issues d'un cursus de second cycle (49.1%) et de troisiéme cycle (33%)")
-        st.write("Seulement 11% des clients sont issues d'un cursus de premier cycle)
+        st.write("Seulement 11% des clients sont issues d'un cursus de premier cycle")
 
         variables = ["default", "housing", "loan"]
         for variable in variables:

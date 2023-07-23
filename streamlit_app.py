@@ -73,17 +73,17 @@ if option == 'Étude Statistiques':
         marital_counts = df['marital'].value_counts()
         labels = marital_counts.index
         sizes = marital_counts.values
-        fig = go.Figure(data=go.Pie(labels=labels, values=sizes, hoverinfo='label+percent',
+        fig1 = go.Figure(data=go.Pie(labels=labels, values=sizes, hoverinfo='label+percent',
                             textinfo='percent', insidetextorientation='radial'))
-        fig.update_layout(title='Répartition des états matrimoniaux')
-        st.plotly_chart(fig)
-        st.write(marital_counts)
+        fig1.update_layout(title='Répartition des états matrimoniaux')
+        
 
         st.header("Distribution du niveau d'étude")
-        fig = go.Figure(data=go.Bar(x=df['education'].value_counts().index, y=df['education'].value_counts().values))
-        fig.update_layout(title="Répartition des niveaux d'éducation", xaxis_title="Niveau d'éducation", yaxis_title="Décompte")
-        fig.update_xaxes(tickangle=45)
-        st.plotly_chart(fig)
+        fig2 = go.Figure(data=go.Bar(x=df['education'].value_counts().index, y=df['education'].value_counts().values))
+        fig2.update_layout(title="Répartition des niveaux d'éducation", xaxis_title="Niveau d'éducation", yaxis_title="Décompte")
+        fig2.update_xaxes(tickangle=45)
+        col1.plotly_chart(fig1, use_container_width=True)
+        col2.plotly_chart(fig2, use_container_width=True)
         st.write(df['education'].value_counts())
 
         education_counts = df['education'].value_counts()

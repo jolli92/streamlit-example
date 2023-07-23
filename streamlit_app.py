@@ -263,16 +263,11 @@ Par conséquent, il serait judicieux pour les banques de cibler davantage cette 
     count_yes = deposit_yes['month'].value_counts().sort_index()
     count_no = deposit_no['month'].value_counts().sort_index()
     bar_width = 0.35
-    months = range(len(count_yes.index))
-    fig, ax = plt.subplots(figsize=(10,6))
-    bar1 = ax.bar(months, count_yes.values, bar_width, label='Deposit Yes', color='#66B3FF')
-    bar2 = ax.bar([month + bar_width for month in months], count_no.values, bar_width, label='Deposit No', color='#FF9999')
-    ax.set_xlabel('Mois')
-    ax.set_ylabel('Nombre de clients')
-    ax.set_title('Effet du mois sur deposit')
-    ax.set_xticks([month + bar_width / 2 for month in months])
-    ax.set_xticklabels(count_yes.index)
-    ax.legend()
+    fig = go.Figure(data=[
+    go.Bar(name='Deposit Yes', x=count_yes.index, y=count_yes.values, marker_color='#66B3FF'),
+    go.Bar(name='Deposit No', x=count_no.index, y=count_no.values, marker_color='#FF9999')
+])
+    fig.update_layout(barmode='group', title_text='Effet du mois sur deposit')
     st.pyplot(fig)
 elif option == 'Menu X':
     print('soon')

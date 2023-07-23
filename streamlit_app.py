@@ -16,12 +16,12 @@ if option == 'Etude statistiques':
     option = st.sidebar.selectbox('Quel menu voulez-vous voir ?', ('Analyse des informations brutes', 'Etude des variables', 'Menu 3'))
 
     if option == 'Analyse des informations brutes':
-        st.write("Informations du DataFrame :")
+        st.header("Informations du DataFrame :")
         buffer = io.StringIO()
         df.info(buf=buffer)
         s = buffer.getvalue()
         st.text(s)
-        st.write("Description statistique du DataFrame :")
+        st.header("Description statistique du DataFrame :")
         st.dataframe(df.describe())
         st.dataframe(df.describe(include=["object"]))
         st.header("Description des variables")

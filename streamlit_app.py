@@ -29,7 +29,7 @@ if option == 'Etude statistiques':
         categorical_columns = ["job", "marital", "education", "default", "housing", "loan", "contact", "month", "poutcome"]
         for column in categorical_columns:
             unique_values = df[column].unique()
-            st.write(f"Valeurs uniques de la colonne '{column}': {unique_values}", "\n")
+            st.markdown(f"Valeurs uniques de la colonne '{column}': {unique_values}\n")
         st.write(" * Information client :")
         st.write("l'aperçu des données numériques montrent l'échantillon de la population varie de 18 à 95 ans avec un moyen d'âge de 41 ans et une grande majorité vers les 49 ans.")
         st.write("leur compte courant qui varie entre un déficit de -6 847 et un crédit de 81 204 (euro?), en moyen les clients a  1 528 (euro?) sur leurs comptes.")

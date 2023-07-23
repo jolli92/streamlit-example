@@ -21,6 +21,8 @@ if option == 'Etude statistiques':
         df.info(buf=buffer)
         s = buffer.getvalue()
         st.text(s)
+        st.write(premier aperçu de la table, nous avons 11 162 enregistrements non null sur 17 variables, dont 7 variables sont de type integer et 10 de type objets.)
+        st.write(des structures des données affichent que toutes les lignes sont remplies, tandis que les premières lignes de données renvoient des valeurs "Unknown", l'impact de cette valeur à est un point d'attention à voir plus loin..)
         st.header("Description statistique du DataFrame :")
         st.dataframe(df.describe())
         st.dataframe(df.describe(include=["object"]))

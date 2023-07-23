@@ -20,7 +20,7 @@ if option == 'Etude statistiques':
         df.info(buf=lambda x: info_lines.append(x))
         st.write("Informations du DataFrame :")
         for line in info_lines:
-             st.text(line)
+             st.write(line)
         st.write("Description statistique du DataFrame :")
         st.dataframe(df.describe())
         st.dataframe(df.describe(include=["object"]))

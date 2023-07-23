@@ -255,22 +255,25 @@ L'analyse montre aussi que les clients les plus âgés sont plus enclins à sous
 
 Par conséquent, il serait judicieux pour les banques de cibler davantage cette catégorie d'âge pour augmenter le nombre de souscriptions aux dépôts à terme.
 """)
+
+    
     st.header('Effet du mois sur deposit')
     deposit_yes = df[df['deposit'] == 'yes']
     deposit_no = df[df['deposit'] == 'no']
     count_yes = deposit_yes['month'].value_counts().sort_index()
     count_no = deposit_no['month'].value_counts().sort_index()
     bar_width = 0.35
-    months = count_yes.index
+    months = range(len(count_yes.index))
     fig, ax = plt.subplots(figsize=(10,6))
     bar1 = ax.bar(months, count_yes.values, bar_width, label='Deposit Yes', color='#66B3FF')
-    bar2 = ax.bar(months + bar_width, count_no.values, bar_width, label='Deposit No', color='#FF9999')
+    bar2 = ax.bar([month + bar_width for month in months], count_no.values, bar_width, label='Deposit No', color='#FF9999')
     ax.set_xlabel('Mois')
     ax.set_ylabel('Nombre de clients')
     ax.set_title('Effet du mois sur deposit')
+    ax.set_xticks([month + bar_width / 2 for month in months])
+    ax.set_xticklabels(count_yes.index)
     ax.legend()
     st.pyplot(fig)
-
 elif option == 'Menu X':
     print('soon')
 

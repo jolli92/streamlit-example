@@ -25,7 +25,7 @@ if option == 'Etude statistiques':
         st.dataframe(df.describe())
         st.dataframe(df.describe(include=["object"]))
         st.header("Description des variables")
-        st.write("<u>age</u> (quantitative)")
+        st.markdown("<u>age</u> (quantitative)")
         st.write("<u>job:</u> type de job (categorielle: \"admin.\",\"unknown\",\"unemployed\",\"management\",\"housemaid\",\"entrepreneur\",\"student\",\"blue-collar\",\"self-employed\",\"retired\",\"technician\",\"services\")")
         st.write("<u>marital</u> : Statut marital (categorielle: \"married\",\"divorced\",\"single\"; note: \"divorced\" meansdivorced or widowed)")
         st.write("<u>education</u> (categorielle: \"unknown\",\"secondary\",\"primary\",\"tertiary\")")

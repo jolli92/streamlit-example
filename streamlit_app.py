@@ -15,18 +15,26 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 st.title('Analyse de bank marketing')
+st.write('Introduction')
 df_file = st.sidebar.file_uploader("Upload a Dataset", type=['csv', 'txt'])
 df = pd.read_csv(df_file)
 option = st.sidebar.selectbox(
     'Quel menu voulez-vous voir ?',
-     ('Étude Statistiques', 'Menu X', 'Menu XX'))
+     ('Etude statistiques', 'Menu X', 'Menu XX'))
 if option == 'Étude Statistiques':
     option = st.sidebar.selectbox(
         'Quel menu voulez-vous voir ?',
-         ('Étude des variables', 'Menu 2', 'Menu 3'))
+         ('Analyse des informations brutes', 'Etude des variables', 'Menu 3'))
     
    
-    if option == 'Étude des variables':
+    if option == 'Analyse des informations brutes':
+       st.write("Informations du DataFrame :")
+       st.dataframe(df.info())
+       st.write("Description statistique du DataFrame :")
+       st.dataframe(df.describe())
+
+        
+    elif option == 'Etude des variables':
         st.header('_Visualisation de la distribution de la variable cible : deposit_')        
         
         
@@ -194,10 +202,6 @@ if option == 'Étude Statistiques':
         ax.set_xlabel("Prêt immobilier")
         ax.set_ylabel("Âge")
         st.pyplot(fig)
-
-        
-    elif option == 'Menu 2':
-        print('soon')
 
     elif option == 'Menu 3':
         print('soon')

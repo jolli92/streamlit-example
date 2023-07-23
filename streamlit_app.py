@@ -306,6 +306,31 @@ Ainsi, pour augmenter les souscriptions aux dépôts à terme, il serait avantag
 
 
 
+    
+    st.header('Effet de previous sur deposit')
+    trace0 = go.Scatter(
+    x=campaign_counts_yes.index,
+    y=campaign_counts_yes.values,
+    mode='lines',
+    name='Deposit Yes',
+    line=dict(color='#66B3FF')
+)
+
+    trace1 = go.Scatter(
+    x=campaign_counts_no.index,
+    y=campaign_counts_no.values,
+    mode='lines',
+    name='Deposit No',
+    line=dict(color='#FF9999')
+)
+    data = [trace0, trace1]
+    layout = go.Layout(xaxis=dict(title='Previous'),
+    yaxis=dict(title='Nombre de clients'),
+)
+    fig = go.Figure(data=data, layout=layout)
+    st.plotly_chart(fig)
+
+
 
 
 

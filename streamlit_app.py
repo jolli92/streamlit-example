@@ -263,7 +263,7 @@ Par conséquent, il serait judicieux pour les banques de cibler davantage cette 
     fig.add_trace(go.Histogram(x=deposit_yes['month'], nbinsx=12, name='Deposit Yes', marker_color='#66B3FF'))
     fig.add_trace(go.Histogram(x=deposit_no['month'], nbinsx=12, name='Deposit No', marker_color='#FF9999'))
 
-    fig.update_layout(barmode='overlay',
+    fig.update_layout(barmode='barmode',
                   title_text='Effet du mois sur deposit',
                   xaxis_title_text='Mois',
                   yaxis_title_text='Nombre de clients',

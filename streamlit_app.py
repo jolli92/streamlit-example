@@ -24,7 +24,7 @@ if option == 'Étude Statistiques':
     option = st.sidebar.selectbox(
         'Quel menu voulez-vous voir ?',
          ('Étude des variables', 'Menu 2', 'Menu 3'))
-    st.title('Analyse de bank marketing')
+    
    
     if option == 'Étude des variables':
         st.header('_Visualisation de la distribution de la variable cible : deposit_')        

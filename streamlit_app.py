@@ -17,7 +17,8 @@ if option == 'Etude statistiques':
 
     if option == 'Analyse des informations brutes':
         st.write("Informations du DataFrame :")
-        st.dataframe(df.info())
+        st.write("Informations du DataFrame :")
+        st.write(df.info())
         st.write("Description statistique du DataFrame :")
         st.dataframe(df.describe())
         st.dataframe(df.describe(include=["object"]))

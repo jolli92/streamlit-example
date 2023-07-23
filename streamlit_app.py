@@ -218,6 +218,7 @@ if option == 'Etude statistiques':
         st.pyplot(fig)
 
     elif option == 'Menu 3':
+        st.header("Effet de l'age sur Deposit")
         age_counts_yes = df[df['deposit'] == 'yes']['age'].value_counts().sort_index()
         age_counts_no = df[df['deposit'] == 'no']['age'].value_counts().sort_index()
         fig = go.Figure()
@@ -238,9 +239,7 @@ if option == 'Etude statistiques':
         line=dict(color='#FF9999')
     ))
 
-    fig.update_layout(
-        title_text="Effet de l'âge sur deposit",
-        xaxis_title="Âge",
+    fig.update_layout(xaxis_title="Âge",
         yaxis_title="Nombre de clients",
         hovermode="x",
         autosize=False,

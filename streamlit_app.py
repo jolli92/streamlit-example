@@ -7,6 +7,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import io
 from scipy.stats import chi2_contingency
+from scipy.stats import ttest_ind
 
 st.title('Analyse de bank marketing')
 df_file = st.sidebar.file_uploader("Upload a Dataset", type=['csv', 'txt'])

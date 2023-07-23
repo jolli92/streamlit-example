@@ -383,6 +383,11 @@ En revanche, si l'issue est un succès, il y a une forte probabilité que le cli
         _, p = ttest_ind(group1, group2)
         ttest_p_values[feature] = p
     st.write(ttest_p_values)
+    st.write("""
+Les valeurs de p des tests du Chi-carré pour les variables catégorielles et des tests t pour les variables numériques sont toutes significativement inférieures à 0,05. Cela signifie que nous pouvons rejeter l'hypothèse nulle pour ces variables. Par conséquent, il existe une différence statistiquement significative entre les groupes de dépôt (yes et no) pour chaque variable numérique.
+
+En résumé, les tests du Chi-carré pour les variables catégorielles et les tests t pour les variables numériques suggèrent que toutes ces caractéristiques ont une relation statistiquement significative avec la variable de dépôt. Par conséquent, nous pouvons dire que toutes ces variables pourraient potentiellement avoir un effet sur la décision d'un client de faire un dépôt ou non. Cependant, il est important de se rappeler que la corrélation n'implique pas la causalité, et ces résultats ne nous indiquent pas comment ces variables influencent le résultat du dépôt. Pour cela, une investigation plus approfondie et éventuellement une modélisation prédictive seraient nécessaires.
+""")
 
 
 

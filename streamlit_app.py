@@ -55,7 +55,7 @@ if option == 'Etude statistiques':
         col1.plotly_chart(fig4, use_container_width=True)
         col2.plotly_chart(fig, use_container_width=True)
 
-                # ... Start of the code for 'Etude des variables'
+                
         
         st.write("Les clients ayant des emplois de gestion et des emplois d'ouvrier qualifié sont les plus nombreux dans la banque.")
         st.write("Il y a très peu d'étudiants parmi les clients de la banque.")
@@ -92,18 +92,6 @@ if option == 'Etude statistiques':
         ax.set_xlabel("Prêt immobilier")
         ax.set_ylabel("Âge")
         st.pyplot(fig)
-
-    elif option == 'Menu 3':
-        print('soon')
-
-elif option == 'Menu X':
-    print('soon')
-
-elif option == 'Menu XX':
-    print('soon')
-
-# End of the complete code
-
 
     elif option == 'Menu 3':
         print('soon')

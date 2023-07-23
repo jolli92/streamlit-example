@@ -72,6 +72,8 @@ if option == 'Etude statistiques':
         st.write('47.4% des clients de la banque ont souscrit un compte à terme')
         st.write("52.6% des clients de la banque n'ont pas souscrit un compte à terme")
 
+
+        st.header("Analyse de toutes les variables spécifiques aux clients")
         fig1 = px.histogram(df, x="age", nbins=20, title="Visualisation de la distribution de l'âge",
                    labels={'age': 'Âge'}, marginal='box')
 

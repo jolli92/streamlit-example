@@ -27,11 +27,11 @@ if option == 'Étude Statistiques':
          ('Analyse des informations brutes', 'Etude des variables', 'Menu 3'))
     
    
-    if option == 'Analyse des informations brutes':
-       st.write("Informations du DataFrame :")
-       st.dataframe(df.info())
-       st.write("Description statistique du DataFrame :")
-       st.dataframe(df.describe())
+if option == 'Analyse des informations brutes':
+    st.write("Informations du DataFrame :")
+    st.dataframe(df.info())
+    st.write("Description statistique du DataFrame :")
+    st.dataframe(df.describe())
 
         
     elif option == 'Etude des variables':

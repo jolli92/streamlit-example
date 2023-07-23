@@ -20,6 +20,7 @@ if option == 'Etude statistiques':
         st.dataframe(df.info())
         st.write("Description statistique du DataFrame :")
         st.dataframe(df.describe())
+        st.dataframe(df.describe(include=["object"]))
 
     elif option == 'Etude des variables':
         st.header('_Visualisation de la distribution de la variable cible : deposit_')        

@@ -55,14 +55,12 @@ if option == 'Étude Statistiques':
         st.header('Distribution du nombre de jours passés entre deux contacts de campagnes différentes')
         fig4 = go.Figure(data=go.Histogram(x=df['pdays'], nbinsx=20))
         fig4.update_layout(title="Distribution de pdays", xaxis_title="pdays")
-        st.plotly_chart(fig4)
         
-
+        
         st.header('Distribution des jobs')
         fig = go.Figure(data=go.Bar(x=df['job'].value_counts().index, y=df['job'].value_counts().values))
         fig.update_layout(title="Répartition des emplois", xaxis_title="Emploi", yaxis_title="Nombre de clients")
         fig.update_xaxes(tickangle=45)
-        st.plotly_chart(fig)
         st.write(df['job'].value_counts())
         col1.plotly_chart(fig4, use_container_width=True)
         col2.plotly_chart(fig, use_container_width=True)

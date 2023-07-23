@@ -399,9 +399,11 @@ Au niveau des professions, les retraités, les étudiants et les aides ménagèr
 
 Malgré une souscription notable aux dépôts à terme chez les clients d'âge moyen, ils sont plus nombreux à ne pas souscrire. Par contre, les clients âgés adhèrent davantage à ces produits et sont moins nombreux à refuser. Il serait donc profitable pour les banques de concentrer leurs efforts sur la clientèle âgée pour augmenter les souscriptions aux dépôts à terme.
 
-En matière de résultats de campagnes antérieures, un échec conduit à une probabilité de 50% pour le client de ne pas souscrire au dépôt à terme. Par contre, si le résultat de la campagne a été positif, les chances que le client souscrive sont élevées. Précisément, 91,3 % des succès ont abouti à une souscription, contre 8,7 % qui n'ont pas abouti.
+En matière de résultats de campagnes antérieures, un échec conduit à une probabilité de 50% pour le client de ne pas souscrire au dépôt à terme. Par contre, si le résultat de la campagne précédente a été positif, les chances que le client souscrive sont élevées. Précisément, 91,3 % des succès ont abouti à une souscription, contre 8,7 % qui n'ont pas abouti.
 
-Les clients qui n'ont pas d'intérêt pour les prêts immobiliers pourraient être intéressés par les dépôts à terme. De plus, un solde client supérieur à la moyenne est un indicateur positif de souscription à un dépôt à terme.
+Les clients qui n'ont pas d'intérêt pour les prêts immobiliers pourraient être intéressés par les dépôts à terme. 
+
+De plus, un solde client supérieur à la moyenne est un indicateur positif de souscription à un dépôt à terme.
 """)
 
 

@@ -67,8 +67,8 @@ if option == 'Étude Statistiques':
         fig.update_xaxes(tickangle=45)
         col1.plotly_chart(fig4, use_container_width=True)
         col2.plotly_chart(fig, use_container_width=True)
-        col2.write("Les clients ayant des emplois de gestion et des emplois d'ouvrier qualifié sont les plus nombreux dans la banque.")
-        col2.write("Il y a très peu d'étudiants parmi les clients de la banque.")
+        st.write("Les clients ayant des emplois de gestion et des emplois d'ouvrier qualifié sont les plus nombreux dans la banque.")
+        st.write("Il y a très peu d'étudiants parmi les clients de la banque.")
 
         
         marital_counts = df['marital'].value_counts()

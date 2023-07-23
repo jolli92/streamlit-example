@@ -245,8 +245,8 @@ if option == 'Etude statistiques 📈':
         width=800,
         height=500,
     )
-    st.plotly_chart(fig)
-    st.write("""
+        st.plotly_chart(fig)
+        st.write("""
 Selon notre analyse, même si une partie significative des clients d'âge moyen souscrit à des dépôts à terme, il est notable qu'une majorité d'entre eux n'y souscrit pas. 
 
 L'analyse montre aussi que les clients les plus âgés sont plus enclins à souscrire à des dépôts à terme, avec moins d'entre eux qui choisissent de ne pas y souscrire. 
@@ -257,27 +257,27 @@ Par conséquent, il serait judicieux pour les banques de cibler davantage cette 
 
 
     
-    st.header('Effet du mois sur deposit')
-    deposit_yes = df[df['deposit'] == 'yes']
-    deposit_no = df[df['deposit'] == 'no']
-    count_yes = deposit_yes['month'].value_counts().sort_index()
-    count_no = deposit_no['month'].value_counts().sort_index()
-    bar_width = 0.35
-    months = range(len(count_yes.index))
-    fig, ax = plt.subplots(figsize=(10,6))
-    bar1 = ax.bar(months, count_yes.values, bar_width, label='Deposit Yes', color='#66B3FF')
-    bar2 = ax.bar([month + bar_width for month in months], count_no.values, bar_width, label='Deposit No', color='#FF9999')
-    for i, value in enumerate(count_yes.values):
-        ax.text(i, value, f"{value/df.shape[0]:.2%}", ha='center', va='bottom')
-    for i, value in enumerate(count_no.values):
-        ax.text(i + bar_width, value, f"{value/df.shape[0]:.2%}", ha='center', va='bottom')
-    ax.set_xlabel('Mois')
-    ax.set_ylabel('Nombre de clients')
-    ax.set_xticks([month + bar_width / 2 for month in months])
-    ax.set_xticklabels(count_yes.index)
-    ax.legend()
-    st.pyplot(fig)
-    st.write("""
+        st.header('Effet du mois sur deposit')
+        deposit_yes = df[df['deposit'] == 'yes']
+        deposit_no = df[df['deposit'] == 'no']
+        count_yes = deposit_yes['month'].value_counts().sort_index()
+        count_no = deposit_no['month'].value_counts().sort_index()
+        bar_width = 0.35
+        months = range(len(count_yes.index))
+        fig, ax = plt.subplots(figsize=(10,6))
+        bar1 = ax.bar(months, count_yes.values, bar_width, label='Deposit Yes', color='#66B3FF')
+        bar2 = ax.bar([month + bar_width for month in months], count_no.values, bar_width, label='Deposit No', color='#FF9999')
+        for i, value in enumerate(count_yes.values):
+            ax.text(i, value, f"{value/df.shape[0]:.2%}", ha='center', va='bottom')
+        for i, value in enumerate(count_no.values):
+            ax.text(i + bar_width, value, f"{value/df.shape[0]:.2%}", ha='center', va='bottom')
+        ax.set_xlabel('Mois')
+        ax.set_ylabel('Nombre de clients')
+        ax.set_xticks([month + bar_width / 2 for month in months])
+        ax.set_xticklabels(count_yes.index)
+        ax.legend()
+        st.pyplot(fig)
+        st.write("""
 Les mois de mai, juin, juillet et août de l'année précédente ont été les plus actifs en termes de contacts avec les clients de la banque. C'est également pendant ces périodes que le nombre de souscriptions aux dépôts à terme a été le plus élevé.
 
 Cependant, les mois de septembre, mars et décembre, malgré une moindre activité en matière de contacts, ont vu un taux de souscription aux dépôts à terme supérieur. Il serait donc judicieux de concentrer davantage d'efforts pour contacter les clients pendant ces périodes.
@@ -285,22 +285,22 @@ Cependant, les mois de septembre, mars et décembre, malgré une moindre activit
 
 
     
-    st.header('Effet de campaign sur deposit')
-    campaign_counts_yes = deposit_yes['campaign'].value_counts().sort_index()
-    campaign_counts_no = deposit_no['campaign'].value_counts().sort_index()
-    counts_df_yes = pd.DataFrame(campaign_counts_yes).reset_index()
-    counts_df_yes.columns = ['Campaign', 'Count']
-    counts_df_yes['Deposit'] = 'Yes'
-    counts_df_no = pd.DataFrame(campaign_counts_no).reset_index()
-    counts_df_no.columns = ['Campaign', 'Count']
-    counts_df_no['Deposit'] = 'No'
-    counts_df = pd.concat([counts_df_yes, counts_df_no])
-    fig = go.Figure()
-    fig.add_trace(go.Scatter(x=counts_df['Campaign'][counts_df['Deposit'] == 'Yes'], y=counts_df['Count'][counts_df['Deposit'] == 'Yes'], mode='lines+markers', name='Deposit Yes', line=dict(color='#66B3FF')))
-    fig.add_trace(go.Scatter(x=counts_df['Campaign'][counts_df['Deposit'] == 'No'], y=counts_df['Count'][counts_df['Deposit'] == 'No'], mode='lines+markers', name='Deposit No', line=dict(color='#FF9999')))
-    fig.update_layout(xaxis_title='Campagne', yaxis_title='Nombre de clients', legend_title='Deposit', autosize=False, width=1000, height=600, margin=dict(l=50, r=50, b=100, t=100, pad=4))
-    st.plotly_chart(fig)
-    st.write("""
+        st.header('Effet de campaign sur deposit')
+        campaign_counts_yes = deposit_yes['campaign'].value_counts().sort_index()
+        campaign_counts_no = deposit_no['campaign'].value_counts().sort_index()
+        counts_df_yes = pd.DataFrame(campaign_counts_yes).reset_index()
+        counts_df_yes.columns = ['Campaign', 'Count']
+        counts_df_yes['Deposit'] = 'Yes'
+        counts_df_no = pd.DataFrame(campaign_counts_no).reset_index()
+        counts_df_no.columns = ['Campaign', 'Count']
+        counts_df_no['Deposit'] = 'No'
+        counts_df = pd.concat([counts_df_yes, counts_df_no])
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=counts_df['Campaign'][counts_df['Deposit'] == 'Yes'], y=counts_df['Count'][counts_df['Deposit'] == 'Yes'], mode='lines+markers', name='Deposit Yes', line=dict(color='#66B3FF')))
+        fig.add_trace(go.Scatter(x=counts_df['Campaign'][counts_df['Deposit'] == 'No'], y=counts_df['Count'][counts_df['Deposit'] == 'No'], mode='lines+markers', name='Deposit No', line=dict(color='#FF9999')))
+        fig.update_layout(xaxis_title='Campagne', yaxis_title='Nombre de clients', legend_title='Deposit', autosize=False, width=1000, height=600, margin=dict(l=50, r=50, b=100, t=100, pad=4))
+        st.plotly_chart(fig)
+        st.write("""
 Selon notre analyse, plus nous multiplions les contacts avec les clients lors d'une campagne, plus il est probable qu'ils ne souscrivent pas aux dépôts à terme . 
 
 Ainsi, pour augmenter les souscriptions aux dépôts à terme, il serait avantageux de limiter le nombre de contacts avec le client.
@@ -309,89 +309,88 @@ Ainsi, pour augmenter les souscriptions aux dépôts à terme, il serait avantag
 
 
     
-    st.header('Effet de previous sur deposit')
-    trace0 = go.Scatter(
-    x=campaign_counts_yes.index,
-    y=campaign_counts_yes.values,
-    mode='lines',
-    name='Deposit Yes',
-    line=dict(color='#66B3FF')
+        st.header('Effet de previous sur deposit')
+        trace0 = go.Scatter(
+         x=campaign_counts_yes.index,
+         y=campaign_counts_yes.values,
+         mode='lines',
+         name='Deposit Yes',
+         line=dict(color='#66B3FF')
 )
-
-    trace1 = go.Scatter(
-    x=campaign_counts_no.index,
-    y=campaign_counts_no.values,
-    mode='lines',
-    name='Deposit No',
-    line=dict(color='#FF9999')
+        trace1 = go.Scatter(
+        x=campaign_counts_no.index,
+        y=campaign_counts_no.values,
+        mode='lines',
+        name='Deposit No',
+        line=dict(color='#FF9999')
 )
-    data = [trace0, trace1]
-    layout = go.Layout(xaxis=dict(title='Previous'),
-    yaxis=dict(title='Nombre de clients'),
+        data = [trace0, trace1]
+        layout = go.Layout(xaxis=dict(title='Previous'),
+        yaxis=dict(title='Nombre de clients'),
 )
-    fig = go.Figure(data=data, layout=layout)
-    st.plotly_chart(fig)
-    st.write("""
+        fig = go.Figure(data=data, layout=layout)
+        st.plotly_chart(fig)
+        st.write("""
 Selon nos observations, plus un client a été contacté avant cette campagne, plus il est susceptible de ne pas souscrire aux dépôt à terme. 
 Pour optimiser les résultats, il serait judicieux de limiter le nombre de contacts à moins de 3.
 """)
 
-    st.header('Effet de Poutcome sur deposit')
-    def plot_interactive(df):
-        poutcome_unique = df['poutcome'].unique()
-        deposit_yes = df[df['deposit'] == 'yes']
-        deposit_no = df[df['deposit'] == 'no']
+        st.header('Effet de Poutcome sur deposit')
+        def plot_interactive(df):
+            poutcome_unique = df['poutcome'].unique()
+            deposit_yes = df[df['deposit'] == 'yes']
+            deposit_no = df[df['deposit'] == 'no']
 
-        deposit_yes_counts = deposit_yes['poutcome'].value_counts().reindex(poutcome_unique, fill_value=0)
-        deposit_no_counts = deposit_no['poutcome'].value_counts().reindex(poutcome_unique, fill_value=0)
+            deposit_yes_counts = deposit_yes['poutcome'].value_counts().reindex(poutcome_unique, fill_value=0)
+            deposit_no_counts = deposit_no['poutcome'].value_counts().reindex(poutcome_unique, fill_value=0)
 
-        fig = go.Figure(data=[
-        go.Bar(name='Deposit Yes', x=poutcome_unique, y=deposit_yes_counts, marker_color='#66B3FF', text=[f"{(i / j) * 100:.1f}%" for i, j in zip(deposit_yes_counts, deposit_yes_counts + deposit_no_counts)], textposition='auto'),
-        go.Bar(name='Deposit No', x=poutcome_unique, y=deposit_no_counts, marker_color='#FF9999', text=[f"{(i / j) * 100:.1f}%" for i, j in zip(deposit_no_counts, deposit_yes_counts + deposit_no_counts)], textposition='auto')
+            fig = go.Figure(data=[
+            go.Bar(name='Deposit Yes', x=poutcome_unique, y=deposit_yes_counts, marker_color='#66B3FF', text=[f"{(i / j) * 100:.1f}%" for i, j in zip(deposit_yes_counts, deposit_yes_counts + deposit_no_counts)], textposition='auto'),
+            go.Bar(name='Deposit No', x=poutcome_unique, y=deposit_no_counts, marker_color='#FF9999', text=[f"{(i / j) * 100:.1f}%" for i, j in zip(deposit_no_counts, deposit_yes_counts + deposit_no_counts)], textposition='auto')
     ])
-        fig.update_layout(barmode='group', xaxis_title='Poutcome', yaxis_title='Nombre de clients')
-        return fig
+            fig.update_layout(barmode='group', xaxis_title='Poutcome', yaxis_title='Nombre de clients')
+            return fig
 
 
-    fig = plot_interactive(df)
-    st.plotly_chart(fig)
-    st.write("""
+        fig = plot_interactive(df)
+        st.plotly_chart(fig)
+        st.write("""
 Selon les résultats de la campagne précédente, lorsque l'issue est un échec, il y a 50 % de chances que le client ne souscrive pas au dépôt à terme. Parmi tous les échecs, 50,3 % des clients décident de souscrire, tandis que 49,7 % choisissent de ne pas souscrire au dépôt à terme.
 
 En revanche, si l'issue est un succès, il y a une forte probabilité que le client souscrive au dépôt à terme. Parmi tous les succès, 91,3 % des clients s'abonnent, tandis que 8,7 % ne s'abonnent pas au dépôt à terme.
 """)
 
-    st.header('Tests statistiques')
-    st.write('Tests statistiques variable catégorielle : utilisation de chi²')
-    cat_features = ['job', 'marital', 'education', 'default', 'housing', 'loan', 'contact', 'month', 'poutcome', 'deposit']
+        st.header('Tests statistiques')
+        st.write('Tests statistiques variable catégorielle : utilisation de chi²')
+        cat_features = ['job', 'marital', 'education', 'default', 'housing', 'loan', 'contact', 'month', 'poutcome', 'deposit']
 
-    chi2_p_values = {}
+        chi2_p_values = {}
 
-    for feature in cat_features:
-        if feature != 'deposit':
-            contingency_table = pd.crosstab(df[feature], df['deposit'])
-            _, p, _, _ = chi2_contingency(contingency_table)
-            chi2_p_values[feature] = p
-    st.write(chi2_p_values)
+        for feature in cat_features:
+            if feature != 'deposit':
+                contingency_table = pd.crosstab(df[feature], df['deposit'])
+                _, p, _, _ = chi2_contingency(contingency_table)
+                chi2_p_values[feature] = p
+         st.write(chi2_p_values)
 
-    st.write('Tests statistiques variable catégorielle : utilisation du test t de student')
-    num_features = ['age', 'balance', 'duration', 'campaign', 'pdays', 'previous']
-    ttest_p_values = {}
-    for feature in num_features:
-        group1 = df[df['deposit'] == 'yes'][feature]
-        group2 = df[df['deposit'] == 'no'][feature]
-        _, p = ttest_ind(group1, group2)
-        ttest_p_values[feature] = p
-    st.write(ttest_p_values)
-    st.write("""
+        st.write('Tests statistiques variable catégorielle : utilisation du test t de student')
+        num_features = ['age', 'balance', 'duration', 'campaign', 'pdays', 'previous']
+        ttest_p_values = {}
+        for feature in num_features:
+            group1 = df[df['deposit'] == 'yes'][feature]
+            group2 = df[df['deposit'] == 'no'][feature]
+            _, p = ttest_ind(group1, group2)
+            ttest_p_values[feature] = p
+        st.write(ttest_p_values)
+        st.write("""
 Les valeurs de p des tests du Chi-carré pour les variables catégorielles et des tests t pour les variables numériques sont toutes significativement inférieures à 0,05. Cela signifie que nous pouvons rejeter l'hypothèse nulle pour ces variables. Par conséquent, il existe une différence statistiquement significative entre les groupes de dépôt (yes et no) pour chaque variable numérique.
 
 En résumé, les tests du Chi-carré pour les variables catégorielles et les tests t pour les variables numériques suggèrent que toutes ces caractéristiques ont une relation statistiquement significative avec la variable de dépôt. Par conséquent, nous pouvons dire que toutes ces variables pourraient potentiellement avoir un effet sur la décision d'un client de faire un dépôt ou non. Cependant, il est important de se rappeler que la corrélation n'implique pas la causalité, et ces résultats ne nous indiquent pas comment ces variables influencent le résultat du dépôt. Pour cela, une investigation plus approfondie et éventuellement une modélisation prédictive seraient nécessaires.
 """)
 
 
-    st.header('Conclusion')
-    st.write("""
+        st.header('Conclusion')
+        st.write("""
 L'année passée, la plupart des interactions avec les clients de la banque ont eu lieu entre les mois de mai et août. Cependant, le mois de mai, qui a connu le plus grand nombre de contacts, a également vu le moins d'adhésion aux dépôts à terme. Les mois de mars, septembre et décembre ont vu peu de contacts, et il serait bénéfique de privilégier ces périodes pour une meilleure communication.
 
 Lorsqu'un client est sollicité par plusieurs campagnes ou est contacté plusieurs fois, il a tendance à se désintéresser des dépôts à terme. Il est donc recommandé de limiter les interactions à deux ou trois tentatives au maximum.

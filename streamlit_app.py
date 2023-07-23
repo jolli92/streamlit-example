@@ -334,7 +334,7 @@ Selon nos observations, plus un client a été contacté avant cette campagne, p
 Pour optimiser les résultats, il serait judicieux de limiter le nombre de contacts à moins de 3.
 """)
 
-
+    st.header('Effet de Poutcome sur deposit')
     def plot_interactive(df):
         poutcome_unique = df['poutcome'].unique()
         deposit_yes = df[df['deposit'] == 'yes']
@@ -347,12 +347,17 @@ Pour optimiser les résultats, il serait judicieux de limiter le nombre de conta
         go.Bar(name='Deposit Yes', x=poutcome_unique, y=deposit_yes_counts, marker_color='#66B3FF', text=[f"{(i / j) * 100:.1f}%" for i, j in zip(deposit_yes_counts, deposit_yes_counts + deposit_no_counts)], textposition='auto'),
         go.Bar(name='Deposit No', x=poutcome_unique, y=deposit_no_counts, marker_color='#FF9999', text=[f"{(i / j) * 100:.1f}%" for i, j in zip(deposit_no_counts, deposit_yes_counts + deposit_no_counts)], textposition='auto')
     ])
-        fig.update_layout(barmode='group', title='Effet de Poutcome sur deposit', xaxis_title='Poutcome', yaxis_title='Nombre de clients')
+        fig.update_layout(barmode='group', xaxis_title='Poutcome', yaxis_title='Nombre de clients')
         return fig
 
 
     fig = plot_interactive(df)
     st.plotly_chart(fig)
+    st.write("""
+Selon les résultats de la campagne précédente, lorsque l'issue est un échec, il y a 50 % de chances que le client ne souscrive pas au dépôt à terme. Parmi tous les échecs, 50,3 % des clients décident de souscrire, tandis que 49,7 % choisissent de ne pas souscrire au dépôt à terme.
+
+En revanche, si l'issue est un succès, il y a une forte probabilité que le client souscrive au dépôt à terme. Parmi tous les succès, 91,3 % des clients s'abonnent, tandis que 8,7 % ne s'abonnent pas au dépôt à terme.
+""")
 
 
 

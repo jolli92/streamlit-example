@@ -222,7 +222,6 @@ if option == 'Etude statistiques 📈':
         age_counts_yes = df[df['deposit'] == 'yes']['age'].value_counts().sort_index()
         age_counts_no = df[df['deposit'] == 'no']['age'].value_counts().sort_index()
         fig = go.Figure()
-
         fig.add_trace(go.Scatter(
         x=age_counts_yes.index, 
         y=age_counts_yes.values, 
@@ -230,7 +229,6 @@ if option == 'Etude statistiques 📈':
         name='Deposit Yes',
         line=dict(color='#66B3FF')
     ))
-
     fig.add_trace(go.Scatter(
         x=age_counts_no.index, 
         y=age_counts_no.values, 
@@ -238,7 +236,6 @@ if option == 'Etude statistiques 📈':
         name='Deposit No',
         line=dict(color='#FF9999')
     ))
-
     fig.update_layout(xaxis_title="Âge",
         yaxis_title="Nombre de clients",
         hovermode="x",
@@ -246,7 +243,6 @@ if option == 'Etude statistiques 📈':
         width=800,
         height=500,
     )
-
     st.plotly_chart(fig)
     st.write("""
 Selon notre analyse, même si une partie significative des clients d'âge moyen souscrit à des dépôts à terme, il est notable qu'une majorité d'entre eux n'y souscrit pas. 
@@ -255,6 +251,8 @@ L'analyse montre aussi que les clients les plus âgés sont plus enclins à sous
 
 Par conséquent, il serait judicieux pour les banques de cibler davantage cette catégorie d'âge pour augmenter le nombre de souscriptions aux dépôts à terme.
 """)
+
+
 
     
     st.header('Effet du mois sur deposit')
@@ -282,7 +280,10 @@ Les mois de mai, juin, juillet et août de l'année précédente ont été les p
 
 Cependant, les mois de septembre, mars et décembre, malgré une moindre activité en matière de contacts, ont vu un taux de souscription aux dépôts à terme supérieur. Il serait donc judicieux de concentrer davantage d'efforts pour contacter les clients pendant ces périodes.
 """)
+
+
     
+    st.header('Effet de campaign sur deposit')
     campaign_counts_yes = deposit_yes['campaign'].value_counts().sort_index()
     campaign_counts_no = deposit_no['campaign'].value_counts().sort_index()
     counts_df_yes = pd.DataFrame(campaign_counts_yes).reset_index()
@@ -295,7 +296,7 @@ Cependant, les mois de septembre, mars et décembre, malgré une moindre activit
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=counts_df['Campaign'][counts_df['Deposit'] == 'Yes'], y=counts_df['Count'][counts_df['Deposit'] == 'Yes'], mode='lines+markers', name='Deposit Yes', line=dict(color='#66B3FF')))
     fig.add_trace(go.Scatter(x=counts_df['Campaign'][counts_df['Deposit'] == 'No'], y=counts_df['Count'][counts_df['Deposit'] == 'No'], mode='lines+markers', name='Deposit No', line=dict(color='#FF9999')))
-    fig.update_layout(title='Effet de campaign sur deposit', xaxis_title='Campagne', yaxis_title='Nombre de clients', legend_title='Deposit', autosize=False, width=1000, height=600, margin=dict(l=50, r=50, b=100, t=100, pad=4))
+    fig.update_layout(xaxis_title='Campagne', yaxis_title='Nombre de clients', legend_title='Deposit', autosize=False, width=1000, height=600, margin=dict(l=50, r=50, b=100, t=100, pad=4))
     st.plotly_chart(fig)
 
 

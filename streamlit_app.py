@@ -22,7 +22,7 @@ option = st.sidebar.selectbox(
     'Quel menu voulez-vous voir ?',
      ('Etude statistiques', 'Menu X', 'Menu XX'))
 if option == 'Étude Statistiques':
-    option = st.sidebar.selectbox(
+   option = st.sidebar.selectbox(
         'Quel menu voulez-vous voir ?',
          ('Analyse des informations brutes', 'Etude des variables', 'Menu 3'))
     
@@ -203,8 +203,8 @@ if option == 'Étude Statistiques':
         ax.set_ylabel("Âge")
         st.pyplot(fig)
 
-    elif option == 'Menu 3':
-        print('soon')
+        elif option == 'Menu 3':
+            print('soon')
 elif option == 'Menu X':
         print('soon')
 

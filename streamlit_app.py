@@ -430,6 +430,38 @@ if page == pages[3] :
         if balance_group_category != selected_balance_group:
             encoded_data['balance_group_' + balance_group_category] = 0
 
+    column_mapping = {
+    "18_25": "age_group_18_25",
+    "25_35": "age_group_25_35",
+    "35_50": "age_group_35_50",
+    "50_65": "age_group_50_65",
+    "65_100": "age_group_65_100"
+}
+
+# Sélectionner la catégorie de "age_group" choisie par l'utilisateur
+    selected_age_group = st.selectbox('Sélectionnez la catégorie de "age_group"', age_labels)
+
+# Récupérer le nom de la colonne encodée correspondant à la valeur sélectionnée
+    selected_age_column = column_mapping[selected_age_group]
+
+# Ajouter une nouvelle colonne à encoded_data avec les valeurs correspondantes
+    encoded_data[selected_age_column] = df_train[selected_age_column]
+
+# Répéter le processus pour la catégorie de "balance_group" choisie par l'utilisateur
+    column_mapping_balance = {
+    "eleve": "balance_group_eleve",
+    "faible": "balance_group_faible",
+    "moyen": "balance_group_moyen",
+    "negatif": "balance_group_negatif",
+    "tres_faible": "balance_group_tres_faible"
+}
+
+    selected_balance_group = st.selectbox('Sélectionnez la catégorie de "balance_group"', balance_labels)
+    selected_balance_column = column_mapping_balance[selected_balance_group]
+
+# Ajouter une nouvelle colonne à encoded_data avec les valeurs correspondantes
+    encoded_data[selected_balance_column] = df_train[selected_balance_column]
+
 
 
 

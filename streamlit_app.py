@@ -13,6 +13,7 @@ from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import classification_report
+import io
 from io import StringIO
 import plotly.graph_objs as go
 import plotly.express as px

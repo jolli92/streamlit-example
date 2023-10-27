@@ -336,7 +336,7 @@ if page == pages[2] :
     buffer = io.StringIO()
     X_train.info(buf=buffer)
     s = buffer.getvalue()
-    st.write(s)
+    st.text(s)
 
 if page == pages[3] :
     st.write("Prédictions")

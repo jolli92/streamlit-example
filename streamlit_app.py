@@ -345,7 +345,7 @@ if page == pages[3] :
     # Charger le modèle
     with open('xgb_optimized.pkl', 'rb') as model_file:
         model = pickle.load(model_file)
-    job = st.selectbox('Job', data['job'].unique())
+    job = st.selectbox('Job', df['job'].unique())
 
 
 

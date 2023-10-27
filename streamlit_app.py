@@ -410,7 +410,7 @@ if page == pages[3] :
         if poutcome_category != poutcome:
             encoded_data['poutcome_' + poutcome_category] = 0
 
-    age_options = {v: k for k, v in column_mapping.items()}
+    
     
     column_mapping = {
     "18_25": "age_group_18_25",
@@ -419,7 +419,7 @@ if page == pages[3] :
     "50_65": "age_group_50_65",
     "65_100": "age_group_65_100"
 }
-
+    age_options = {v: k for k, v in column_mapping.items()}
 # Sélectionner la catégorie de "age_group" choisie par l'utilisateur
     selected_age_group = st.selectbox('Sélectionnez la catégorie de "age_group"', list(age_options.keys()))
 

@@ -471,7 +471,7 @@ elif option == 'Prediction':
     # On applique le changement sur le dataset pour creer la colonne
     df['age_group'] = pd.cut(df['age'], bins=age_bins, labels=age_labels, right=False)
     #Création du bins et des étiquettes
-     balance_bins = [-6848, 0, 122, 550, 1708, 81205]
+    balance_bins = [-6848, 0, 122, 550, 1708, 81205]
     balance_labels = ["negatif", "tres_faible", "faible", "moyen", "eleve"]
     # Cut the balance column into bins
     df['balance_group'] = pd.cut(df['balance'], bins=balance_bins, labels=balance_labels, right=False)

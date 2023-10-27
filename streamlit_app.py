@@ -314,7 +314,7 @@ if page == pages[2] :
     categorical_columns = X_train.select_dtypes(include=['object']).columns
 
 # Encodage des caractéristiques catégorielles
-    encoder = OneHotEncoder(drop='first', sparse=False)
+    encoder = OneHotEncoder(drop=None, sparse=False)
 
 # Utilisation de  fit sur l'ensemble d'entraînement
     encoder.fit(X_train[categorical_columns])

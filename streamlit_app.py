@@ -468,6 +468,7 @@ if page == pages[3] :
     encoded_data['balance_group_negatif'] = 0
     encoded_data['age_group_35_50'] = 0
     encoded_data['age_group_18_25'] = 0
+    
     column_mapping = {
     "18_25": "age_group_18_25",
     "25_35": "age_group_25_35",
@@ -475,10 +476,10 @@ if page == pages[3] :
     "50_65": "age_group_50_65",
     "65_100": "age_group_65_100"
 }
-    age_options = {k: v for k, v in column_mapping.items()}
+    #age_options = {k: v for k, v in column_mapping.items()}
 # Sélectionner la catégorie de "age_group" choisie par l'utilisateur
     selected_age_group = st.selectbox('Sélectionnez la catégorie de "age_group"', list(age_options.keys()))
-
+    age_options = {k: v for k, v in column_mapping.items()}
 # Récupérer le nom de la colonne encodée correspondant à la valeur sélectionnée
     encoded_data[selected_age_group] = 0
     selected_age_column = column_mapping[selected_age_group]
@@ -492,12 +493,12 @@ if page == pages[3] :
     "negatif": "balance_group_negatif",
     "tres_faible": "balance_group_tres_faible"
 }
-    balance_options = {k: v for k, v in column_mapping_balance.items()}
+    #balance_options = {k: v for k, v in column_mapping_balance.items()}
 
 
 # Sélectionner la catégorie de "balance_group" choisie par l'utilisateur à partir des options inversées
     selected_balance_group = st.selectbox('Sélectionnez la catégorie de "balance_group"', list(balance_options.keys()))
-
+    balance_options = {k: v for k, v in column_mapping_balance.items()}
 # Créer une nouvelle colonne dans encoded_data pour la catégorie sélectionnée
     selected_balance_column = column_mapping_balance[selected_balance_group]
     encoded_data[selected_balance_column] = 1

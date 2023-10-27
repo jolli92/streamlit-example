@@ -522,5 +522,5 @@ elif option == 'Menu X':
         st.dataframe(X_train.info())
 
 
-        elif option == 'Menu XX':
-            print('soon')
+    elif option == 'Menu XX':
+        print('soon')

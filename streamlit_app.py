@@ -410,6 +410,32 @@ if page == pages[3] :
         if poutcome_category != poutcome:
             encoded_data['poutcome_' + poutcome_category] = 0
 
+    # Sélectionner la catégorie de "age_group" choisie par l'utilisateur
+    selected_age_group = st.selectbox('Sélectionnez la catégorie de "age_group"', df['age_group'].unique())
+
+# Effectuer l'encodage à chaud (one-hot encoding) pour la catégorie de "age_group" sélectionnée
+    encoded_data['age_group_' + selected_age_group] = 1
+
+# Remplir les autres colonnes de la DataFrame encodée avec des zéros
+    for age_group_category in age_labels:
+        if age_group_category != selected_age_group:
+            encoded_data['age_group_' + age_group_category] = 0
+
+# Répéter le processus pour la catégorie de "balance_group" choisie par l'utilisateur
+    selected_balance_group = st.selectbox('Sélectionnez la catégorie de "balance_group"', df['balance_group'].unique())
+
+    encoded_data['balance_group_' + selected_balance_group] = 1
+
+    for balance_group_category in balance_labels:
+        if balance_group_category != selected_balance_group:
+            encoded_data['balance_group_' + balance_group_category] = 0
+
+
+Ce code suit un processus similaire à celui précédemment expliqué pour l'encodage de la variable "job". Vous sélectionnez d'abord la catégorie de "age_group" et "balance_group" que l'utilisateur choisit à l'aide de st.selectbox, puis vous effectuez l'encodage à chaud correspondant pour la catégorie sélectionnée.
+
+Assurez-vous d'adapter ce code à votre application Streamlit et à la structure de votre modèle et de vos données.
+
+
 
 
 

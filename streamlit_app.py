@@ -230,7 +230,7 @@ if page == pages[1] :
     ax.set_ylabel("Âge")
     st.pyplot(fig)
 
-if page == pages[3] :
+if page == pages[2] :
     st.write("Pre-processing")
     df = pd.read_csv('bank.csv')
      #On écarte les valeurs -1 de pdays pour ne pas les traiter lors du pre-processing

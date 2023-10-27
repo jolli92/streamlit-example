@@ -3,19 +3,6 @@ pandas
 streamlit
 seaborn
 matplotlib
-plotly.express
-import xgboost
+plotly
+xgboost
 scikit-learn
-sklearn.model_selection 
-train_test_split 
-sklearn.metrics 
-accuracy_score
-sklearn.model_selection 
-RandomizedSearchCV
-GridSearchCV
-sklearn.preprocessing 
-OneHotEncoder
-sklearn.preprocessing
-LabelEncoder
-sklearn.metrics
-classification_report

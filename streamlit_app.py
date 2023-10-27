@@ -17,6 +17,7 @@ import io
 from io import StringIO
 import plotly.graph_objs as go
 import plotly.express as px
+import pickle
 
 
 df = pd.read_csv('bank.csv')

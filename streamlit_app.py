@@ -410,26 +410,6 @@ if page == pages[3] :
         if poutcome_category != poutcome:
             encoded_data['poutcome_' + poutcome_category] = 0
 
-    # Sélectionner la catégorie de "age_group" choisie par l'utilisateur
-    selected_age_group = st.selectbox('Sélectionnez la catégorie de "age_group"', df['age_group'].unique())
-
-# Effectuer l'encodage à chaud (one-hot encoding) pour la catégorie de "age_group" sélectionnée
-    encoded_data['age_group_' + selected_age_group] = 1
-
-# Remplir les autres colonnes de la DataFrame encodée avec des zéros
-    for age_group_category in age_labels:
-        if age_group_category != selected_age_group:
-            encoded_data['age_group_' + age_group_category] = 0
-
-# Répéter le processus pour la catégorie de "balance_group" choisie par l'utilisateur
-    selected_balance_group = st.selectbox('Sélectionnez la catégorie de "balance_group"', df['balance_group'].unique())
-
-    encoded_data['balance_group_' + selected_balance_group] = 1
-
-    for balance_group_category in balance_labels:
-        if balance_group_category != selected_balance_group:
-            encoded_data['balance_group_' + balance_group_category] = 0
-
     age_options = {v: k for k, v in column_mapping.items()}
     
     column_mapping = {

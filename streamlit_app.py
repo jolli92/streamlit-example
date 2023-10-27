@@ -392,7 +392,7 @@ if page == pages[3] :
     # Charger le modèle
     with open('xgb_optimized.pkl', 'rb') as model_file:
         model = pickle.load(model_file)
-    encoded_data = pd.DataFrame()
+    encoded_data = pd.DataFrame(index=[0])
     
     job = st.selectbox('Job', df['job'].unique())
     encoded_data['job_' + job] = 1

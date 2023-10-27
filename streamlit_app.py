@@ -13,6 +13,7 @@ from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import classification_report
+from io import StringIO
 
 st.title('Analyse de bank marketing')
 df = pd.read_csv('bank.csv')

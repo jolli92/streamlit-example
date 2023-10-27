@@ -341,4 +341,23 @@ if page == pages[2] :
 
 if page == pages[3] :
     st.write("Prédictions")
+    df = pd.read_csv('bank.csv')
+    # Charger le modèle
+    with open('xgb_optimized.pkl', 'rb') as model_file:
+        model = pickle.load(model_file)
+    job = st.selectbox('Job', data['job'].unique())
+
+
+
+
+    
+    #prediction = model.predict(preprocessed_data)
+    #if prediction == 1:
+    #st.write("La prédiction est : Yes")
+    #else:
+    #st.write("La prédiction est : No")
+
+
+
+
 

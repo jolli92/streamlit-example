@@ -431,9 +431,7 @@ if page == pages[3] :
             encoded_data['balance_group_' + balance_group_category] = 0
 
 
-Ce code suit un processus similaire à celui précédemment expliqué pour l'encodage de la variable "job". Vous sélectionnez d'abord la catégorie de "age_group" et "balance_group" que l'utilisateur choisit à l'aide de st.selectbox, puis vous effectuez l'encodage à chaud correspondant pour la catégorie sélectionnée.
 
-Assurez-vous d'adapter ce code à votre application Streamlit et à la structure de votre modèle et de vos données.
 
 
 

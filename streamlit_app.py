@@ -482,7 +482,7 @@ if page == pages[3] :
     
 # Récupérer le nom de la colonne encodée correspondant à la valeur sélectionnée
     encoded_data[selected_age_group] = 0
-    selected_age_column = column_mapping[selected_age_group]
+    selected_age_column = column_mapping.value[selected_age_group]
     encoded_data[selected_age_column] = 1
 
 # Répéter le processus pour la catégorie de "balance_group" choisie par l'utilisateur
@@ -500,7 +500,7 @@ if page == pages[3] :
     
     selected_balance_group = st.selectbox('Sélectionnez la catégorie de "balance_group"', list(balance_options.keys()))
 # Créer une nouvelle colonne dans encoded_data pour la catégorie sélectionnée
-    selected_balance_column = column_mapping_balance[selected_balance_group]
+    selected_balance_column = column_mapping_balance.value[selected_balance_group]
     encoded_data[selected_balance_column] = 1
 
     encoded_data['day'] = df['day'].median().astype(int)

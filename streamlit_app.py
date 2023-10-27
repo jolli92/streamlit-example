@@ -18,14 +18,15 @@ from io import StringIO
 import plotly.graph_objs as go
 import plotly.express as px
 
-st.title('Analyse de bank marketing')
+
 df = pd.read_csv('bank.csv')
-option = st.sidebar.selectbox('Quel menu voulez-vous voir ?', ('Etude statistiques 📈', 'Prediction', 'Menu XX'))
+st.title("Analyse de bank marketing")
+st.sidebar.title("Sommaire")
+pages=["Exploration", "DataVizualization","Pre-processing", "Prédictions"]
+page=st.sidebar.radio("Aller vers", pages)
 
-if option == 'Etude statistiques 📈':
-    option = st.sidebar.selectbox('Quel menu voulez-vous voir ?', ('Analyse des informations brutes', 'Etude des variables', 'Menu 3'))
-
-    if option == 'Analyse des informations brute':
+    if page == pages[0] :
+        st.write("Exploration")
         st.header("Informations du DataFrame :")
         buffer = io.StringIO()
         df.info(buf=buffer)
@@ -73,7 +74,8 @@ if option == 'Etude statistiques 📈':
         st.write("previous : Nombre de contacts effectués lors de la campagne précédente et pour ce client (quantitative)")
         st.write("poutcome : Résultat de la campagne marketing précédente (categorielle: \"unknown\",\"other\",\"failure\",\"success\")")
 
-    elif option == 'Etude des variables':
+    if page == pages[1] :
+        st.write("DataVizualization")
         st.header('_Visualisation de la distribution de la variable cible : deposit_')        
 
         fig1 = px.histogram(df, x="deposit")
@@ -227,304 +229,115 @@ if option == 'Etude statistiques 📈':
         ax.set_xlabel("Prêt immobilier")
         ax.set_ylabel("Âge")
         st.pyplot(fig)
-
-    elif option == 'Menu 3':
-        st.header("Effet de l'age sur Deposit")
-        age_counts_yes = df[df['deposit'] == 'yes']['age'].value_counts().sort_index()
-        age_counts_no = df[df['deposit'] == 'no']['age'].value_counts().sort_index()
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(
-        x=age_counts_yes.index, 
-        y=age_counts_yes.values, 
-        mode='lines',
-        name='Deposit Yes',
-        line=dict(color='#66B3FF')
-    ))
-        fig.add_trace(go.Scatter(
-    x=age_counts_no.index, 
-    y=age_counts_no.values, 
-    mode='lines',
-    name='Deposit No',
-    line=dict(color='#FF9999')
-))
-        fig.update_layout(xaxis_title="Âge",
-        yaxis_title="Nombre de clients",
-        hovermode="x",
-        autosize=False,
-        width=800,
-        height=500,
-    )
-        st.plotly_chart(fig)
-        st.write("""
-Selon notre analyse, même si une partie significative des clients d'âge moyen souscrit à des dépôts à terme, il est notable qu'une majorité d'entre eux n'y souscrit pas. 
-
-L'analyse montre aussi que les clients les plus âgés sont plus enclins à souscrire à des dépôts à terme, avec moins d'entre eux qui choisissent de ne pas y souscrire. 
-
-Par conséquent, il serait judicieux pour les banques de cibler davantage cette catégorie d'âge pour augmenter le nombre de souscriptions aux dépôts à terme.
-""")
-
-
-
     
-        st.header('Effet du mois sur deposit')
-        deposit_yes = df[df['deposit'] == 'yes']
-        deposit_no = df[df['deposit'] == 'no']
-        count_yes = deposit_yes['month'].value_counts().sort_index()
-        count_no = deposit_no['month'].value_counts().sort_index()
-        bar_width = 0.35
-        months = range(len(count_yes.index))
-        fig, ax = plt.subplots(figsize=(10,6))
-        bar1 = ax.bar(months, count_yes.values, bar_width, label='Deposit Yes', color='#66B3FF')
-        bar2 = ax.bar([month + bar_width for month in months], count_no.values, bar_width, label='Deposit No', color='#FF9999')
-        for i, value in enumerate(count_yes.values):
-            ax.text(i, value, f"{value/df.shape[0]:.2%}", ha='center', va='bottom')
-        for i, value in enumerate(count_no.values):
-            ax.text(i + bar_width, value, f"{value/df.shape[0]:.2%}", ha='center', va='bottom')
-        ax.set_xlabel('Mois')
-        ax.set_ylabel('Nombre de clients')
-        ax.set_xticks([month + bar_width / 2 for month in months])
-        ax.set_xticklabels(count_yes.index)
-        ax.legend()
-        st.pyplot(fig)
-        st.write("""
-Les mois de mai, juin, juillet et août de l'année précédente ont été les plus actifs en termes de contacts avec les clients de la banque. C'est également pendant ces périodes que le nombre de souscriptions aux dépôts à terme a été le plus élevé.
+    if page == pages[3] :
+        st.write("Pre-processing")
+        df = pd.read_csv('bank.csv')
+         #On écarte les valeurs -1 de pdays pour ne pas les traiter lors du pre-processing
+        pdays_filtered = df['pdays'][df['pdays'] != -1]
+        # Pour 'campaign'
+        Q1_campaign = df['campaign'].quantile(0.25)
+        Q3_campaign = df['campaign'].quantile(0.75)
+        IQR_campaign = Q3_campaign - Q1_campaign
+        Sbas_campaign = Q1_campaign - 1.5 * IQR_campaign
+        Shaut_campaign = Q3_campaign + 1.5 * IQR_campaign
 
-Cependant, les mois de septembre, mars et décembre, malgré une moindre activité en matière de contacts, ont vu un taux de souscription aux dépôts à terme supérieur. Il serait donc judicieux de concentrer davantage d'efforts pour contacter les clients pendant ces périodes.
-""")
+        # Pour 'pdays' (excluding -1 values)
+        Q1_pdays = pdays_filtered.quantile(0.25)
+        Q3_pdays = pdays_filtered.quantile(0.75)
+        IQR_pdays = Q3_pdays - Q1_pdays
+        Sbas_pdays = Q1_pdays - 1.5 * IQR_pdays
+        Shaut_pdays = Q3_pdays + 1.5 * IQR_pdays
 
+        # Pour 'previous'
+        Q1_previous = df['previous'].quantile(0.25)
+        Q3_previous = df['previous'].quantile(0.75)
+        IQR_previous = Q3_previous - Q1_previous
+        Sbas_previous = Q1_previous - 1.5 * IQR_previous
+        Shaut_bound_previous = Q3_previous + 1.5 * IQR_previous
 
-    
-        st.header('Effet de campaign sur deposit')
-        campaign_counts_yes = deposit_yes['campaign'].value_counts().sort_index()
-        campaign_counts_no = deposit_no['campaign'].value_counts().sort_index()
-        counts_df_yes = pd.DataFrame(campaign_counts_yes).reset_index()
-        counts_df_yes.columns = ['Campaign', 'Count']
-        counts_df_yes['Deposit'] = 'Yes'
-        counts_df_no = pd.DataFrame(campaign_counts_no).reset_index()
-        counts_df_no.columns = ['Campaign', 'Count']
-        counts_df_no['Deposit'] = 'No'
-        counts_df = pd.concat([counts_df_yes, counts_df_no])
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(x=counts_df['Campaign'][counts_df['Deposit'] == 'Yes'], y=counts_df['Count'][counts_df['Deposit'] == 'Yes'], mode='lines+markers', name='Deposit Yes', line=dict(color='#66B3FF')))
-        fig.add_trace(go.Scatter(x=counts_df['Campaign'][counts_df['Deposit'] == 'No'], y=counts_df['Count'][counts_df['Deposit'] == 'No'], mode='lines+markers', name='Deposit No', line=dict(color='#FF9999')))
-        fig.update_layout(xaxis_title='Campagne', yaxis_title='Nombre de clients', legend_title='Deposit', autosize=False, width=1000, height=600, margin=dict(l=50, r=50, b=100, t=100, pad=4))
-        st.plotly_chart(fig)
-        st.write("""
-Selon notre analyse, plus nous multiplions les contacts avec les clients lors d'une campagne, plus il est probable qu'ils ne souscrivent pas aux dépôts à terme . 
+        #Pour 'Duration'
+        Q1_duration = df['duration'].quantile(0.25)
+        Q3_duration = df['duration'].quantile(0.75)
+        IQR_duration = Q3_duration - Q1_duration
+        Sbas_duration = Q1_previous - 1.5 * IQR_duration
+        Shaut_bound_duration = Q3_duration + 1.5 * IQR_duration
 
-Ainsi, pour augmenter les souscriptions aux dépôts à terme, il serait avantageux de limiter le nombre de contacts avec le client.
-""")
+        moyenne_pdays = pdays_filtered.mean()
+        moyenne_campaign = df['campaign'].mean()
+        moyenne_previous = df['previous'].mean()
+        moyenne_duration = df['duration'].mean()
 
+        # Remplacer les valeurs aberrantes de 'pdays' par sa moyenne (en excluant les valeurs -1)
+        df.loc[(df['pdays'] > Shaut_pdays) & (df['pdays'] != -1), 'pdays'] = moyenne_pdays
 
+        # Remplacer les valeurs aberrantes de 'campaign' par sa moyenne
+        df.loc[df['campaign'] > Shaut_campaign, 'campaign'] = moyenne_campaign
 
-    
-        st.header('Effet de previous sur deposit')
-        trace0 = go.Scatter(
-         x=campaign_counts_yes.index,
-         y=campaign_counts_yes.values,
-         mode='lines',
-         name='Deposit Yes',
-         line=dict(color='#66B3FF')
-)
-        trace1 = go.Scatter(
-        x=campaign_counts_no.index,
-        y=campaign_counts_no.values,
-        mode='lines',
-        name='Deposit No',
-        line=dict(color='#FF9999')
-)
-        data = [trace0, trace1]
-        layout = go.Layout(xaxis=dict(title='Previous'),
-        yaxis=dict(title='Nombre de clients'),
-)
-        fig = go.Figure(data=data, layout=layout)
-        st.plotly_chart(fig)
-        st.write("""
-Selon nos observations, plus un client a été contacté avant cette campagne, plus il est susceptible de ne pas souscrire aux dépôt à terme. 
-Pour optimiser les résultats, il serait judicieux de limiter le nombre de contacts à moins de 3.
-""")
+        # Remplacer les valeurs aberrantes de 'previous' par la moyenne de 'campaign'
+        df.loc[df['previous'] > Shaut_bound_previous, 'previous'] = moyenne_previous
 
-        st.header('Effet de Poutcome sur deposit')
-        def plot_interactive(df):
-            poutcome_unique = df['poutcome'].unique()
-            deposit_yes = df[df['deposit'] == 'yes']
-            deposit_no = df[df['deposit'] == 'no']
-
-            deposit_yes_counts = deposit_yes['poutcome'].value_counts().reindex(poutcome_unique, fill_value=0)
-            deposit_no_counts = deposit_no['poutcome'].value_counts().reindex(poutcome_unique, fill_value=0)
-
-            fig = go.Figure(data=[
-            go.Bar(name='Deposit Yes', x=poutcome_unique, y=deposit_yes_counts, marker_color='#66B3FF', text=[f"{(i / j) * 100:.1f}%" for i, j in zip(deposit_yes_counts, deposit_yes_counts + deposit_no_counts)], textposition='auto'),
-            go.Bar(name='Deposit No', x=poutcome_unique, y=deposit_no_counts, marker_color='#FF9999', text=[f"{(i / j) * 100:.1f}%" for i, j in zip(deposit_no_counts, deposit_yes_counts + deposit_no_counts)], textposition='auto')
-    ])
-            fig.update_layout(barmode='group', xaxis_title='Poutcome', yaxis_title='Nombre de clients')
-            return fig
-
-
-        fig = plot_interactive(df)
-        st.plotly_chart(fig)
-        st.write("""
-Selon les résultats de la campagne précédente, lorsque l'issue est un échec, il y a 50 % de chances que le client ne souscrive pas au dépôt à terme. Parmi tous les échecs, 50,3 % des clients décident de souscrire, tandis que 49,7 % choisissent de ne pas souscrire au dépôt à terme.
-
-En revanche, si l'issue est un succès, il y a une forte probabilité que le client souscrive au dépôt à terme. Parmi tous les succès, 91,3 % des clients s'abonnent, tandis que 8,7 % ne s'abonnent pas au dépôt à terme.
-""")
-
-        st.header('Tests statistiques')
-        st.write('Tests statistiques variable catégorielle : utilisation de chi²')
-        cat_features = ['job', 'marital', 'education', 'default', 'housing', 'loan', 'contact', 'month', 'poutcome', 'deposit']
-
-        chi2_p_values = {}
-
-        for feature in cat_features:
-            if feature != 'deposit':
-                contingency_table = pd.crosstab(df[feature], df['deposit'])
-                _, p, _, _ = chi2_contingency(contingency_table)
-                chi2_p_values[feature] = p
-        st.write(chi2_p_values)
-
-        st.write('Tests statistiques variable catégorielle : utilisation du test t de student')
-        num_features = ['age', 'balance', 'duration', 'campaign', 'pdays', 'previous']
-        ttest_p_values = {}
-        for feature in num_features:
-            group1 = df[df['deposit'] == 'yes'][feature]
-            group2 = df[df['deposit'] == 'no'][feature]
-            _, p = ttest_ind(group1, group2)
-            ttest_p_values[feature] = p
-        st.write(ttest_p_values)
-        st.write("""
-Les valeurs de p des tests du Chi-carré pour les variables catégorielles et des tests t pour les variables numériques sont toutes significativement inférieures à 0,05. Cela signifie que nous pouvons rejeter l'hypothèse nulle pour ces variables. Par conséquent, il existe une différence statistiquement significative entre les groupes de dépôt (yes et no) pour chaque variable numérique.
-
-En résumé, les tests du Chi-carré pour les variables catégorielles et les tests t pour les variables numériques suggèrent que toutes ces caractéristiques ont une relation statistiquement significative avec la variable de dépôt. Par conséquent, nous pouvons dire que toutes ces variables pourraient potentiellement avoir un effet sur la décision d'un client de faire un dépôt ou non. Cependant, il est important de se rappeler que la corrélation n'implique pas la causalité, et ces résultats ne nous indiquent pas comment ces variables influencent le résultat du dépôt. Pour cela, une investigation plus approfondie et éventuellement une modélisation prédictive seraient nécessaires.
-""")
-
-
-        st.header('Conclusion')
-        st.write("""
-L'année passée, la plupart des interactions avec les clients de la banque ont eu lieu entre les mois de mai et août. Cependant, le mois de mai, qui a connu le plus grand nombre de contacts, a également vu le moins d'adhésion aux dépôts à terme. Les mois de mars, septembre et décembre ont vu peu de contacts, et il serait bénéfique de privilégier ces périodes pour une meilleure communication.
-
-Lorsqu'un client est sollicité par plusieurs campagnes ou est contacté plusieurs fois, il a tendance à se désintéresser des dépôts à terme. Il est donc recommandé de limiter les interactions à deux ou trois tentatives au maximum.
-
-Au niveau des professions, les retraités, les étudiants et les aides ménagères semblent être les plus enclins à opter pour les dépôts à terme. Les retraités, qui dépensent généralement peu, sont plus disposés à investir leur argent dans une institution financière. Les étudiants forment également un groupe privilégié pour la souscription aux dépôts à terme.
-
-Malgré une souscription notable aux dépôts à terme chez les clients d'âge moyen, ils sont plus nombreux à ne pas souscrire. Par contre, les clients âgés adhèrent davantage à ces produits et sont moins nombreux à refuser. Il serait donc profitable pour les banques de concentrer leurs efforts sur la clientèle âgée pour augmenter les souscriptions aux dépôts à terme.
-
-En matière de résultats de campagnes antérieures, un échec conduit à une probabilité de 50% pour le client de ne pas souscrire au dépôt à terme. Par contre, si le résultat de la campagne précédente a été positif, les chances que le client souscrive sont élevées. Précisément, 91,3 % des succès ont abouti à une souscription, contre 8,7 % qui n'ont pas abouti.
-
-Les clients qui n'ont pas d'intérêt pour les prêts immobiliers pourraient être intéressés par les dépôts à terme. 
-
-De plus, un solde client supérieur à la moyenne est un indicateur positif de souscription à un dépôt à terme.
-""")
-
-
-
-
-elif option == 'Prediction':
-    df = pd.read_csv('bank.csv')
-     #On écarte les valeurs -1 de pdays pour ne pas les traiter lors du pre-processing
-    pdays_filtered = df['pdays'][df['pdays'] != -1]
-    # Pour 'campaign'
-    Q1_campaign = df['campaign'].quantile(0.25)
-    Q3_campaign = df['campaign'].quantile(0.75)
-    IQR_campaign = Q3_campaign - Q1_campaign
-    Sbas_campaign = Q1_campaign - 1.5 * IQR_campaign
-    Shaut_campaign = Q3_campaign + 1.5 * IQR_campaign
-
-    # Pour 'pdays' (excluding -1 values)
-    Q1_pdays = pdays_filtered.quantile(0.25)
-    Q3_pdays = pdays_filtered.quantile(0.75)
-    IQR_pdays = Q3_pdays - Q1_pdays
-    Sbas_pdays = Q1_pdays - 1.5 * IQR_pdays
-    Shaut_pdays = Q3_pdays + 1.5 * IQR_pdays
-
-    # Pour 'previous'
-    Q1_previous = df['previous'].quantile(0.25)
-    Q3_previous = df['previous'].quantile(0.75)
-    IQR_previous = Q3_previous - Q1_previous
-    Sbas_previous = Q1_previous - 1.5 * IQR_previous
-    Shaut_bound_previous = Q3_previous + 1.5 * IQR_previous
-
-    #Pour 'Duration'
-    Q1_duration = df['duration'].quantile(0.25)
-    Q3_duration = df['duration'].quantile(0.75)
-    IQR_duration = Q3_duration - Q1_duration
-    Sbas_duration = Q1_previous - 1.5 * IQR_duration
-    Shaut_bound_duration = Q3_duration + 1.5 * IQR_duration
-
-    moyenne_pdays = pdays_filtered.mean()
-    moyenne_campaign = df['campaign'].mean()
-    moyenne_previous = df['previous'].mean()
-    moyenne_duration = df['duration'].mean()
-
-    # Remplacer les valeurs aberrantes de 'pdays' par sa moyenne (en excluant les valeurs -1)
-    df.loc[(df['pdays'] > Shaut_pdays) & (df['pdays'] != -1), 'pdays'] = moyenne_pdays
-
-    # Remplacer les valeurs aberrantes de 'campaign' par sa moyenne
-    df.loc[df['campaign'] > Shaut_campaign, 'campaign'] = moyenne_campaign
-
-    # Remplacer les valeurs aberrantes de 'previous' par la moyenne de 'campaign'
-    df.loc[df['previous'] > Shaut_bound_previous, 'previous'] = moyenne_previous
-
-    # Remplacer les valeurs aberrantes de 'duration' par la moyenne de 'campaign'
-    df.loc[df['duration'] > Shaut_bound_duration, 'duration'] = moyenne_duration
+        # Remplacer les valeurs aberrantes de 'duration' par la moyenne de 'campaign'
+        df.loc[df['duration'] > Shaut_bound_duration, 'duration'] = moyenne_duration
 
 
     #Transformation des colonnes age et balance pour creer un découpage dans le but d'attenuer les valeurs extrémes qui ne me semble pas abberante tout en les gardant.
     #Création du bins et des étiquettes
-    age_bins = [18, 25, 35, 50, 65, 100]
-    age_labels = ["18_25", "25_35", "35_50", "50_65", "65_100"]
+        age_bins = [18, 25, 35, 50, 65, 100]
+        age_labels = ["18_25", "25_35", "35_50", "50_65", "65_100"]
     # On applique le changement sur le dataset pour creer la colonne
-    df['age_group'] = pd.cut(df['age'], bins=age_bins, labels=age_labels, right=False)
+        df['age_group'] = pd.cut(df['age'], bins=age_bins, labels=age_labels, right=False)
     #Création du bins et des étiquettes
-    balance_bins = [-6848, 0, 122, 550, 1708, 81205]
-    balance_labels = ["negatif", "tres_faible", "faible", "moyen", "eleve"]
+        balance_bins = [-6848, 0, 122, 550, 1708, 81205]
+        balance_labels = ["negatif", "tres_faible", "faible", "moyen", "eleve"]
     # Cut the balance column into bins
-    df['balance_group'] = pd.cut(df['balance'], bins=balance_bins, labels=balance_labels, right=False)
+        df['balance_group'] = pd.cut(df['balance'], bins=balance_bins, labels=balance_labels, right=False)
     # On applique le changement sur le dataset pour creer la colonne
-    df['age_group'] = pd.cut(df['age'], bins=age_bins, labels=age_labels, right=False)
-    df['age_group'] = df['age_group'].astype('object')
-    df['balance_group'] = df['balance_group'].astype('object')
+        df['age_group'] = pd.cut(df['age'], bins=age_bins, labels=age_labels, right=False)
+        df['age_group'] = df['age_group'].astype('object')
+        df['balance_group'] = df['balance_group'].astype('object')
     # Séparation des données en ensembles d'entraînement et de test
     # Séparation des données en ensembles d'entraînement et de test
-    X = df.drop(columns=['deposit'])
-    y = df['deposit']
-    TEST_SIZE = 0.25
-    RAND_STATE = 42
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=TEST_SIZE, random_state=RAND_STATE)
+        X = df.drop(columns=['deposit'])
+        y = df['deposit']
+        TEST_SIZE = 0.25
+        RAND_STATE = 42
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=TEST_SIZE, random_state=RAND_STATE)
 
      # Encodage de la variable cible
-    label_encoder = LabelEncoder()
-    y_train = label_encoder.fit_transform(y_train)
-    y_test = label_encoder.transform(y_test)
+        label_encoder = LabelEncoder()
+        y_train = label_encoder.fit_transform(y_train)
+        y_test = label_encoder.transform(y_test)
 
     # Sélection des colonnes catégorielles
-    categorical_columns = X_train.select_dtypes(include=['object']).columns
+        categorical_columns = X_train.select_dtypes(include=['object']).columns
 
     # Encodage des caractéristiques catégorielles
-    encoder = OneHotEncoder(drop='first', sparse=False)
+        encoder = OneHotEncoder(drop='first', sparse=False)
 
     # Utilisation de  fit sur l'ensemble d'entraînement
-    encoder.fit(X_train[categorical_columns])
+        encoder.fit(X_train[categorical_columns])
 
     # Transformations des ensembles d'entraînement et de test
-    encoded_train = encoder.transform(X_train[categorical_columns])
-    encoded_test = encoder.transform(X_test[categorical_columns])
+        encoded_train = encoder.transform(X_train[categorical_columns])
+        encoded_test = encoder.transform(X_test[categorical_columns])
 
     # Conversion des caractéristiques encodées en dataframes
-    encoded_train_df = pd.DataFrame(encoded_train, columns=encoder.get_feature_names_out(categorical_columns))
-    encoded_test_df = pd.DataFrame(encoded_test, columns=encoder.get_feature_names_out(categorical_columns))
+        encoded_train_df = pd.DataFrame(encoded_train, columns=encoder.get_feature_names_out(categorical_columns))
+        encoded_test_df = pd.DataFrame(encoded_test, columns=encoder.get_feature_names_out(categorical_columns))
 
     # Fusion des dataframes encodés avec les originaux
-    X_train_encoded = X_train.drop(columns=categorical_columns).reset_index(drop=True).merge(encoded_train_df, left_index=True, right_index=True)
-    X_test_encoded = X_test.drop(columns=categorical_columns).reset_index(drop=True).merge(encoded_test_df, left_index=True, right_index=True)
+        X_train_encoded = X_train.drop(columns=categorical_columns).reset_index(drop=True).merge(encoded_train_df, left_index=True, right_index=True)
+        X_test_encoded = X_test.drop(columns=categorical_columns).reset_index(drop=True).merge(encoded_test_df, left_index=True, right_index=True)
 
     # Suppression des colonnes inutiles
-    X_train = X_train_encoded.drop(columns=['balance', 'age'])
-    X_test = X_test_encoded.drop(columns=['balance', 'age'])
-    buffer = io.StringIO()
-    X_train.info(buf=buffer)
-    s = buffer.getvalue()
-    st.text(s)
+        X_train = X_train_encoded.drop(columns=['balance', 'age'])
+        X_test = X_test_encoded.drop(columns=['balance', 'age'])
+        buffer = io.StringIO()
+        X_train.info(buf=buffer)
+        s = buffer.getvalue()
+        st.text(s)
 
+    if page == pages[3] :
+        st.write("Prédictions")
 
-elif option == 'Menu XX':
-    print('soon')

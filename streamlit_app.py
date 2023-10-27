@@ -345,7 +345,20 @@ if page == pages[3] :
     # Charger le modèle
     with open('xgb_optimized.pkl', 'rb') as model_file:
         model = pickle.load(model_file)
+    
     job = st.selectbox('Job', df['job'].unique())
+    encoded_data['job_' + job] = 1
+# Remplir les autres colonnes de la DataFrame encodée avec des zéros
+    for job_category in df['job'].unique():
+        if job_category != job:
+            encoded_data['job_' + job_category] = 0
+            
+    month = st.selectbox('Month', df['month'].unique())
+    encoded_data['job_' + job] = 1
+# Remplir les autres colonnes de la DataFrame encodée avec des zéros
+    for month_category in df['month'].unique():
+        if month_category != month:
+            encoded_data['month_' + month_category] = 0
 
 
 

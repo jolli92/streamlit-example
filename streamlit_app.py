@@ -374,6 +374,20 @@ if page == pages[3] :
     for default_category in df['default'].unique():
         if default_category != default:
             encoded_data['default_' + default_category] = 0
+            
+    marital = st.selectbox('Marital', df['marital'].unique())
+    encoded_data['marital_' + marital] = 1
+# Remplir les autres colonnes de la DataFrame encodée avec des zéros
+    for marital_category in df['marital'].unique():
+        if marital_category != marital:
+            encoded_data['marital_' + marital_category] = 0
+            
+    housing = st.selectbox('Housing', df['housing'].unique())
+    encoded_data['housing_' + housing] = 1
+# Remplir les autres colonnes de la DataFrame encodée avec des zéros
+    for housing_category in df['housing'].unique():
+        if housing_category != housing:
+            encoded_data['housing_' + housing_category] = 0
 
 
 

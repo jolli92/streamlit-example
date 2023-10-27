@@ -401,7 +401,8 @@ if page == pages[3] :
         if job_category != job:
             encoded_data['job_' + job_category] = 0
     st.write(f"Selected job: {job}")
-    st.write(encoded_data['job_' + job])   
+    st.write(encoded_data['job_' + job])
+    st.write(encoded_data)
     month = st.selectbox('Month', df['month'].unique())
     encoded_data['month_' + month] = 1
 # Remplir les autres colonnes de la DataFrame encodée avec des zéros

@@ -342,6 +342,53 @@ if page == pages[2] :
 if page == pages[3] :
     st.write("Prédictions")
     df = pd.read_csv('bank.csv')
+    #On écarte les valeurs -1 de pdays pour ne pas les traiter lors du pre-processing
+    pdays_filtered = df['pdays'][df['pdays'] != -1]
+    # Pour 'campaign'
+    Q1_campaign = df['campaign'].quantile(0.25)
+    Q3_campaign = df['campaign'].quantile(0.75)
+    IQR_campaign = Q3_campaign - Q1_campaign
+    Sbas_campaign = Q1_campaign - 1.5 * IQR_campaign
+    Shaut_campaign = Q3_campaign + 1.5 * IQR_campaign
+
+    # Pour 'pdays' (excluding -1 values)
+    Q1_pdays = pdays_filtered.quantile(0.25)
+    Q3_pdays = pdays_filtered.quantile(0.75)
+    IQR_pdays = Q3_pdays - Q1_pdays
+    Sbas_pdays = Q1_pdays - 1.5 * IQR_pdays
+    Shaut_pdays = Q3_pdays + 1.5 * IQR_pdays
+
+    # Pour 'previous'
+    Q1_previous = df['previous'].quantile(0.25)
+    Q3_previous = df['previous'].quantile(0.75)
+    IQR_previous = Q3_previous - Q1_previous
+    Sbas_previous = Q1_previous - 1.5 * IQR_previous
+    Shaut_bound_previous = Q3_previous + 1.5 * IQR_previous
+
+    #Pour 'Duration'
+    Q1_duration = df['duration'].quantile(0.25)
+    Q3_duration = df['duration'].quantile(0.75)
+    IQR_duration = Q3_duration - Q1_duration
+    Sbas_duration = Q1_previous - 1.5 * IQR_duration
+    Shaut_bound_duration = Q3_duration + 1.5 * IQR_duration
+
+    moyenne_pdays = pdays_filtered.mean()
+    moyenne_campaign = df['campaign'].mean()
+    moyenne_previous = df['previous'].mean()
+    moyenne_duration = df['duration'].mean()
+
+    # Remplacer les valeurs aberrantes de 'pdays' par sa moyenne (en excluant les valeurs -1)
+    df.loc[(df['pdays'] > Shaut_pdays) & (df['pdays'] != -1), 'pdays'] = moyenne_pdays
+
+    # Remplacer les valeurs aberrantes de 'campaign' par sa moyenne
+    df.loc[df['campaign'] > Shaut_campaign, 'campaign'] = moyenne_campaign
+
+    # Remplacer les valeurs aberrantes de 'previous' par la moyenne de 'campaign'
+    df.loc[df['previous'] > Shaut_bound_previous, 'previous'] = moyenne_previous
+
+    # Remplacer les valeurs aberrantes de 'duration' par la moyenne de 'campaign'
+    df.loc[df['duration'] > Shaut_bound_duration, 'duration'] = moyenne_duration
+    
     # Charger le modèle
     with open('xgb_optimized.pkl', 'rb') as model_file:
         model = pickle.load(model_file)
@@ -449,6 +496,13 @@ if page == pages[3] :
 # Mettre à jour la valeur de la colonne sélectionnée à 1
     encoded_data.loc[encoded_data.index, selected_balance_group] = 1
 
+    encoded_data[day] = df[day].median
+    encoded_data[duration] = df[duration].mean
+    encoded_data[pdays] = df[pdays].mean
+    encoded_data[campaign] = df[campaign].mean
+    encoded_data[previous] = df[previous].mean
+    
+
 
 
 
@@ -457,11 +511,11 @@ if page == pages[3] :
 
 
     
-    #prediction = model.predict(preprocessed_data)
-    #if prediction == 1:
-    #st.write("La prédiction est : Yes")
-    #else:
-    #st.write("La prédiction est : No")
+    prediction = model.predict(encoded_data)
+    if prediction == 1:
+        st.write("La prédiction est : Yes")
+    else:
+        st.write("La prédiction est : No")
 
 
 

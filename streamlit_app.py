@@ -508,7 +508,7 @@ if page == pages[3] :
     encoded_data['pdays'] = df['pdays'].mean().astype(int)
     encoded_data['campaign'] = df['campaign'].mean().astype(int)
     encoded_data['previous'] = df['previous'].mean().astype(int)
-    
+    st.dataframe(encoded_data)
 
 
 
@@ -518,11 +518,11 @@ if page == pages[3] :
 
 
     
-    prediction = model.predict(encoded_data)
-    if prediction == 1:
-        st.write("La prédiction est : Yes")
-    else:
-        st.write("La prédiction est : No")
+    #prediction = model.predict(encoded_data)
+    #if prediction == 1:
+        #st.write("La prédiction est : Yes")
+    #else:
+        #st.write("La prédiction est : No")
 
 
 

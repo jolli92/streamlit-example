@@ -415,6 +415,7 @@ De plus, un solde client supérieur à la moyenne est un indicateur positif de s
 
 
 elif option == 'Menu X':
+    option = st.sidebar.selectbox('Test Prediction'))
     if option == 'Test Prediction':
         df = pd.read_csv('bank.csv')
         #On écarte les valeurs -1 de pdays pour ne pas les traiter lors du pre-processing

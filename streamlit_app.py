@@ -483,7 +483,7 @@ if page == pages[3] :
     selected_age_group = st.selectbox('Sélectionnez la catégorie de "age_group"', list(age_options.keys()))
     
 # Récupérer le nom de la colonne encodée correspondant à la valeur sélectionnée
-    encoded_data[selected_age_group] = 0
+    #encoded_data[selected_age_group] = 0
     selected_age_column = column_mapping[selected_age_group]
     encoded_data[selected_age_column] = 1
 

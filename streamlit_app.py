@@ -389,6 +389,27 @@ if page == pages[3] :
         if housing_category != housing:
             encoded_data['housing_' + housing_category] = 0
 
+    loan = st.selectbox('Loan', df['loan'].unique())
+    encoded_data['loan_' + loan] = 1
+# Remplir les autres colonnes de la DataFrame encodée avec des zéros
+    for loan_category in df['loan'].unique():
+        if loan_category != loan:
+            encoded_data['loan_' + loan_category] = 0
+            
+    contact = st.selectbox('Contact', df['contact'].unique())
+    encoded_data['contact_' + contact] = 1
+# Remplir les autres colonnes de la DataFrame encodée avec des zéros
+    for contact_category in df['contact'].unique():
+        if contact_category != contact:
+            encoded_data['contact_' + contact_category] = 0
+
+    poutcome = st.selectbox('poutcome', df['poutcome'].unique())
+    encoded_data['poutcome_' + poutcome] = 1
+# Remplir les autres colonnes de la DataFrame encodée avec des zéros
+    for poutcome_category in df['poutcome'].unique():
+        if poutcome_category != poutcome:
+            encoded_data['poutcome_' + poutcome_category] = 0
+
 
 
 

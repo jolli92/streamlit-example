@@ -419,7 +419,7 @@ if page == pages[3] :
     "50_65": "age_group_50_65",
     "65_100": "age_group_65_100"
 }
-    age_options = {v: k for k, v in column_mapping.items()}
+    age_options = {k: v for k, v in column_mapping.items()}
 # Sélectionner la catégorie de "age_group" choisie par l'utilisateur
     selected_age_group = st.selectbox('Sélectionnez la catégorie de "age_group"', list(age_options.keys()))
 
@@ -437,7 +437,7 @@ if page == pages[3] :
     "negatif": "balance_group_negatif",
     "tres_faible": "balance_group_tres_faible"
 }
-    balance_options = {v: k for k, v in column_mapping_balance.items()}
+    balance_options = {k: v for k, v in column_mapping_balance.items()}
     selected_balance_group = st.selectbox('Sélectionnez la catégorie de "balance_group"', list(balance_options.keys()))
     selected_balance_column = column_mapping_balance[selected_balance_group]
 

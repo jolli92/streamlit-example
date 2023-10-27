@@ -516,7 +516,10 @@ elif option == 'Prediction':
     # Suppression des colonnes inutiles
     X_train = X_train_encoded.drop(columns=['balance', 'age'])
     X_test = X_test_encoded.drop(columns=['balance', 'age'])
-    st.dataframe(X_train.info())
+    buffer = io.StringIO()
+    X_train.info(buf=buffer)
+    s = buffer.getvalue()
+    st.text(s)
 
 
 elif option == 'Menu XX':

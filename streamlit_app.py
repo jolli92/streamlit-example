@@ -458,7 +458,16 @@ if page == pages[3] :
             encoded_data['poutcome_' + poutcome_category] = 0
 
     
-    
+    encoded_data['balance_group_faible'] = 0
+    encoded_data['age_group_25_35'] = 0
+    encoded_data['age_group_50_65'] = 0
+    encoded_data['balance_group_eleve'] = 0
+    encoded_data['balance_group_tres_faible'] = 0
+    encoded_data['balance_group_moyen'] = 0
+    encoded_data['age_group_65_100'] = 0
+    encoded_data['balance_group_negatif'] = 0
+    encoded_data['age_group_35_50'] = 0
+    encoded_data['age_group_18_25'] = 0
     column_mapping = {
     "18_25": "age_group_18_25",
     "25_35": "age_group_25_35",
@@ -495,6 +504,7 @@ if page == pages[3] :
 
 # Mettre à jour la valeur de la colonne sélectionnée à 1
     encoded_data.loc[encoded_data.index, selected_balance_group] = 1
+    
 
     encoded_data['day'] = df['day'].median().astype(int)
     encoded_data['duration'] = df['duration'].mean().astype(int)

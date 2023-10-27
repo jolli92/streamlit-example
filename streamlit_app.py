@@ -10,8 +10,7 @@ from scipy.stats import chi2_contingency
 from scipy.stats import ttest_ind
 
 st.title('Analyse de bank marketing')
-df_file = st.sidebar.file_uploader("Upload a Dataset", type=['csv', 'txt'])
-df = pd.read_csv(df_file)
+df = pd.read_csv('bank.csv')
 option = st.sidebar.selectbox('Quel menu voulez-vous voir ?', ('Etude statistiques 📈', 'Menu X', 'Menu XX'))
 
 if option == 'Etude statistiques 📈':

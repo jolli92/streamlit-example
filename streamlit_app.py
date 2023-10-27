@@ -11,8 +11,6 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import LabelEncoder
-import os
-from google.colab import drive
 from sklearn.metrics import classification_report
 
 st.title('Analyse de bank marketing')

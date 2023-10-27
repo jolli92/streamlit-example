@@ -525,8 +525,3 @@ if page == pages[3] :
         st.write("La prédiction est : Yes")
     else:
         #st.write("La prédiction est : No")
-
-
-
-
-

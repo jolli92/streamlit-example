@@ -20,7 +20,7 @@ option = st.sidebar.selectbox('Quel menu voulez-vous voir ?', ('Etude statistiqu
 if option == 'Etude statistiques 📈':
     option = st.sidebar.selectbox('Quel menu voulez-vous voir ?', ('Analyse des informations brutes', 'Etude des variables', 'Menu 3'))
 
-    if option == 'Analyse des informations brutes':
+    if option == 'Analyse des informations brute':
         st.header("Informations du DataFrame :")
         buffer = io.StringIO()
         df.info(buf=buffer)

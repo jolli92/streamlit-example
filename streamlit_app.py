@@ -345,7 +345,7 @@ if page == pages[3] :
     # Charger le modèle
     with open('xgb_optimized.pkl', 'rb') as model_file:
         model = pickle.load(model_file)
-    
+    encoded_data = pd.DataFrame()
     job = st.selectbox('Job', df['job'].unique())
     encoded_data['job_' + job] = 1
 # Remplir les autres colonnes de la DataFrame encodée avec des zéros

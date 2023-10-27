@@ -14,6 +14,8 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import classification_report
 from io import StringIO
+import plotly.graph_objs as go
+import plotly.express as px
 
 st.title('Analyse de bank marketing')
 df = pd.read_csv('bank.csv')

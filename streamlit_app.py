@@ -427,7 +427,7 @@ if page == pages[3] :
     encoded_data[selected_age_group] = 0
 
 # Ajouter une nouvelle colonne à encoded_data avec les valeurs correspondantes
-    encoded_data.loc[encoded_data.index, sselected_age_group] = 1
+    encoded_data.loc[encoded_data.index, selected_age_group] = 1
 
 # Répéter le processus pour la catégorie de "balance_group" choisie par l'utilisateur
     column_mapping_balance = {

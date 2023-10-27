@@ -496,11 +496,11 @@ if page == pages[3] :
 # Mettre à jour la valeur de la colonne sélectionnée à 1
     encoded_data.loc[encoded_data.index, selected_balance_group] = 1
 
-    encoded_data['day'] = df['day'].median
-    encoded_data['duration'] = df['duration'].mean
-    encoded_data['pdays'] = df['pdays'].mean
-    encoded_data['campaign'] = df['campaign'].mean
-    encoded_data['previous'] = df['previous'].mean
+    encoded_data['day'] = df['day'].median().astype(int)
+    encoded_data['duration'] = df['duration'].mean().astype(int)
+    encoded_data['pdays'] = df['pdays'].mean().astype(int)
+    encoded_data['campaign'] = df['campaign'].mean().astype(int)
+    encoded_data['previous'] = df['previous'].mean().astype(int)
     
 
 

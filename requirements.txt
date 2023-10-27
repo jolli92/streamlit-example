@@ -5,7 +5,7 @@ seaborn
 matplotlib
 plotly.express
 import xgboost
-sklearn
+scikit-learn
 sklearn.model_selection 
 train_test_split 
 sklearn.metrics 

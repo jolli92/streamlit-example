@@ -438,8 +438,7 @@ if page == pages[3] :
     "tres_faible": "balance_group_tres_faible"
 }
     balance_options = {k: v for k, v in column_mapping_balance.items()}
-    selected_balance_group = st.selectbox('Sélectionnez la catégorie de "balance_group"', list(balance_options.keys()))
-    balance_options = {k: v for k, v in column_mapping_balance.items()}
+
 
 # Sélectionner la catégorie de "balance_group" choisie par l'utilisateur à partir des options inversées
     selected_balance_group = st.selectbox('Sélectionnez la catégorie de "balance_group"', list(balance_options.keys()))

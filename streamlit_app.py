@@ -529,7 +529,7 @@ if page == pages[3] :
 
 
     if st.button('Predictions'):
-    prediction = model.predict(encoded_data)
+        prediction = model.predict(encoded_data)
     if prediction == 1:
         # Affichage du résultat sous forme d'un pop-up
         st.info("La prédiction est : Yes")

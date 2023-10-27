@@ -524,4 +524,4 @@ if page == pages[3] :
     if prediction == 1:
         st.write("La prédiction est : Yes")
     else:
-        #st.write("La prédiction est : No")
+        st.write("La prédiction est : No")

@@ -531,6 +531,6 @@ if page == pages[3] :
     
     prediction = model.predict(encoded_data)
     if prediction == 1:
-        st.write("La prédiction est : Yes")
+        st.markdown("La prédiction est : Yes")
     else:
-        st.write("La prédiction est : No")
+        st.mardown("La prédiction est : No")

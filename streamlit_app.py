@@ -528,9 +528,16 @@ if page == pages[3] :
 
 
 
-    
+    if st.button('Predictions'):
     prediction = model.predict(encoded_data)
     if prediction == 1:
-        st.markdown("**La prédiction est : Yes**")
+        # Affichage du résultat sous forme d'un pop-up
+        st.info("La prédiction est : Yes")
     else:
-        st.mardown("**La prédiction est : No**")
+        st.warning("La prédiction est : No")
+        
+   # prediction = model.predict(encoded_data)
+    #if prediction == 1:
+       # st.markdown("**La prédiction est : Yes**")
+   # else:
+       # st.mardown("**La prédiction est : No**")

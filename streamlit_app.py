@@ -500,7 +500,7 @@ if page == pages[3] :
     encoded_data['duration'] = df['duration'].mean
     encoded_data['pdays'] = df['pdays'].mean
     encoded_data['campaign'] = df['campaign'].mean
-    encoded_data['previous'] = df'[previous'].mean
+    encoded_data['previous'] = df['previous'].mean
     
 
 

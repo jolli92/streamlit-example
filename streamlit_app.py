@@ -606,4 +606,4 @@ if page == pages[4] :
         df_sorted = df.sort_values(by='prediction', ascending=False)
 
     # Display the top 50 clients
-        st.write(df_sorted.head(50))
+        st.dataframe(df_sorted.head(50))

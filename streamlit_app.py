@@ -23,7 +23,7 @@ import pickle
 df = pd.read_csv('bank.csv')
 st.title("Analyse de bank marketing")
 st.sidebar.title("Sommaire")
-pages=["Exploration", "DataVizualization","Pre-processing", "Prédictions"]
+pages=["Exploration", "DataVizualization","Pre-processing", "Prédictions", "Prédictions_2"]
 page=st.sidebar.radio("Aller vers", pages)
 
 if page == pages[0] :
@@ -541,3 +541,7 @@ if page == pages[3] :
        # st.markdown("**La prédiction est : Yes**")
    # else:
        # st.mardown("**La prédiction est : No**")
+
+
+if page == pages[4] :
+    st.write("Prédictions_2")

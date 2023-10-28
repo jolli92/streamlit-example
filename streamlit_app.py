@@ -627,7 +627,7 @@ if page == pages[4] :
 
 
 # Conversion des caractéristiques encodées en dataframes
-    encoded_df = pd.DataFrame(encoded_df, columns=encoder.get_feature_names_out(categorical_columns))
+    encoded_df = pd.DataFrame(encoded_df_2, columns=encoder.get_feature_names_out(categorical_columns))
     encoded_df = encoded_df.drop(columns=categorical_columns).reset_index(drop=True).merge(encoded_df_2, left_index=True, right_index=True)
     cols = [
     "day", "duration", "campaign", "pdays", "previous", "job_admin.", "job_blue-collar", "job_entrepreneur", "job_housemaid",

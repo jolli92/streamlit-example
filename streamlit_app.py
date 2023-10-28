@@ -628,7 +628,7 @@ if page == pages[4] :
 
 # Conversion des caractéristiques encodées en dataframes
     encoded_df = pd.DataFrame(encoded_df, columns=encoder.get_feature_names_out(categorical_columns))
-    
+    st.dataframe(encoded_df)
     with open('xgb_optimized.pkl', 'rb') as model_file:
         model = pickle.load(model_file)
     y_pred = model.predict(encoded_df)     # Remplacez "modele_entraine" par votre modèle réel

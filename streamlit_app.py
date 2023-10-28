@@ -575,32 +575,38 @@ if page == pages[4] :
     _, upper_pdays = calculate_outlier_bounds(pdays_filtered, 'pdays')
     _, upper_previous = calculate_outlier_bounds(df, 'previous')
     _, upper_duration = calculate_outlier_bounds(df, 'duration')
-
+    if 'pdays' not in df:
+        st.write("6La colonne 'pdays' a disparu!")
     # Replace outliers with mean
     replace_outliers_with_mean(df, 'pdays', upper_pdays)
     replace_outliers_with_mean(df, 'campaign', upper_campaign)
     replace_outliers_with_mean(df, 'previous', upper_previous)
     replace_outliers_with_mean(df, 'duration', upper_duration)
-
+    if 'pdays' not in df:
+        st.write("5La colonne 'pdays' a disparu!")
     # Bin 'age' and 'balance' columns
     age_bins = [18, 25, 35, 50, 65, 100]
     age_labels = ["18_25", "25_35", "35_50", "50_65", "65_100"]
     df['age_group'] = pd.cut(df['age'], bins=age_bins, labels=age_labels, right=False).astype('object')
-    
+    if 'pdays' not in df:
+        st.write("4La colonne 'pdays' a disparu!")
     balance_bins = [-6848, 0, 122, 550, 1708, 81205]
     balance_labels = ["negatif", "tres_faible", "faible", "moyen", "eleve"]
     df['balance_group'] = pd.cut(df['balance'], bins=balance_bins, labels=balance_labels, right=False).astype('object')
-
+    if 'pdays' not in df:
+        st.write(3"La colonne 'pdays' a disparu!")
     # Encode categorical columns
     categorical_columns = df.select_dtypes(include=['object']).columns
     encoded_df = encode_categorical_features(df, categorical_columns)
-
+    if 'pdays' not in df:
+        st.write("2La colonne 'pdays' a disparu!")
     # Load the trained model and predict
     with open('xgb_optimized.pkl', 'rb') as model_file:
         model = pickle.load(model_file)
     y_pred = model.predict(encoded_df)
     df['prediction'] = y_pred
-
+    if 'pdays' not in df:
+        st.write("1La colonne 'pdays' a disparu!")
     # Concatenate the columns "prénom" and "téléphone" and sort by prediction
     df = pd.concat([df_prenom_telephone, df], axis=1)
     df_sorted = df.sort_values(by='prediction', ascending=False)

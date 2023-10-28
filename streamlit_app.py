@@ -594,7 +594,7 @@ if page == pages[4] :
     balance_labels = ["negatif", "tres_faible", "faible", "moyen", "eleve"]
     df['balance_group'] = pd.cut(df['balance'], bins=balance_bins, labels=balance_labels, right=False).astype('object')
     if 'pdays' not in df:
-        st.write(3"La colonne 'pdays' a disparu!")
+        st.write("3La colonne 'pdays' a disparu!")
     # Encode categorical columns
     categorical_columns = df.select_dtypes(include=['object']).columns
     encoded_df = encode_categorical_features(df, categorical_columns)

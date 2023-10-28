@@ -600,7 +600,6 @@ if page == pages[4] :
     # Encode categorical columns
     categorical_columns = df.select_dtypes(include=['object']).columns
     encoded_df = encode_categorical_features(df, categorical_columns)
-    encoded_df = encoded_df.drop(columns=categorical_columns).reset_index(drop=True).merge(df, left_index=True, right_index=True)
     st.dataframe(encoded_df)
     cols = [
     "day", "duration", "campaign", "pdays", "previous", "job_admin.", "job_blue-collar", "job_entrepreneur", "job_housemaid",

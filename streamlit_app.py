@@ -547,7 +547,6 @@ if page == pages[4] :
     st.write("Prédictions_2")
     st.write("Ajout d'une colonne prénom + téléphone(généré aleatoirement) /colonne déposit supprimée et redistribution compléte du dataset sur toutes les colonnes à l'aide de .sample")
     df = pd.read_csv('Banktest.csv')
-    st.dataframe(df)
     def calculate_outlier_bounds(df, column):
         Q1 = df[column].quantile(0.25)
         Q3 = df[column].quantile(0.75)
@@ -602,7 +601,7 @@ if page == pages[4] :
     encoded_df = encode_categorical_features(df, categorical_columns)
     columns_to_add = ['day', 'duration', 'campaign', 'pdays', 'previous']
     encoded_df = pd.concat([df[columns_to_add], encoded_df], axis=1)
-    st.dataframe(encoded_df)
+    
     cols = [
     "day", "duration", "campaign", "pdays", "previous", "job_admin.", "job_blue-collar", "job_entrepreneur", "job_housemaid",
     "job_management", "job_retired", "job_self-employed", "job_services", "job_student", "job_technician", "job_unemployed",
@@ -630,4 +629,5 @@ if page == pages[4] :
     df_sorted = df.sort_values(by='prediction', ascending=False)
         
     # Display the top 50 clients
-    st.dataframe(df_sorted.head(50))
+    st.write("Les 50 clients avec le plus de potentiel sont :"
+    st.dataframe(df_sorted[['prénom', 'téléphone']].head(50))

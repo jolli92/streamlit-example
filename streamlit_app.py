@@ -565,6 +565,8 @@ if page == pages[4] :
         return encoded_df
     # Save and drop the columns "prénom" and "téléphone"
     df_prenom_telephone = df[['prénom', 'téléphone']]
+    if 'pdays' not in df:
+        st.write("XDLa colonne 'pdays' a disparu!")
     df = df.drop(columns=['prénom', 'téléphone'])
     if 'pdays' not in df:
         st.write("VLa colonne 'pdays' a disparu!")

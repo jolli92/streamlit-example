@@ -545,6 +545,6 @@ if page == pages[3] :
 
 if page == pages[4] :
     st.write("Prédictions_2")
-    st.write("Ajout d'une colonne prénom + téléphone (généré aleatoirement) et redistribution compléte du dataset sur toutes les colonnes à l'aide de .sample")
+    st.write("Ajout d'une colonne prénom + téléphone(généré aleatoirement) /colonne déposit supprimée et redistribution compléte du dataset sur toutes les colonnes à l'aide de .sample")
     df = pd.read_csv('Banktest.csv')
     st.dataframe(df)

@@ -547,112 +547,63 @@ if page == pages[4] :
     st.write("Prédictions_2")
     st.write("Ajout d'une colonne prénom + téléphone(généré aleatoirement) /colonne déposit supprimée et redistribution compléte du dataset sur toutes les colonnes à l'aide de .sample")
     df = pd.read_csv('Banktest.csv')
-    st.dataframe(df)
-    # 2. Sauvegarder les colonnes "prénom" et "téléphone"
-    df_prenom_telephone = df[['prénom', 'téléphone']]
+    def calculate_outlier_bounds(df, column):
+        Q1 = df[column].quantile(0.25)
+        Q3 = df[column].quantile(0.75)
+        IQR = Q3 - Q1
+        return Q1 - 1.5 * IQR, Q3 + 1.5 * IQR
 
-    # 3. Écarter les colonnes "prénom" et "téléphone"
-    df = df.drop(columns=['prénom', 'téléphone'])
-    #On écarte les valeurs -1 de pdays pour ne pas les traiter lors du pre-processing
-    pdays_filtered = df['pdays'][df['pdays'] != -1]
-    # Pour 'campaign'
-    Q1_campaign = df['campaign'].quantile(0.25)
-    Q3_campaign = df['campaign'].quantile(0.75)
-    IQR_campaign = Q3_campaign - Q1_campaign
-    Sbas_campaign = Q1_campaign - 1.5 * IQR_campaign
-    Shaut_campaign = Q3_campaign + 1.5 * IQR_campaign
+    def replace_outliers_with_mean(df, column, upper_bound):
+        mean_value = df[column].mean()
+        df.loc[df[column] > upper_bound, column] = mean_value
 
-    # Pour 'pdays' (excluding -1 values)
-    Q1_pdays = pdays_filtered.quantile(0.25)
-    Q3_pdays = pdays_filtered.quantile(0.75)
-    IQR_pdays = Q3_pdays - Q1_pdays
-    Sbas_pdays = Q1_pdays - 1.5 * IQR_pdays
-    Shaut_pdays = Q3_pdays + 1.5 * IQR_pdays
+    def encode_categorical_features(df, categorical_columns):
+        encoder = OneHotEncoder(drop=None, sparse=False)
+        encoder.fit(df[categorical_columns])
+        encoded_df_2 = encoder.transform(df[categorical_columns])
+        encoded_df = pd.DataFrame(encoded_df_2, columns=encoder.get_feature_names_out(categorical_columns))
+        return encoded_df
+    # Save and drop the columns "prénom" and "téléphone"
+        df_prenom_telephone = df[['prénom', 'téléphone']]
+        df = df.drop(columns=['prénom', 'téléphone'])
 
-    # Pour 'previous'
-    Q1_previous = df['previous'].quantile(0.25)
-    Q3_previous = df['previous'].quantile(0.75)
-    IQR_previous = Q3_previous - Q1_previous
-    Sbas_previous = Q1_previous - 1.5 * IQR_previous
-    Shaut_bound_previous = Q3_previous + 1.5 * IQR_previous
+    # Filter for pdays column
+        pdays_filtered = df['pdays'][df['pdays'] != -1]
 
-    #Pour 'Duration'
-    Q1_duration = df['duration'].quantile(0.25)
-    Q3_duration = df['duration'].quantile(0.75)
-    IQR_duration = Q3_duration - Q1_duration
-    Sbas_duration = Q1_previous - 1.5 * IQR_duration
-    Shaut_bound_duration = Q3_duration + 1.5 * IQR_duration
+    # Calculate outlier bounds for the respective columns
+        _, upper_campaign = calculate_outlier_bounds(df, 'campaign')
+        _, upper_pdays = calculate_outlier_bounds(pdays_filtered, 'pdays')
+        _, upper_previous = calculate_outlier_bounds(df, 'previous')
+        _, upper_duration = calculate_outlier_bounds(df, 'duration')
 
-    moyenne_pdays = pdays_filtered.mean()
-    moyenne_campaign = df['campaign'].mean()
-    moyenne_previous = df['previous'].mean()
-    moyenne_duration = df['duration'].mean()
+    # Replace outliers with mean
+        replace_outliers_with_mean(df, 'pdays', upper_pdays)
+        replace_outliers_with_mean(df, 'campaign', upper_campaign)
+        replace_outliers_with_mean(df, 'previous', upper_previous)
+        replace_outliers_with_mean(df, 'duration', upper_duration)
 
-    # Remplacer les valeurs aberrantes de 'pdays' par sa moyenne (en excluant les valeurs -1)
-    df.loc[(df['pdays'] > Shaut_pdays) & (df['pdays'] != -1), 'pdays'] = moyenne_pdays
+    # Bin 'age' and 'balance' columns
+        age_bins = [18, 25, 35, 50, 65, 100]
+        age_labels = ["18_25", "25_35", "35_50", "50_65", "65_100"]
+        df['age_group'] = pd.cut(df['age'], bins=age_bins, labels=age_labels, right=False).astype('object')
+    
+        balance_bins = [-6848, 0, 122, 550, 1708, 81205]
+        balance_labels = ["negatif", "tres_faible", "faible", "moyen", "eleve"]
+        df['balance_group'] = pd.cut(df['balance'], bins=balance_bins, labels=balance_labels, right=False).astype('object')
 
-    # Remplacer les valeurs aberrantes de 'campaign' par sa moyenne
-    df.loc[df['campaign'] > Shaut_campaign, 'campaign'] = moyenne_campaign
+    # Encode categorical columns
+        categorical_columns = df.select_dtypes(include=['object']).columns
+        encoded_df = encode_categorical_features(df, categorical_columns)
 
-    # Remplacer les valeurs aberrantes de 'previous' par la moyenne de 'campaign'
-    df.loc[df['previous'] > Shaut_bound_previous, 'previous'] = moyenne_previous
+    # Load the trained model and predict
+        with open('xgb_optimized.pkl', 'rb') as model_file:
+            model = pickle.load(model_file)
+        y_pred = model.predict(encoded_df)
+        df['prediction'] = y_pred
 
-    # Remplacer les valeurs aberrantes de 'duration' par la moyenne de 'campaign'
-    df.loc[df['duration'] > Shaut_bound_duration, 'duration'] = moyenne_duration
+    # Concatenate the columns "prénom" and "téléphone" and sort by prediction
+        df = pd.concat([df_prenom_telephone, df], axis=1)
+        df_sorted = df.sort_values(by='prediction', ascending=False)
 
-
-   #Transformation des colonnes age et balance pour creer un découpage dans le but d'attenuer les valeurs extrémes qui ne me semble pas abberante tout en les gardant.
-   #Création du bins et des étiquettes
-    age_bins = [18, 25, 35, 50, 65, 100]
-    age_labels = ["18_25", "25_35", "35_50", "50_65", "65_100"]
-   # On applique le changement sur le dataset pour creer la colonne
-    df['age_group'] = pd.cut(df['age'], bins=age_bins, labels=age_labels, right=False)
-   #Création du bins et des étiquettes
-    balance_bins = [-6848, 0, 122, 550, 1708, 81205]
-    balance_labels = ["negatif", "tres_faible", "faible", "moyen", "eleve"]
-   # Cut the balance column into bins
-    df['balance_group'] = pd.cut(df['balance'], bins=balance_bins, labels=balance_labels, right=False)
-   # On applique le changement sur le dataset pour creer la colonne
-    df['age_group'] = pd.cut(df['age'], bins=age_bins, labels=age_labels, right=False)
-    df['age_group'] = df['age_group'].astype('object')
-    df['balance_group'] = df['balance_group'].astype('object')
-    categorical_columns = df.select_dtypes(include=['object']).columns
-
-# Encodage des caractéristiques catégorielles
-    encoder = OneHotEncoder(drop=None, sparse=False)
-
-# Utilisation de  fit sur l'ensemble d'entraînement
-    encoder.fit(df[categorical_columns])
-    encoded_df_2 = encoder.transform(df[categorical_columns])
-
-
-# Conversion des caractéristiques encodées en dataframes
-    encoded_df = pd.DataFrame(encoded_df_2, columns=encoder.get_feature_names_out(categorical_columns))
-    encoded_df = encoded_df.drop(columns=categorical_columns).reset_index(drop=True).merge(encoded_df_2, left_index=True, right_index=True)
-    cols = [
-    "day", "duration", "campaign", "pdays", "previous", "job_admin.", "job_blue-collar", "job_entrepreneur", "job_housemaid",
-    "job_management", "job_retired", "job_self-employed", "job_services", "job_student", "job_technician", "job_unemployed",
-    "job_unknown", "marital_divorced", "marital_married", "marital_single", "education_primary", "education_secondary",
-    "education_tertiary", "education_unknown", "default_no", "default_yes", "housing_no", "housing_yes", "loan_no",
-    "loan_yes", "contact_cellular", "contact_telephone", "contact_unknown", "month_apr", "month_aug", "month_dec",
-    "month_feb", "month_jan", "month_jul", "month_jun", "month_mar", "month_may", "month_nov", "month_oct", "month_sep",
-    "poutcome_failure", "poutcome_other", "poutcome_success", "poutcome_unknown", "age_group_18_25", "age_group_25_35",
-    "age_group_35_50", "age_group_50_65", "age_group_65_100", "balance_group_eleve", "balance_group_faible",
-    "balance_group_moyen", "balance_group_negatif", "balance_group_tres_faible"
-]
-
-    encoded_df = encoded_df[cols]
-    st.dataframe(encoded_df)
-    with open('xgb_optimized.pkl', 'rb') as model_file:
-        model = pickle.load(model_file)
-    y_pred = model.predict(encoded_df)     # Remplacez "modele_entraine" par votre modèle réel
-    df['prediction'] = y_pred
-
-    # 5. Réintégrer les colonnes "prénom" et "téléphone"
-    df = pd.concat([df_prenom_telephone, df], axis=1)
-
-    # 6. Trier les clients en fonction du score de prédiction
-    df_sorted = df.sort_values(by='prediction', ascending=False)
-
-    # 7. Afficher les 50 clients ayant le meilleur score (avec Streamlit)
-    st.write(df_sorted.head(50))
+    # Display the top 50 clients
+        st.write(df_sorted.head(50))

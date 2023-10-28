@@ -593,18 +593,15 @@ if page == pages[4] :
     age_bins = [18, 25, 35, 50, 65, 100]
     age_labels = ["18_25", "25_35", "35_50", "50_65", "65_100"]
     df['age_group'] = pd.cut(df['age'], bins=age_bins, labels=age_labels, right=False).astype('object')
-    if 'pdays' not in df:
-        st.write("4La colonne 'pdays' a disparu!")
+    
     balance_bins = [-6848, 0, 122, 550, 1708, 81205]
     balance_labels = ["negatif", "tres_faible", "faible", "moyen", "eleve"]
     df['balance_group'] = pd.cut(df['balance'], bins=balance_bins, labels=balance_labels, right=False).astype('object')
-    if 'pdays' not in df:
-        st.write("3La colonne 'pdays' a disparu!")
+    
     # Encode categorical columns
     categorical_columns = df.select_dtypes(include=['object']).columns
     encoded_df = encode_categorical_features(df, categorical_columns)
-    if 'pdays' not in df:
-        st.write("2La colonne 'pdays' a disparu!")
+    st.dataframe(encoded_df)
     cols = [
     "day", "duration", "campaign", "pdays", "previous", "job_admin.", "job_blue-collar", "job_entrepreneur", "job_housemaid",
     "job_management", "job_retired", "job_self-employed", "job_services", "job_student", "job_technician", "job_unemployed",

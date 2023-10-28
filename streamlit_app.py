@@ -623,11 +623,12 @@ if page == pages[4] :
 
 # Utilisation de  fit sur l'ensemble d'entraînement
     encoder.fit(df[categorical_columns])
-    encoded_df = encoder.transform(df[categorical_columns])
+    encoded_df_2 = encoder.transform(df[categorical_columns])
 
 
 # Conversion des caractéristiques encodées en dataframes
     encoded_df = pd.DataFrame(encoded_df, columns=encoder.get_feature_names_out(categorical_columns))
+    encoded_df = encoded_df.drop(columns=categorical_columns).reset_index(drop=True).merge(encoded_df_2, left_index=True, right_index=True)
     cols = [
     "day", "duration", "campaign", "pdays", "previous", "job_admin.", "job_blue-collar", "job_entrepreneur", "job_housemaid",
     "job_management", "job_retired", "job_self-employed", "job_services", "job_student", "job_technician", "job_unemployed",

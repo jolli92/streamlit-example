@@ -609,6 +609,8 @@ if page == pages[4] :
         st.write("1La colonne 'pdays' a disparu!")
     # Concatenate the columns "prénom" and "téléphone" and sort by prediction
     df = pd.concat([df_prenom_telephone, df], axis=1)
+    if 'pdays' not in df:
+        st.write("0La colonne 'pdays' a disparu!")
     df_sorted = df.sort_values(by='prediction', ascending=False)
         
     # Display the top 50 clients

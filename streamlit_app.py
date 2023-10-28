@@ -577,7 +577,7 @@ if page == pages[4] :
         st.write("XLa colonne 'pdays' a disparu!")
     # Calculate outlier bounds for the respective columns
     _, upper_campaign = calculate_outlier_bounds(df, 'campaign')
-    _, upper_pdays = calculate_outlier_bounds(pdays_filtered, 'pdays')
+    _, upper_pdays = calculate_outlier_bounds(df, 'pdays')
     _, upper_previous = calculate_outlier_bounds(df, 'previous')
     _, upper_duration = calculate_outlier_bounds(df, 'duration')
     if 'pdays' not in df:

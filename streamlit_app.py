@@ -640,7 +640,7 @@ if page == pages[4] :
     "balance_group_moyen", "balance_group_negatif", "balance_group_tres_faible"
 ]
 
-    encoded_df = encoded_data[cols]
+    encoded_df = encoded_df[cols]
     st.dataframe(encoded_df)
     with open('xgb_optimized.pkl', 'rb') as model_file:
         model = pickle.load(model_file)

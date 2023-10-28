@@ -627,7 +627,7 @@ if page == pages[4] :
     if 'pdays' not in df:
         st.write("0La colonne 'pdays' a disparu!")
     df_sorted = df.sort_values(by='prediction', ascending=False)
-        
+    df_sorted = df_sorted[['prénom', 'téléphone']  
     # Display the top 50 clients
     st.write("Les 50 clients avec le plus de potentiel sont :"
-    df_sorted[['prénom', 'téléphone']].head(50)
+    st.dataframe(df_sorted.head(50))

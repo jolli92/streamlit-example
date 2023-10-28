@@ -628,6 +628,19 @@ if page == pages[4] :
 
 # Conversion des caractéristiques encodées en dataframes
     encoded_df = pd.DataFrame(encoded_df, columns=encoder.get_feature_names_out(categorical_columns))
+    cols = [
+    "day", "duration", "campaign", "pdays", "previous", "job_admin.", "job_blue-collar", "job_entrepreneur", "job_housemaid",
+    "job_management", "job_retired", "job_self-employed", "job_services", "job_student", "job_technician", "job_unemployed",
+    "job_unknown", "marital_divorced", "marital_married", "marital_single", "education_primary", "education_secondary",
+    "education_tertiary", "education_unknown", "default_no", "default_yes", "housing_no", "housing_yes", "loan_no",
+    "loan_yes", "contact_cellular", "contact_telephone", "contact_unknown", "month_apr", "month_aug", "month_dec",
+    "month_feb", "month_jan", "month_jul", "month_jun", "month_mar", "month_may", "month_nov", "month_oct", "month_sep",
+    "poutcome_failure", "poutcome_other", "poutcome_success", "poutcome_unknown", "age_group_18_25", "age_group_25_35",
+    "age_group_35_50", "age_group_50_65", "age_group_65_100", "balance_group_eleve", "balance_group_faible",
+    "balance_group_moyen", "balance_group_negatif", "balance_group_tres_faible"
+]
+
+    encoded_df = encoded_data[cols]
     st.dataframe(encoded_df)
     with open('xgb_optimized.pkl', 'rb') as model_file:
         model = pickle.load(model_file)

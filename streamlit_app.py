@@ -620,13 +620,11 @@ if page == pages[4] :
         model = pickle.load(model_file)
     y_pred = model.predict(encoded_df)
     df['prediction'] = y_pred
-    if 'pdays' not in df:
-        st.write("1La colonne 'pdays' a disparu!")
+    
     # Concatenate the columns "prénom" and "téléphone" and sort by prediction
     df = pd.concat([df_prenom_telephone, df], axis=1)
-    if 'pdays' not in df:
-        st.write("0La colonne 'pdays' a disparu!")
+    
     df_sorted = df.sort_values(by='prediction', ascending=False)
-    df_sorted = df_sorted[['prénom', 'téléphone']  
-    # Display the top 50 clients
+    df_sorted = df_sorted[['prénom', 'téléphone']]
+# Display the top 50 clients
     st.dataframe(df_sorted.head(50))

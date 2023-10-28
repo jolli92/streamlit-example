@@ -629,5 +629,5 @@ if page == pages[4] :
     df_sorted = df.sort_values(by='prediction', ascending=False)
     df_sorted = df_sorted[['prénom', 'téléphone']  
     # Display the top 50 clients
-    st.write("Les 50 clients avec le plus de potentiel sont :")
+    
     st.dataframe(df_sorted.head(50))

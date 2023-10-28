@@ -564,46 +564,46 @@ if page == pages[4] :
         encoded_df = pd.DataFrame(encoded_df_2, columns=encoder.get_feature_names_out(categorical_columns))
         return encoded_df
     # Save and drop the columns "prénom" and "téléphone"
-        df_prenom_telephone = df[['prénom', 'téléphone']]
-        df = df.drop(columns=['prénom', 'téléphone'])
+    df_prenom_telephone = df[['prénom', 'téléphone']]
+    df = df.drop(columns=['prénom', 'téléphone'])
 
     # Filter for pdays column
-        pdays_filtered = df['pdays'][df['pdays'] != -1]
+    pdays_filtered = df['pdays'][df['pdays'] != -1]
 
     # Calculate outlier bounds for the respective columns
-        _, upper_campaign = calculate_outlier_bounds(df, 'campaign')
-        _, upper_pdays = calculate_outlier_bounds(pdays_filtered, 'pdays')
-        _, upper_previous = calculate_outlier_bounds(df, 'previous')
-        _, upper_duration = calculate_outlier_bounds(df, 'duration')
+    _, upper_campaign = calculate_outlier_bounds(df, 'campaign')
+    _, upper_pdays = calculate_outlier_bounds(pdays_filtered, 'pdays')
+    _, upper_previous = calculate_outlier_bounds(df, 'previous')
+    _, upper_duration = calculate_outlier_bounds(df, 'duration')
 
     # Replace outliers with mean
-        replace_outliers_with_mean(df, 'pdays', upper_pdays)
-        replace_outliers_with_mean(df, 'campaign', upper_campaign)
-        replace_outliers_with_mean(df, 'previous', upper_previous)
-        replace_outliers_with_mean(df, 'duration', upper_duration)
+    replace_outliers_with_mean(df, 'pdays', upper_pdays)
+    replace_outliers_with_mean(df, 'campaign', upper_campaign)
+    replace_outliers_with_mean(df, 'previous', upper_previous)
+    replace_outliers_with_mean(df, 'duration', upper_duration)
 
     # Bin 'age' and 'balance' columns
-        age_bins = [18, 25, 35, 50, 65, 100]
-        age_labels = ["18_25", "25_35", "35_50", "50_65", "65_100"]
-        df['age_group'] = pd.cut(df['age'], bins=age_bins, labels=age_labels, right=False).astype('object')
+    age_bins = [18, 25, 35, 50, 65, 100]
+    age_labels = ["18_25", "25_35", "35_50", "50_65", "65_100"]
+    df['age_group'] = pd.cut(df['age'], bins=age_bins, labels=age_labels, right=False).astype('object')
     
-        balance_bins = [-6848, 0, 122, 550, 1708, 81205]
-        balance_labels = ["negatif", "tres_faible", "faible", "moyen", "eleve"]
-        df['balance_group'] = pd.cut(df['balance'], bins=balance_bins, labels=balance_labels, right=False).astype('object')
+    balance_bins = [-6848, 0, 122, 550, 1708, 81205]
+    balance_labels = ["negatif", "tres_faible", "faible", "moyen", "eleve"]
+    df['balance_group'] = pd.cut(df['balance'], bins=balance_bins, labels=balance_labels, right=False).astype('object')
 
     # Encode categorical columns
-        categorical_columns = df.select_dtypes(include=['object']).columns
-        encoded_df = encode_categorical_features(df, categorical_columns)
+    categorical_columns = df.select_dtypes(include=['object']).columns
+    encoded_df = encode_categorical_features(df, categorical_columns)
 
     # Load the trained model and predict
-        with open('xgb_optimized.pkl', 'rb') as model_file:
-            model = pickle.load(model_file)
-        y_pred = model.predict(encoded_df)
-        df['prediction'] = y_pred
+    with open('xgb_optimized.pkl', 'rb') as model_file:
+        model = pickle.load(model_file)
+    y_pred = model.predict(encoded_df)
+    df['prediction'] = y_pred
 
     # Concatenate the columns "prénom" and "téléphone" and sort by prediction
-        df = pd.concat([df_prenom_telephone, df], axis=1)
-        df_sorted = df.sort_values(by='prediction', ascending=False)
-
+    df = pd.concat([df_prenom_telephone, df], axis=1)
+    df_sorted = df.sort_values(by='prediction', ascending=False)
+        
     # Display the top 50 clients
-        st.dataframe(df_sorted.head(50))
+    st.dataframe(df_sorted.head(50))

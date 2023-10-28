@@ -630,4 +630,4 @@ if page == pages[4] :
         
     # Display the top 50 clients
     st.write("Les 50 clients avec le plus de potentiel sont :"
-    st.dataframe(df_sorted[['prénom', 'téléphone']].head(50))
+    df_sorted[['prénom', 'téléphone']].head(50)

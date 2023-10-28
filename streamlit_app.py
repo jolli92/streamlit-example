@@ -566,10 +566,12 @@ if page == pages[4] :
     # Save and drop the columns "prénom" and "téléphone"
     df_prenom_telephone = df[['prénom', 'téléphone']]
     df = df.drop(columns=['prénom', 'téléphone'])
-
+    if 'pdays' not in df:
+        st.write("VLa colonne 'pdays' a disparu!")
     # Filter for pdays column
     pdays_filtered = df['pdays'][df['pdays'] != -1]
-
+    if 'pdays' not in df:
+        st.write("XLa colonne 'pdays' a disparu!")
     # Calculate outlier bounds for the respective columns
     _, upper_campaign = calculate_outlier_bounds(df, 'campaign')
     _, upper_pdays = calculate_outlier_bounds(pdays_filtered, 'pdays')

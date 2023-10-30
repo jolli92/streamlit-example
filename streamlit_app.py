@@ -627,7 +627,10 @@ if page == pages[4] :
     # Concatenate the columns "prénom" and "téléphone" and sort by prediction
     df = pd.concat([df_prenom_telephone, df], axis=1)
     
-    df_sorted = df.sort_values(by='prediction', ascending=False)
-    df_sorted = df_sorted[['prénom', 'téléphone','prediction']]
+    #df_sorted = df.sort_values(by='prediction', ascending=False)
+    y_proba = model.predict_proba(encoded_df)
+    df['probability'] = y_proba[:,1]  # Pour une classification binaire, cela donnerait la probabilité de la classe 1
+    df_sorted = df.sort_values(by='probability', ascending=False)
+    df_sorted = df_sorted[['prénom', 'téléphone','probability']]
 # Display the top 50 clients
     st.dataframe(df_sorted.head(50))

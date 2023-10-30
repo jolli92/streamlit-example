@@ -625,6 +625,6 @@ if page == pages[4] :
     df = pd.concat([df_prenom_telephone, df], axis=1)
     
     df_sorted = df.sort_values(by='prediction', ascending=False)
-    df_sorted = df_sorted[['prénom', 'téléphone']]
+    df_sorted = df_sorted[['prénom', 'téléphone','prediction']]
 # Display the top 50 clients
     st.dataframe(df_sorted.head(50))

@@ -563,6 +563,9 @@ if page == pages[4] :
         encoded_df_2 = encoder.transform(df[categorical_columns])
         encoded_df = pd.DataFrame(encoded_df_2, columns=encoder.get_feature_names_out(categorical_columns))
         return encoded_df
+    columns_to_convert = ['day', 'duration', 'campaign', 'pdays', 'previous']
+    for column in columns_to_convert:
+        df[column] = df[column].astype(int)
     # Save and drop the columns "prénom" and "téléphone"
     df_prenom_telephone = df[['prénom', 'téléphone']]
     if 'pdays' not in df:

@@ -338,6 +338,42 @@ if page == pages[2] :
     X_train.info(buf=buffer)
     s = buffer.getvalue()
     st.text(s)
+    
+    def evaluation_normalised(model):
+    # Entraînement du modèle sur les données d'entraînement
+    model.fit(X_train, y_train)
+
+    # Prédiction sur les données de test
+    y_pred = model.predict(X_test)
+
+    # Affichage de la matrice de confusion pour évaluer la performance du modèle
+    print(confusion_matrix(y_test, y_pred))
+
+    # Affichage du rapport de classification qui inclut des métriques telles que précision, rappel, et score F1
+    print(classification_report(y_test, y_pred))
+
+    # Calcul de la courbe d'apprentissage pour évaluer l'efficacité du modèle à différentes tailles d'entraînement
+    N, train_score, val_score = learning_curve(
+        model, X_train, y_train, cv=4, scoring='f1', train_sizes=np.linspace(0.1, 1, 10)
+    )
+
+    # Création d'une figure pour la visualisation des scores
+    plt.figure(figsize=(5, 5))
+
+    # Tracé du score moyen d'entraînement en fonction de la taille de l'échantillon d'entraînement
+    plt.plot(N, train_score.mean(axis=1), label='train score')
+
+    # Tracé du score moyen de validation en fonction de la taille de l'échantillon d'entraînement
+    plt.plot(N, val_score.mean(axis=1), label='validation score')
+
+    # Ajout d'une légende au graphique
+    plt.legend()
+
+    # Retour du modèle après évaluation
+    return model
+     with open('xgb_optimized.pkl', 'rb') as model_file:
+        model = pickle.load(model_file)
+    evaluation_normalised(model)
 
 if page == pages[3] :
     st.write("Prédictions")

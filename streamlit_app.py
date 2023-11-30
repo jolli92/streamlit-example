@@ -371,7 +371,7 @@ if page == pages[2] :
 
     # Retour du modèle après évaluation
     return model
-     with open('xgb_optimized.pkl', 'rb') as model_file:
+    with open('xgb_optimized.pkl', 'rb') as model_file:
         model = pickle.load(model_file)
     evaluation_normalised(model)
 

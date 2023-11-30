@@ -18,6 +18,7 @@ from io import StringIO
 import plotly.graph_objs as go
 import plotly.express as px
 import pickle
+from sklearn.metrics import confusion_matrix
 
 
 df = pd.read_csv('bank.csv')

@@ -22,9 +22,7 @@ from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import learning_curve
 from sklearn.metrics import r2_score
 from joblib import load
-import warnings
-warnings.filterwarnings("ignore")
-
+st.set_option('deprecation.showPyplotGlobalUse', False)
 
 df = pd.read_csv('bank.csv')
 st.title("Analyse de bank marketing")

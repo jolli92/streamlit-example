@@ -21,6 +21,7 @@ import pickle
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import learning_curve
 from sklearn.metrics import r2_score
+from joblib import load
 
 df = pd.read_csv('bank.csv')
 st.title("Analyse de bank marketing")
@@ -340,9 +341,7 @@ if page == pages[2] :
     X_train.info(buf=buffer)
     s = buffer.getvalue()
     st.text(s)
-    with open('xgb_optimized.pkl', 'rb') as model_file:
-        model = pickle.load(model_file)
-    # Training the model
+    model = load('XGboost.joblib')
     model.fit(X_train, y_train)
 
 # Making predictions

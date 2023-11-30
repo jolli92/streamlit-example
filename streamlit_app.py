@@ -343,22 +343,7 @@ if page == pages[2] :
     st.text(s)
     model = load('XGboost.joblib')
     model.fit(X_train, y_train)
-    N, train_score, val_score = learning_curve(
-            model, X_train, y_train, cv=4, scoring='f1', train_sizes=np.linspace(0.1, 1, 10)
-        )
-
-    # Création d'une figure pour la visualisation des scores
-    plt.figure(figsize=(5, 5))
-
-    # Tracé du score moyen d'entraînement en fonction de la taille de l'échantillon d'entraînement
-    plt.plot(N, train_score.mean(axis=1), label='train score')
-
-    # Tracé du score moyen de validation en fonction de la taille de l'échantillon d'entraînement
-    plt.plot(N, val_score.mean(axis=1), label='validation score')
-
-    # Ajout d'une légende au graphique
-    plt.legend()
-    st.pyplot()
+    st.text(classification_report(y_test, y_pred))
 
 if page == pages[3] :
     st.write("Prédictions")

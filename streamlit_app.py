@@ -345,6 +345,28 @@ if page == pages[2] :
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)
     st.text(classification_report(y_test, y_pred))
+    train_sizes, train_scores, test_scores = learning_curve(model, X_train, y_train, n_jobs=-1, 
+                                                        train_sizes=np.linspace(.1, 1.0, 5))
+
+# Calcul des moyennes et des écarts-types des scores de formation et de test
+    train_mean = np.mean(train_scores, axis=1)
+    train_std = np.std(train_scores, axis=1)
+    test_mean = np.mean(test_scores, axis=1)
+    test_std = np.std(test_scores, axis=1)
+
+# Création du graphique
+    plt.figure()
+    plt.plot(train_sizes, train_mean, label='Training score')
+    plt.plot(train_sizes, test_mean, label='Cross-validation score')
+    plt.fill_between(train_sizes, train_mean - train_std, train_mean + train_std, alpha=0.1)
+    plt.fill_between(train_sizes, test_mean - test_std, test_mean + test_std, alpha=0.1)
+    plt.title('Learning Curve')
+    plt.xlabel('Training Size')
+    plt.ylabel('Score')
+    plt.legend()
+
+# Affichage du graphique dans Streamlit
+    st.pyplot()
 
 if page == pages[3] :
     st.write("Prédictions")

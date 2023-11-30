@@ -19,6 +19,7 @@ import plotly.graph_objs as go
 import plotly.express as px
 import pickle
 from sklearn.metrics import confusion_matrix
+from sklearn.model_selection import learning_curve
 
 
 df = pd.read_csv('bank.csv')

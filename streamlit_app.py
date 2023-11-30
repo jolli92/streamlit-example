@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.pyplot
 import streamlit as st
 import seaborn as sns
 from sklearn.svm import SVC
@@ -23,7 +24,7 @@ from sklearn.model_selection import learning_curve
 from sklearn.metrics import r2_score
 from joblib import load
 import warnings
-warnings.filterwarnings("ignore", category=plt.cbook.PyplotGlobalUseWarning)
+warnings.filterwarnings("ignore", category=matplotlib.cbook.PyplotGlobalUseWarning)
 
 
 df = pd.read_csv('bank.csv')

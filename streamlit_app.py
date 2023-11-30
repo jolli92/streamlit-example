@@ -22,6 +22,9 @@ from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import learning_curve
 from sklearn.metrics import r2_score
 from joblib import load
+import warnings
+warnings.filterwarnings("ignore", category=matplotlib.cbook.PyplotGlobalUseWarning)
+
 
 df = pd.read_csv('bank.csv')
 st.title("Analyse de bank marketing")

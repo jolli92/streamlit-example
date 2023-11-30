@@ -343,6 +343,7 @@ if page == pages[2] :
     st.text(s)
     model = load('XGboost.joblib')
     model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
     st.text(classification_report(y_test, y_pred))
 
 if page == pages[3] :

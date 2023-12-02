@@ -374,7 +374,7 @@ if page == pages[2] :
     if model_choisi == 'Random Forest' :
        #model = load('clf_optimized.pkl')
        #model.fit(X_train, y_train)
-       with open("clf_optimized.pkl", "rb") as file:
+       with open("clf_optimized", "rb") as file:
            clf_optimized = pickle.load(file)
        y_pred = clf_optimized.predict(X_test)
        st.text(classification_report(y_test, y_pred))

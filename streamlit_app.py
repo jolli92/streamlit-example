@@ -360,7 +360,7 @@ if page == pages[2] :
         knn = joblib.load("knn_ma")
         y_pred = knn.predict(X_test)
         st.text(classification_report(y_test, y_pred))
-        train_sizes, train_scores, test_scores = learning_curve(model, X_train, y_train, n_jobs=-1, 
+        train_sizes, train_scores, test_scores = learning_curve(knn, X_train, y_train, n_jobs=-1, 
                                                         train_sizes=np.linspace(.1, 1.0, 5))
     if model_choisi == 'Decision Tree' :
        model = load('clf_dt_gini.pkl')

@@ -241,32 +241,32 @@ if page == pages[2] :
     df = pd.read_csv('bank.csv')
      #On écarte les valeurs -1 de pdays pour ne pas les traiter lors du pre-processing
     pdays_filtered = df['pdays'][df['pdays'] != -1]
-    # Pour 'campaign'
+# Pour 'campaign'
     Q1_campaign = df['campaign'].quantile(0.25)
     Q3_campaign = df['campaign'].quantile(0.75)
     IQR_campaign = Q3_campaign - Q1_campaign
     Sbas_campaign = Q1_campaign - 1.5 * IQR_campaign
     Shaut_campaign = Q3_campaign + 1.5 * IQR_campaign
 
-    # Pour 'pdays' (excluding -1 values)
+# Pour 'pdays' (excluding -1 values)
     Q1_pdays = pdays_filtered.quantile(0.25)
     Q3_pdays = pdays_filtered.quantile(0.75)
     IQR_pdays = Q3_pdays - Q1_pdays
     Sbas_pdays = Q1_pdays - 1.5 * IQR_pdays
     Shaut_pdays = Q3_pdays + 1.5 * IQR_pdays
 
-    # Pour 'previous'
+# Pour 'previous'
     Q1_previous = df['previous'].quantile(0.25)
     Q3_previous = df['previous'].quantile(0.75)
     IQR_previous = Q3_previous - Q1_previous
     Sbas_previous = Q1_previous - 1.5 * IQR_previous
     Shaut_bound_previous = Q3_previous + 1.5 * IQR_previous
 
-    #Pour 'Duration'
+#Pour 'Duration'
     Q1_duration = df['duration'].quantile(0.25)
     Q3_duration = df['duration'].quantile(0.75)
     IQR_duration = Q3_duration - Q1_duration
-    Sbas_duration = Q1_previous - 1.5 * IQR_duration
+    Sbas_duration = Q1_duration - 1.5 * IQR_duration
     Shaut_bound_duration = Q3_duration + 1.5 * IQR_duration
 
     moyenne_pdays = pdays_filtered.mean()
@@ -274,20 +274,21 @@ if page == pages[2] :
     moyenne_previous = df['previous'].mean()
     moyenne_duration = df['duration'].mean()
 
-    # Remplacer les valeurs aberrantes de 'pdays' par sa moyenne (en excluant les valeurs -1)
+# Remplacer les valeurs aberrantes de 'pdays' par sa moyenne (en excluant les valeurs -1)
     df.loc[(df['pdays'] > Shaut_pdays) & (df['pdays'] != -1), 'pdays'] = moyenne_pdays
 
-    # Remplacer les valeurs aberrantes de 'campaign' par sa moyenne
+# Remplacer les valeurs aberrantes de 'campaign' par sa moyenne
     df.loc[df['campaign'] > Shaut_campaign, 'campaign'] = moyenne_campaign
 
-    # Remplacer les valeurs aberrantes de 'previous' par la moyenne de 'campaign'
+# Remplacer les valeurs aberrantes de 'previous' par la moyenne de 'campaign'
     df.loc[df['previous'] > Shaut_bound_previous, 'previous'] = moyenne_previous
 
-    # Remplacer les valeurs aberrantes de 'duration' par la moyenne de 'campaign'
+# Remplacer les valeurs aberrantes de 'duration' par la moyenne de 'campaign'
     df.loc[df['duration'] > Shaut_bound_duration, 'duration'] = moyenne_duration
 
 
 #Transformation des colonnes age et balance pour creer un découpage dans le but d'attenuer les valeurs extrémes qui ne me semble pas abberante tout en les gardant.
+
 #Création du bins et des étiquettes
     age_bins = [18, 25, 35, 50, 65, 100]
     age_labels = ["18_25", "25_35", "35_50", "50_65", "65_100"]
@@ -302,7 +303,7 @@ if page == pages[2] :
     df['age_group'] = pd.cut(df['age'], bins=age_bins, labels=age_labels, right=False)
     df['age_group'] = df['age_group'].astype('object')
     df['balance_group'] = df['balance_group'].astype('object')
-# Séparation des données en ensembles d'entraînement et de test
+
 # Séparation des données en ensembles d'entraînement et de test
     X = df.drop(columns=['deposit'])
     y = df['deposit']
@@ -310,7 +311,7 @@ if page == pages[2] :
     RAND_STATE = 42
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=TEST_SIZE, random_state=RAND_STATE)
 
- # Encodage de la variable cible
+# Encodage de la variable cible
     label_encoder = LabelEncoder()
     y_train = label_encoder.fit_transform(y_train)
     y_test = label_encoder.transform(y_test)
@@ -336,12 +337,12 @@ if page == pages[2] :
     X_train_encoded = X_train.drop(columns=categorical_columns).reset_index(drop=True).merge(encoded_train_df, left_index=True, right_index=True)
     X_test_encoded = X_test.drop(columns=categorical_columns).reset_index(drop=True).merge(encoded_test_df, left_index=True, right_index=True)
 
-    
 # Suppression des colonnes inutiles
-    X_train = X_train_encoded.drop(columns=['balance', 'age'])
-    X_test = X_test_encoded.drop(columns=['balance', 'age'])
+    X_train_encoded = X_train_encoded.drop(columns=['balance', 'age'])
+    X_test_encoded  = X_test_encoded.drop(columns=['balance', 'age'])
+    X_train_encoded.info()
     buffer = io.StringIO()
-    X_train.info(buf=buffer)
+    X_train_encoded.info(buf=buffer)
     s = buffer.getvalue()
     st.text(s)
 

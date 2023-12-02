@@ -403,7 +403,7 @@ if page == pages[2] :
        st.text(classification_report(y_test, y_pred))
        train_sizes, train_scores, test_scores = learning_curve(XGBoost, X_train_encoded, y_train, n_jobs=-1, 
                                                         train_sizes=np.linspace(.1, 1.0, 5))
-xgb_optimized
+
 # Calcul des moyennes et des écarts-types des scores de formation et de test
     train_mean = np.mean(train_scores, axis=1)
     train_std = np.std(train_scores, axis=1)

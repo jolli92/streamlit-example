@@ -355,9 +355,10 @@ if page == pages[2] :
         train_sizes, train_scores, test_scores = learning_curve(model, X_train, y_train, n_jobs=-1, 
                                                         train_sizes=np.linspace(.1, 1.0, 5))
     if model_choisi == 'KNN' :
-        model = load('knn_ma.joblib')
-        model.fit(X_train, y_train)
-        y_pred = model.predict(X_test)
+        #model = load('knn_ma.joblib')
+        #model.fit(X_train, y_train)
+        knn = joblib.load("knn_ma")
+        y_pred = knn.predict(X_test)
         st.text(classification_report(y_test, y_pred))
         train_sizes, train_scores, test_scores = learning_curve(model, X_train, y_train, n_jobs=-1, 
                                                         train_sizes=np.linspace(.1, 1.0, 5))

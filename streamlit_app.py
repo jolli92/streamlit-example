@@ -347,11 +347,12 @@ if page == pages[2] :
     model_choisi = st.selectbox(label = "Modèle", options = ['Regression Logistique', 'KNN', 'Decision Tree', 'Random Forest', 'XGBoost'])
         
     if model_choisi == 'Regression Logistique' :
-        model = load('LogisticRegression.joblib')
+        #model = load('LogisticRegression.joblib')
         #model.fit(X_train, y_train)
-        y_pred = model.predict(X_test)
+        reg = joblib.load("LogisticRegression.joblib")
+        y_pred = reg.predict(X_test)
         st.text(classification_report(y_test, y_pred))
-        train_sizes, train_scores, test_scores = learning_curve(model, X_train, y_train, n_jobs=-1, 
+        train_sizes, train_scores, test_scores = learning_curve(reg, X_train, y_train, n_jobs=-1, 
                                                         train_sizes=np.linspace(.1, 1.0, 5))
     if model_choisi == 'KNN' :
         model = load('knn_ma.joblib')

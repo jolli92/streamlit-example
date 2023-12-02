@@ -365,7 +365,8 @@ if page == pages[2] :
     if model_choisi == 'Decision Tree' :
        #model = load('clf_dt_gini.pkl')
        #model.fit(X_train, y_train)
-       clf_dt_gini = pickle.load("clf_dt_gini")
+       with open("clf_dt_gini.pkl", "rb") as file:
+           clf_dt_gini = pickle.load("clf_dt_gini")
        y_pred = clf_dt_gini.predict(X_test)
        st.text(classification_report(y_test, y_pred))
        train_sizes, train_scores, test_scores = learning_curve(clf_dt_gini, X_train, y_train, n_jobs=-1, 

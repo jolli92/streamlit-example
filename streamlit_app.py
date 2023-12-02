@@ -396,13 +396,14 @@ if page == pages[2] :
        train_sizes, train_scores, test_scores = learning_curve(clf_optimizedd, X_train_encoded, y_train, n_jobs=-1, 
                                                             train_sizes=np.linspace(.1, 1.0, 5))
     if model_choisi == 'XGBoost' :
-       model = load('XGboost.joblib')
-       model.fit(X_train, y_train)
-       y_pred = model.predict(X_test)
+       #model = load('XGboost.joblib')
+       #model.fit(X_train_encoded, y_train)
+       XGBoost = joblib.load("xgb_optimized")
+       y_pred = XGBoost.predict(X_test_encoded)
        st.text(classification_report(y_test, y_pred))
-       train_sizes, train_scores, test_scores = learning_curve(model, X_train, y_train, n_jobs=-1, 
+       train_sizes, train_scores, test_scores = learning_curve(XGBoost, X_train_encoded, y_train, n_jobs=-1, 
                                                         train_sizes=np.linspace(.1, 1.0, 5))
-
+xgb_optimized
 # Calcul des moyennes et des écarts-types des scores de formation et de test
     train_mean = np.mean(train_scores, axis=1)
     train_std = np.std(train_scores, axis=1)

@@ -345,15 +345,28 @@ if page == pages[2] :
     X_train_encoded.info(buf=buffer)
     s = buffer.getvalue()
     st.text(s)
+    # Identifier les colonnes numériques
+    cols_numeriques = X_train_encoded.select_dtypes(include=['int64', 'float64']).columns
+    X_train_normalised = X_train_encoded
+    X_test_normalised = X_test_encoded
+# Initialiser le StandardScaler
+    scaler = StandardScaler()
+
+# Normaliser les colonnes numériques dans l'ensemble d'entraînement
+    X_train_normalised[cols_numeriques] = scaler.fit_transform(X_train_encoded[cols_numeriques])
+
+# Normaliser les colonnes numériques dans l'ensemble de test
+    X_test_normalised[cols_numeriques] = scaler.transform(X_test_encoded[cols_numeriques])
+    X_train_normalised.info()
 
     model_choisi = st.selectbox(label = "Modèle", options = ['Regression Logistique', 'KNN', 'Decision Tree', 'Random Forest', 'XGBoost'])
         
     if model_choisi == 'Regression Logistique' :
         model = load('LogisticRegression.joblib')
-        model.fit(X_train, y_train)
-        y_pred = model.predict(X_test)
+        model.fit(X_train_normalised, y_train)
+        y_pred = model.predict(X_test_normalised)
         st.text(classification_report(y_test, y_pred))
-        train_sizes, train_scores, test_scores = learning_curve(model, X_train, y_train, n_jobs=-1, 
+        train_sizes, train_scores, test_scores = learning_curve(model, X_train_normalised, y_train, n_jobs=-1, 
                                                         train_sizes=np.linspace(.1, 1.0, 5))
     if model_choisi == 'KNN' :
         #model = load('knn_ma.joblib')

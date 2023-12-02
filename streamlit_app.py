@@ -372,11 +372,13 @@ if page == pages[2] :
        train_sizes, train_scores, test_scores = learning_curve(clf_dt_ginis, X_train, y_train, n_jobs=-1, 
                                                             train_sizes=np.linspace(.1, 1.0, 5))
     if model_choisi == 'Random Forest' :
-       model = load('clf_optimized.pkl')
-       model.fit(X_train, y_train)
-       y_pred = model.predict(X_test)
+       #model = load('clf_optimized.pkl')
+       #model.fit(X_train, y_train)
+       with open("clf_optimized.pkl", "rb") as file:
+           clf_optimized = pickle.load(file)
+       y_pred = clf_optimized.predict(X_test)
        st.text(classification_report(y_test, y_pred))
-       train_sizes, train_scores, test_scores = learning_curve(model, X_train, y_train, n_jobs=-1, 
+       train_sizes, train_scores, test_scores = learning_curve(clf_optimized, X_train, y_train, n_jobs=-1, 
                                                             train_sizes=np.linspace(.1, 1.0, 5))
     if model_choisi == 'XGBoost' :
        model = load('XGboost.joblib')

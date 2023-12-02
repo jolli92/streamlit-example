@@ -335,6 +335,7 @@ if page == pages[2] :
     X_train_encoded = X_train.drop(columns=categorical_columns).reset_index(drop=True).merge(encoded_train_df, left_index=True, right_index=True)
     X_test_encoded = X_test.drop(columns=categorical_columns).reset_index(drop=True).merge(encoded_test_df, left_index=True, right_index=True)
 
+    
 # Suppression des colonnes inutiles
     X_train = X_train_encoded.drop(columns=['balance', 'age'])
     X_test = X_test_encoded.drop(columns=['balance', 'age'])
@@ -342,12 +343,44 @@ if page == pages[2] :
     X_train.info(buf=buffer)
     s = buffer.getvalue()
     st.text(s)
-    model = load('XGboost.joblib')
-    model.fit(X_train, y_train)
-    y_pred = model.predict(X_test)
-    st.text(classification_report(y_test, y_pred))
-    train_sizes, train_scores, test_scores = learning_curve(model, X_train, y_train, n_jobs=-1, 
-                                                        train_sizes=np.linspace(.1, 1.0, 5))
+
+    model_choisi = st.selectbox(label = "Modèle", options = ['Regression Logistique', 'KNN', 'Decision Tree', 'Random Forest', 'XGBoost'])
+        
+        if model_choisi == 'Regression Logistique' :
+            model = load('LogisticRegression.joblib')
+            model.fit(X_train, y_train)
+            y_pred = model.predict(X_test)
+            st.text(classification_report(y_test, y_pred))
+            train_sizes, train_scores, test_scores = learning_curve(model, X_train, y_train, n_jobs=-1, 
+                                                            train_sizes=np.linspace(.1, 1.0, 5))
+        if model_choisi == 'KNN' :
+            model = load('knn_ma.joblib')
+            model.fit(X_train, y_train)
+            y_pred = model.predict(X_test)
+            st.text(classification_report(y_test, y_pred))
+            train_sizes, train_scores, test_scores = learning_curve(model, X_train, y_train, n_jobs=-1, 
+                                                            train_sizes=np.linspace(.1, 1.0, 5))
+        if model_choisi == 'Decision Tree' :
+            model = load('clf_dt_gini.joblib')
+            model.fit(X_train, y_train)
+            y_pred = model.predict(X_test)
+            st.text(classification_report(y_test, y_pred))
+            train_sizes, train_scores, test_scores = learning_curve(model, X_train, y_train, n_jobs=-1, 
+                                                            train_sizes=np.linspace(.1, 1.0, 5))
+        if model_choisi == 'Random Forest' :
+            model = load('clf_optimized.joblib')
+            model.fit(X_train, y_train)
+            y_pred = model.predict(X_test)
+            st.text(classification_report(y_test, y_pred))
+            train_sizes, train_scores, test_scores = learning_curve(model, X_train, y_train, n_jobs=-1, 
+                                                            train_sizes=np.linspace(.1, 1.0, 5))
+        if model_choisi == 'XGBoost' :
+            model = load('XGboost.joblib')
+            model.fit(X_train, y_train)
+            y_pred = model.predict(X_test)
+            st.text(classification_report(y_test, y_pred))
+            train_sizes, train_scores, test_scores = learning_curve(model, X_train, y_train, n_jobs=-1, 
+                                                            train_sizes=np.linspace(.1, 1.0, 5))
 
 # Calcul des moyennes et des écarts-types des scores de formation et de test
     train_mean = np.mean(train_scores, axis=1)

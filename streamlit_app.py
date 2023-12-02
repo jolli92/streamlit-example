@@ -24,6 +24,7 @@ from sklearn.metrics import r2_score
 from joblib import load
 from sklearn.preprocessing import StandardScaler
 import joblib
+import library_name
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 df = pd.read_csv('bank.csv')
@@ -346,6 +347,7 @@ if page == pages[2] :
     X_train_encoded.info(buf=buffer)
     s = buffer.getvalue()
     st.text(s)
+    st.write(f"Version de {sklearn.__name__}: {sklearn.__version__}")
     # Identifier les colonnes numériques
     cols_numeriques = X_train_encoded.select_dtypes(include=['int64', 'float64']).columns
     X_train_normalised = X_train_encoded

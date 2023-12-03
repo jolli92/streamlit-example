@@ -239,7 +239,7 @@ if page == pages[1] :
 
 if page == pages[2] :
     st.write("Pre-processing")
-    df = pd.read_csv(df_preprocessed.csv')
+    df = pd.read_csv('df_preprocessed.csv')
      
 # Séparation des données en ensembles d'entraînement et de test
     X = df.drop(columns=['deposit'])

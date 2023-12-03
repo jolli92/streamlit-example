@@ -322,9 +322,9 @@ if page == pages[2] :
     if model_choisi == 'Random Forest' :
         with open('random_forest_model.dill', 'rb') as f:
             clf_optimizedd = dill.load(f)
-       y_pred = clf_optimizedd.predict(X_test_encoded)
-       st.text(classification_report(y_test, y_pred))
-       train_sizes, train_scores, test_scores = learning_curve(clf_optimizedd, X_train_encoded, y_train, n_jobs=-1, 
+        y_pred = clf_optimizedd.predict(X_test_encoded)
+        st.text(classification_report(y_test, y_pred))
+        train_sizes, train_scores, test_scores = learning_curve(clf_optimizedd, X_train_encoded, y_train, n_jobs=-1, 
                                                             train_sizes=np.linspace(.1, 1.0, 5))
     if model_choisi == 'XGBoost' :
        #XGBoost = load('xgb_optimized')

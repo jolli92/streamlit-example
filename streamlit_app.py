@@ -338,12 +338,14 @@ if page == pages[2] :
     if model_choisi == 'XGBoost' :
        #XGBoost = load('xgb_optimized')
        #XGBoost.fit(X_train_encoded, y_train)
-       XGBoost = joblib.load("xgb_optimized")
+       #XGBoost = joblib.load("xgb_optimized")
        #with open("xgb_optimizedpickle", "rb") as file:
            #XGBoost = pickle.load(file)
-       y_pred = XGBoost.predict(X_test_encoded)
+       loaded_bst = xgb.Booster()
+       loaded_bst.load_model('xgb_optimizedbst.model')
+       y_pred = loaded_bst.predict(X_test_encoded)
        st.text(classification_report(y_test, y_pred))
-       train_sizes, train_scores, test_scores = learning_curve(XGBoost, X_train_encoded, y_train, n_jobs=-1, 
+       train_sizes, train_scores, test_scores = learning_curve(loaded_bst, X_train_encoded, y_train, n_jobs=-1, 
                                                         train_sizes=np.linspace(.1, 1.0, 5))
 
 # Calcul des moyennes et des écarts-types des scores de formation et de test

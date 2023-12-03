@@ -24,7 +24,6 @@ from sklearn.metrics import r2_score
 from joblib import load
 from sklearn.preprocessing import StandardScaler
 import joblib
-import library_name
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 df = pd.read_csv('bank.csv')

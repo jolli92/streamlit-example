@@ -397,7 +397,9 @@ if page == pages[2] :
        train_sizes, train_scores, test_scores = learning_curve(clf_optimizedd, X_train_encoded, y_train, n_jobs=-1, 
                                                             train_sizes=np.linspace(.1, 1.0, 5))
     if model_choisi == 'XGBoost' :
-       XGBoost = joblib.load("xgb_optimized")
+       XGBoost = load('xgb_optimized')
+       XGBoost.fit(X_train_encoded, y_train)
+       #XGBoost = joblib.load("xgb_optimized")
        #with open("xgb_optimizedpickle", "rb") as file:
            #XGBoost = pickle.load(file)
        y_pred = XGBoost.predict(X_test_encoded)

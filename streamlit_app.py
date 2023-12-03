@@ -476,8 +476,8 @@ if page == pages[3] :
     df.loc[df['duration'] > Shaut_bound_duration, 'duration'] = moyenne_duration
     
     # Charger le modèle
-    with open('xgb_optimized.pkl', 'rb') as model_file:
-        model = pickle.load(model_file)
+    XGBoost = joblib.load("xgb_optimized")
+    model = XGBoost
     encoded_data = pd.DataFrame(index=[0])
     
     job = st.selectbox('Job', df['job'].unique())

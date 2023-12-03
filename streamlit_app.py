@@ -302,7 +302,7 @@ if page == pages[2] :
         #model = load('LogisticRegression.joblib')
         #model.fit(X_train_normalised, y_train)
         LogisticRegression = joblib.load("LogisticRegression.joblib")
-        y_pred = model.predict(X_test_normalised)
+        y_pred = LogisticRegression.predict(X_test_normalised)
         st.text(classification_report(y_test, y_pred))
         train_sizes, train_scores, test_scores = learning_curve(model, X_train_normalised, y_train, n_jobs=-1, 
                                                         train_sizes=np.linspace(.1, 1.0, 5))

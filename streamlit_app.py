@@ -239,72 +239,8 @@ if page == pages[1] :
 
 if page == pages[2] :
     st.write("Pre-processing")
-    df = pd.read_csv('bank.csv')
-     #On écarte les valeurs -1 de pdays pour ne pas les traiter lors du pre-processing
-    pdays_filtered = df['pdays'][df['pdays'] != -1]
-# Pour 'campaign'
-    Q1_campaign = df['campaign'].quantile(0.25)
-    Q3_campaign = df['campaign'].quantile(0.75)
-    IQR_campaign = Q3_campaign - Q1_campaign
-    Sbas_campaign = Q1_campaign - 1.5 * IQR_campaign
-    Shaut_campaign = Q3_campaign + 1.5 * IQR_campaign
-
-# Pour 'pdays' (excluding -1 values)
-    Q1_pdays = pdays_filtered.quantile(0.25)
-    Q3_pdays = pdays_filtered.quantile(0.75)
-    IQR_pdays = Q3_pdays - Q1_pdays
-    Sbas_pdays = Q1_pdays - 1.5 * IQR_pdays
-    Shaut_pdays = Q3_pdays + 1.5 * IQR_pdays
-
-# Pour 'previous'
-    Q1_previous = df['previous'].quantile(0.25)
-    Q3_previous = df['previous'].quantile(0.75)
-    IQR_previous = Q3_previous - Q1_previous
-    Sbas_previous = Q1_previous - 1.5 * IQR_previous
-    Shaut_bound_previous = Q3_previous + 1.5 * IQR_previous
-
-#Pour 'Duration'
-    Q1_duration = df['duration'].quantile(0.25)
-    Q3_duration = df['duration'].quantile(0.75)
-    IQR_duration = Q3_duration - Q1_duration
-    Sbas_duration = Q1_duration - 1.5 * IQR_duration
-    Shaut_bound_duration = Q3_duration + 1.5 * IQR_duration
-
-    moyenne_pdays = pdays_filtered.mean()
-    moyenne_campaign = df['campaign'].mean()
-    moyenne_previous = df['previous'].mean()
-    moyenne_duration = df['duration'].mean()
-
-# Remplacer les valeurs aberrantes de 'pdays' par sa moyenne (en excluant les valeurs -1)
-    df.loc[(df['pdays'] > Shaut_pdays) & (df['pdays'] != -1), 'pdays'] = moyenne_pdays
-
-# Remplacer les valeurs aberrantes de 'campaign' par sa moyenne
-    df.loc[df['campaign'] > Shaut_campaign, 'campaign'] = moyenne_campaign
-
-# Remplacer les valeurs aberrantes de 'previous' par la moyenne de 'campaign'
-    df.loc[df['previous'] > Shaut_bound_previous, 'previous'] = moyenne_previous
-
-# Remplacer les valeurs aberrantes de 'duration' par la moyenne de 'campaign'
-    df.loc[df['duration'] > Shaut_bound_duration, 'duration'] = moyenne_duration
-
-
-#Transformation des colonnes age et balance pour creer un découpage dans le but d'attenuer les valeurs extrémes qui ne me semble pas abberante tout en les gardant.
-
-#Création du bins et des étiquettes
-    age_bins = [18, 25, 35, 50, 65, 100]
-    age_labels = ["18_25", "25_35", "35_50", "50_65", "65_100"]
-# On applique le changement sur le dataset pour creer la colonne
-    df['age_group'] = pd.cut(df['age'], bins=age_bins, labels=age_labels, right=False)
-#Création du bins et des étiquettes
-    balance_bins = [-6848, 0, 122, 550, 1708, 81205]
-    balance_labels = ["negatif", "tres_faible", "faible", "moyen", "eleve"]
-# Cut the balance column into bins
-    df['balance_group'] = pd.cut(df['balance'], bins=balance_bins, labels=balance_labels, right=False)
-# On applique le changement sur le dataset pour creer la colonne
-    df['age_group'] = pd.cut(df['age'], bins=age_bins, labels=age_labels, right=False)
-    df['age_group'] = df['age_group'].astype('object')
-    df['balance_group'] = df['balance_group'].astype('object')
-
+    df = pd.read_csv(df_preprocessed.csv')
+     
 # Séparation des données en ensembles d'entraînement et de test
     X = df.drop(columns=['deposit'])
     y = df['deposit']

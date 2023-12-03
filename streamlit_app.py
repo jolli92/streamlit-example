@@ -325,7 +325,7 @@ if page == pages[2] :
        with open('clf_dt_gini.dill', 'rb') as f:
            clf_dt_ginis = dill.load(f)
        y_pred = clf_dt_ginis.predict(X_test_encoded)
-       st.text(classification_report(y_test, y_pred1))
+       #st.text(classification_report(y_test, y_pred1))
        st.text(classification_report(y_test, y_pred))
        train_sizes, train_scores, test_scores = learning_curve(clf_dt_ginis, X_train_encoded, y_train, n_jobs=-1, 
                                                             train_sizes=np.linspace(.1, 1.0, 5))

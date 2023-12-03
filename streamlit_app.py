@@ -329,8 +329,10 @@ if page == pages[2] :
     if model_choisi == 'Random Forest' :
        #model = load('clf_optimized')
        #model.fit(X_train, y_train)
-       with open("clf_optimized", "rb") as file:
-           clf_optimizedd = pickle.load(file)
+       #with open("clf_optimized", "rb") as file:
+           #clf_optimizedd = pickle.load(file)
+       with open('random_forest_model.dill', 'rb') as f:
+           clf_optimizedd = dill.load(f)
        y_pred = clf_optimizedd.predict(X_test_encoded)
        st.text(classification_report(y_test, y_pred))
        train_sizes, train_scores, test_scores = learning_curve(clf_optimizedd, X_train_encoded, y_train, n_jobs=-1, 

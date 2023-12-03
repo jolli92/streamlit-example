@@ -341,7 +341,7 @@ if page == pages[2] :
        #XGBoost = joblib.load("xgb_optimized")
        #with open("xgb_optimizedpickle", "rb") as file:
            #XGBoost = pickle.load(file)
-       X_test_encoded = xgb.DMatrix(X_test_encoded)
+       X_test_encoded = xgboost.DMatrix(X_test_encoded)
        loaded_bst = xgboost.Booster()
        loaded_bst.load_model('xgb_optimizedbst.model')
        y_pred = loaded_bst.predict(X_test_encoded)

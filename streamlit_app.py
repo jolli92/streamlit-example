@@ -301,10 +301,10 @@ if page == pages[2] :
     if model_choisi == 'Regression Logistique' :
         #model = load('LogisticRegression.joblib')
         #model.fit(X_train_normalised, y_train)
-        LogisticRegressionx = joblib.load('LogisticRegression')
-        y_pred = LogisticRegressionx.predict(X_test_normalised)
+        LR = joblib.load('LogisticRegression')
+        y_pred = LR.predict(X_test_normalised)
         st.text(classification_report(y_test, y_pred))
-        train_sizes, train_scores, test_scores = learning_curve(LogisticRegressionx, X_train_normalised, y_train, n_jobs=-1, 
+        train_sizes, train_scores, test_scores = learning_curve(LR, X_train_normalised, y_train, n_jobs=-1, 
                                                         train_sizes=np.linspace(.1, 1.0, 5))
     if model_choisi == 'KNN' :
         #model = load('knn_ma.joblib')

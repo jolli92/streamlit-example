@@ -322,7 +322,7 @@ if page == pages[2] :
            #clf_dt_ginis = pickle.load(file)
        #y_pred1 = model.predict(X_test_encoded)
        #clf_dt_ginis = joblib.load("clf_dt_ginijoblib")
-       with open('clf_dt_gini.dill ', 'rb') as f:
+       with open('clf_dt_gini.dill', 'rb') as f:
            clf_dt_ginis = dill.load(f)
        y_pred = clf_dt_ginis.predict(X_test_encoded)
        st.text(classification_report(y_test, y_pred1))

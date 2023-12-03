@@ -299,29 +299,19 @@ if page == pages[2] :
 
     model_choisi = st.selectbox(label = "Modèle", options = ['Regression Logistique', 'KNN', 'Decision Tree', 'Random Forest', 'XGBoost'])
         
-    if model_choisi == 'Regression Logistique' :
-        #model = load('LogisticRegression.joblib')
-        #model.fit(X_train_normalised, y_train)
+    if model_choisi == 'Regression Logistique' :        
         LR = joblib.load('LogisticRegression')
         y_pred = LR.predict(X_test_normalised)
         st.text(classification_report(y_test, y_pred))
         train_sizes, train_scores, test_scores = learning_curve(LR, X_train_normalised, y_train, n_jobs=-1, 
                                                         train_sizes=np.linspace(.1, 1.0, 5))
-    if model_choisi == 'KNN' :
-        #model = load('knn_ma.joblib')
-        #model.fit(X_train_normalised, y_train)
+    if model_choisi == 'KNN' :        
         knn = joblib.load("knn_ma")
         y_pred = knn.predict(X_test_normalised)
         st.text(classification_report(y_test, y_pred))
         train_sizes, train_scores, test_scores = learning_curve(knn, X_train_normalised, y_train, n_jobs=-1, 
                                                         train_sizes=np.linspace(.1, 1.0, 5))
-    if model_choisi == 'Decision Tree' :
-       #model = load('clf_dt_ginijoblib')
-       #model.fit(X_train_encoded, y_train)
-       #with open("clf_dt_gini", "rb") as file:
-           #clf_dt_ginis = pickle.load(file)
-       #y_pred1 = model.predict(X_test_encoded)
-       #clf_dt_ginis = joblib.load("clf_dt_ginijoblib")
+    if model_choisi == 'Decision Tree' :       
        with open('clf_dt_gini.dill', 'rb') as f:
            clf_dt_ginis = dill.load(f)
        y_pred = clf_dt_ginis.predict(X_test_encoded)
@@ -330,12 +320,8 @@ if page == pages[2] :
        train_sizes, train_scores, test_scores = learning_curve(clf_dt_ginis, X_train_encoded, y_train, n_jobs=-1, 
                                                             train_sizes=np.linspace(.1, 1.0, 5))
     if model_choisi == 'Random Forest' :
-       #model = load('clf_optimized')
-       #model.fit(X_train, y_train)
-       #with open("clf_optimized", "rb") as file:
-           #clf_optimizedd = pickle.load(file)
-       with open('random_forest_model.dill', 'rb') as f:
-           clf_optimizedd = dill.load(f)
+        with open('random_forest_model.dill', 'rb') as f:
+            clf_optimizedd = dill.load(f)
        y_pred = clf_optimizedd.predict(X_test_encoded)
        st.text(classification_report(y_test, y_pred))
        train_sizes, train_scores, test_scores = learning_curve(clf_optimizedd, X_train_encoded, y_train, n_jobs=-1, 
@@ -343,9 +329,7 @@ if page == pages[2] :
     if model_choisi == 'XGBoost' :
        #XGBoost = load('xgb_optimized')
        #XGBoost.fit(X_train_encoded, y_train)
-       XGBoost = joblib.load("xgb_optimized")
-       #with open("xgb_optimizedpickle", "rb") as file:
-           #XGBoost = pickle.load(file)
+       XGBoost = joblib.load("xgb_optimized")       
        X_test_encoded = xgboost.DMatrix(X_test_encoded)
        loaded_bst = xgboost.Booster()
        loaded_bst.load_model('xgb_optimizedbst.model')

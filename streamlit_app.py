@@ -299,8 +299,9 @@ if page == pages[2] :
     model_choisi = st.selectbox(label = "Modèle", options = ['Regression Logistique', 'KNN', 'Decision Tree', 'Random Forest', 'XGBoost'])
         
     if model_choisi == 'Regression Logistique' :
-        model = load('LogisticRegression.joblib')
-        model.fit(X_train_normalised, y_train)
+        #model = load('LogisticRegression.joblib')
+        #model.fit(X_train_normalised, y_train)
+        LogisticRegression = joblib.load("LogisticRegression.joblib")
         y_pred = model.predict(X_test_normalised)
         st.text(classification_report(y_test, y_pred))
         train_sizes, train_scores, test_scores = learning_curve(model, X_train_normalised, y_train, n_jobs=-1, 

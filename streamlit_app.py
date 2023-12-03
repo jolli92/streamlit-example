@@ -314,12 +314,14 @@ if page == pages[2] :
         train_sizes, train_scores, test_scores = learning_curve(knn, X_train_normalised, y_train, n_jobs=-1, 
                                                         train_sizes=np.linspace(.1, 1.0, 5))
     if model_choisi == 'Decision Tree' :
-       #model = load('clf_dt_gini.pkl')
-       #model.fit(X_train, y_train)
+       model = load('clf_dt_ginijoblib')
+       model.fit(X_train_encoded, y_train)
        #with open("clf_dt_gini", "rb") as file:
            #clf_dt_ginis = pickle.load(file)
+       y_pred1 = model.predict(X_test_encoded)
        clf_dt_ginis = joblib.load("clf_dt_ginijoblib")
        y_pred = clf_dt_ginis.predict(X_test_encoded)
+       st.text(classification_report(y_test, y_pred1))
        st.text(classification_report(y_test, y_pred))
        train_sizes, train_scores, test_scores = learning_curve(clf_dt_ginis, X_train_encoded, y_train, n_jobs=-1, 
                                                             train_sizes=np.linspace(.1, 1.0, 5))

@@ -644,7 +644,7 @@ if page == pages[4] :
 
     encoded_df = encoded_df[cols]
     # Load the trained model and predict
-    with open('xgb_optimized.pkl', 'rb') as model_file:
+    with open('xgb_optimizedpickle', 'rb') as model_file:
         model = pickle.load(model_file)
     y_pred = model.predict(encoded_df)
     df['prediction'] = y_pred

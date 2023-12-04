@@ -541,9 +541,9 @@ if page == pages[3] :
 
     encoded_data = encoded_data[cols]
 
-    model = xgb.Booster()
+    model = xgboost.Booster()
     model.load_model("xgb_optimizedbst.model")
-    dtest = xgb.DMatrix(encoded_data)
+    dtest = xgboost.DMatrix(encoded_data)
 
 
 

@@ -412,8 +412,6 @@ if page == pages[3] :
     df.loc[df['duration'] > Shaut_bound_duration, 'duration'] = moyenne_duration
     
     # Charger le modèle
-    XGBoost = joblib.load("xgb_optimized")
-    model = XGBoost
     encoded_data = pd.DataFrame(index=[0])
     
     job = st.selectbox('Job', df['job'].unique())
@@ -543,7 +541,9 @@ if page == pages[3] :
 
     encoded_data = encoded_data[cols]
 
-
+    model = xgb.Booster()
+    model.load_model("xgb_optimizedbst.model")
+    dtest = xgb.DMatrix(encoded_data)
 
 
 
@@ -551,12 +551,15 @@ if page == pages[3] :
 
 
     if st.button('Predictions'):
-        prediction = model.predict(encoded_data)
-        if prediction == 1:
-        # Affichage du résultat sous forme d'un pop-up
-            st.info("La prédiction est : Yes")
-        else:
-            st.warning("La prédiction est : No")
+    prediction = model.predict(dtest)
+
+    # XGBoost donne des probabilités pour la classification binaire, donc vous devez définir un seuil
+    # Par exemple, si la prédiction est supérieure à 0.5, on considère que la classe prédite est 1
+    predicted_class = (prediction > 0.5).astype(int)
+    if predicted_class[0] == 1:
+        st.info("La prédiction est : Yes")
+    else:
+        st.warning("La prédiction est : No")
         
    # prediction = model.predict(encoded_data)
     #if prediction == 1:

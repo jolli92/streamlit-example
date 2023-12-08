@@ -413,7 +413,7 @@ if page == pages[3] :
     
     # Charger le modèle
     encoded_data = pd.DataFrame(index=[0])
-    st.text("Ce script démontre l'utilisation standard de Streamlit et XGBoost pour développer une application web interactive axée sur les prédictions, en utilisant des données fournies par l'utilisateur.")
+    st.write("Ce script démontre l'utilisation standard de Streamlit et XGBoost pour développer une application web interactive axée sur les prédictions, en utilisant des données fournies par l'utilisateur.")
         
 
     if st.checkbox('Informations complémentaires'):

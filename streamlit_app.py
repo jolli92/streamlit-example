@@ -413,6 +413,31 @@ if page == pages[3] :
     
     # Charger le modèle
     encoded_data = pd.DataFrame(index=[0])
+    st.text("Ce script démontre l'utilisation standard de Streamlit et XGBoost pour développer une application web interactive axée sur les prédictions, en utilisant des données fournies par l'utilisateur.")
+        
+
+    if st.checkbox('Informations complémentaires'):
+        st.write("""
+        Choix des Caractéristiques par l'Utilisateur :
+
+        Le script emploie la fonction st.selectbox de Streamlit pour générer des menus déroulants. Ces menus permettent aux utilisateurs de sélectionner des options pour divers attributs tels que le métier, le mois, l'éducation, etc., à partir d'un DataFrame nommé df.
+        Pour chaque attribut sélectionné, le script crée une colonne correspondante dans un autre DataFrame encoded_data. La catégorie choisie reçoit la valeur 1, tandis que toutes les autres catégories reçoivent la valeur 0.
+
+        Préparation des Données Complémentaires :
+
+        Le script assigne automatiquement des valeurs par défaut à certaines colonnes, telles que age_group et balance_group, basées sur des catégories préétablies.
+        Il utilise également des statistiques descriptives telles que la médiane et la moyenne du DataFrame df pour compléter d'autres colonnes, notamment day, duration, pdays, campaign, et previous.
+
+        Finalisation de la Préparation des Données :
+
+        Avant la prédiction, le DataFrame encoded_data est réorganisé pour correspondre à la structure requise par le modèle prédictif.
+
+        Processus de Prédiction :
+
+        Lorsque l'utilisateur clique sur le bouton "Prédictions", le modèle génère une prédiction basée sur les données entrées.
+        Le modèle XGBoost, utilisé pour la prédiction, fournit des probabilités pour une classification binaire. Un seuil spécifique, comme 0.5, est appliqué pour déterminer la classe prédite.
+    """)
+
     
     job = st.selectbox('Job', df['job'].unique())
     encoded_data['job_' + job] = 1
@@ -552,26 +577,6 @@ if page == pages[3] :
 
     if st.button('Predictions'):
         prediction = model.predict(dtest)
-        st.text("Ce script démontre l'utilisation standard de Streamlit et XGBoost pour développer une application web interactive axée sur les prédictions, en utilisant des données fournies par l'utilisateur.")
-        if st.checkbox('Informations complémentaires'):
-            st.write("Choix des Caractéristiques par l'Utilisateur :
-
-    Le script emploie la fonction st.selectbox de Streamlit pour générer des menus déroulants. Ces menus permettent aux utilisateurs de sélectionner des options pour divers attributs tels que le métier, le mois, l'éducation, etc., à partir d'un DataFrame nommé df.
-    Pour chaque attribut sélectionné, le script crée une colonne correspondante dans un autre DataFrame encoded_data. La catégorie choisie reçoit la valeur 1, tandis que toutes les autres catégories reçoivent la valeur 0.
-
-Préparation des Données Complémentaires :
-
-    Le script assigne automatiquement des valeurs par défaut à certaines colonnes, telles que age_group et balance_group, basées sur des catégories préétablies.
-    Il utilise également des statistiques descriptives telles que la médiane et la moyenne du DataFrame df pour compléter d'autres colonnes, notamment day, duration, pdays, campaign, et previous.
-
-Finalisation de la Préparation des Données :
-
-    Avant la prédiction, le DataFrame encoded_data est réorganisé pour correspondre à la structure requise par le modèle prédictif.
-
-Processus de Prédiction :
-
-    Lorsque l'utilisateur clique sur le bouton "Prédictions", le modèle génère une prédiction basée sur les données entrées.
-    Le modèle XGBoost, utilisé pour la prédiction, fournit des probabilités pour une classification binaire. Un seuil spécifique, comme 0.5, est appliqué pour déterminer la classe prédite.")
 
         # XGBoost donne des probabilités pour la classification binaire, donc vous devez définir un seuil
     # Par exemple, si la prédiction est supérieure à 0.5, on considère que la classe prédite est 1

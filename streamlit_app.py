@@ -670,18 +670,45 @@ if page == pages[4] :
 
     encoded_df = encoded_df[cols]
     # Load the trained model and predict
-    with open('xgb_optimizedpickle', 'rb') as model_file:
-        model = pickle.load(model_file)
-    y_pred = model.predict(encoded_df)
-    df['prediction'] = y_pred
+    #with open('xgb_optimizedpickle', 'rb') as model_file:
+        #model = pickle.load(model_file)
+    #y_pred = model.predict(encoded_df)
+    #df['prediction'] = y_pred
     
     # Concatenate the columns "prénom" and "téléphone" and sort by prediction
-    df = pd.concat([df_prenom_telephone, df], axis=1)
+    #df = pd.concat([df_prenom_telephone, df], axis=1)
     
     #df_sorted = df.sort_values(by='prediction', ascending=False)
-    y_proba = model.predict_proba(encoded_df)
-    df['probability'] = y_proba[:,1]  # Pour une classification binaire, cela donnerait la probabilité de la classe 1
-    df_sorted = df.sort_values(by='probability', ascending=False)
-    df_sorted = df_sorted[['prénom', 'téléphone','probability']]
+    #y_proba = model.predict_proba(encoded_df)
+    #df['probability'] = y_proba[:,1]  # Pour une classification binaire, cela donnerait la probabilité de la classe 1
+    #df_sorted = df.sort_values(by='probability', ascending=False)
+    #df_sorted = df_sorted[['prénom', 'téléphone','probability']]
 # Display the top 50 clients
+    #st.dataframe(df_sorted.head(50))
+ # Charger le modèle XGBoost
+    model = xgboost.Booster()
+    model.load_model("xgb_optimizedbst.model")
+
+# Préparation des données pour la prédiction
+    dtest = xgboost.DMatrix(encoded_df)
+
+# Effectuer les prédictions
+    y_pred = model.predict(dtest)
+    df['prediction'] = y_pred
+
+# Concaténation des colonnes "prénom" et "téléphone" et tri par probabilité
+    df = pd.concat([df_prenom_telephone, df], axis=1)
+
+# Calcul des probabilités (si votre modèle est un classificateur binaire)
+# Note: XGBoost retourne directement les probabilités, donc pas besoin de 'predict_proba' comme dans scikit-learn
+    df['probability'] = y_pred  # Si le modèle est binaire, cela donne directement la probabilité de la classe positive
+
+# Trier le DataFrame par probabilité
+    df_sorted = df.sort_values(by='probability', ascending=False)
+
+# Garder uniquement les colonnes pertinentes
+    df_sorted = df_sorted[['prénom', 'téléphone', 'probability']]
+
+# Afficher les 50 premiers clients
     st.dataframe(df_sorted.head(50))
+

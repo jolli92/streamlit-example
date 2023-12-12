@@ -287,14 +287,14 @@ variables catégorielles par rapport à la variable cible (deposit) et cela sous
                 chi2_p_values[feature] = p
 
 # Conversion en DataFrame pour la visualisation
-    chi2_df = pd.DataFrame(list(chi2_p_values.items()), columns=['Feature', 'P-value'])
+        chi2_df = pd.DataFrame(list(chi2_p_values.items()), columns=['Feature', 'P-value'])
 
 # Création du graphique à barres
-    fig = px.bar(chi2_df, x='Feature', y='P-value', text='P-value')
-    fig.update_layout(yaxis=dict(range=[0, 0.05]))  
-    fig.add_hline(y=0.05, line_dash="dash", line_color="red")  
+        fig = px.bar(chi2_df, x='Feature', y='P-value', text='P-value')
+        fig.update_layout(yaxis=dict(range=[0, 0.05]))  
+        fig.add_hline(y=0.05, line_dash="dash", line_color="red")  
 
-    st.plotly_chart(fig)
+        st.plotly_chart(fig)
         
     # Checkbox pour la deuxième partie (Test de Student)
     if st.checkbox("Test de Student"):

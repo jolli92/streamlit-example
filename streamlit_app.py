@@ -44,12 +44,9 @@ def create_visualisations(df, variables):
             fig.add_trace(data, row=i, col=1)
             fig.update_layout(height=300 * rows, width=800, showlegend=False)
         return fig
-if page == pages[0] :
-# Chargement des données
-df = df
 
-# Logique de l'application Streamlit
 if page == pages[0]:
+    df = df
     st.title('EXPLORATION')
     df = load_data()
     st.dataframe(df.head(10))

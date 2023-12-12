@@ -57,6 +57,7 @@ if page == pages[0]:
     df = df
     st.dataframe(df.head(10))
     st.write(df.shape)
+    st.write(df.info)
     st.dataframe(df.describe())
 
 
@@ -119,7 +120,6 @@ for choice in heatmap_choices:
     if choice == "Corr Numérique":
         # Affichage de la heatmap numérique
         st.header("Analyse de la corrélation entre les variables numériques")
-        import plotly.express as px
         correlation_matrix = df.corr()
         fig = px.imshow(correlation_matrix, x=correlation_matrix.columns, y=correlation_matrix.columns, text_auto=True)
         st.plotly_chart(fig)
@@ -134,10 +134,6 @@ L'absence de corrélations élevées est favorable pour éviter la multi-collin�
         # Affichage de la heatmap catégorielle
             st.subheader("Analyse de la corrélation entre les variables catégorielles")
             st.subheader("Heatmap des valeurs-p des tests du Chi-carré")
-            import numpy as np
-            from scipy.stats import chi2_contingency
-            import plotly.express as px
-
             def create_p_matrix(df):
                 variables = ['job', 'marital', 'education', 'default', 'housing', 'loan', 'contact', 'month', 'poutcome']
                 p_matrix = pd.DataFrame(np.nan, index=variables, columns=variables)

@@ -190,11 +190,6 @@ L'absence de corrélations élevées est favorable pour éviter la multi-collin�
     elif choice == "Corr Num-Cat":
         # Affichage de la heatmap ANOVA
             st.header("Analyse de la corrélation entre les variables catégorielles et les variables numériques")
-            import numpy as np
-            import itertools
-            import plotly.express as px
-            from statsmodels.formula.api import ols
-            import statsmodels.api as sm
 
 
 # Identification des variables numériques et catégorielles, à l'exception de 'deposit'

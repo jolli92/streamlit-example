@@ -57,7 +57,7 @@ if page == pages[0]:
     df = df
     st.dataframe(df.head(10))
     st.write(df.shape)
-    st.write(df.info)
+    st.write(df.info(verbose=True, memory_usage='deep', show_counts=True))
     st.dataframe(df.describe())
 
 

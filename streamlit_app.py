@@ -52,6 +52,28 @@ def create_visualisations(df, variables):
         fig.add_trace(data, row=i, col=1)
     fig.update_layout(height=300 * rows, width=800, showlegend=False)
     return fig
+def create_plotly_countplot(df, x, hue, title):
+        # Définition de la palette de couleurs
+    color_discrete_map = {'Yes': 'blue', 'No': 'red'}
+
+    # Création du graphique avec la palette personnalisée
+    fig = px.histogram(df, x=x, color=hue, barmode='group', color_discrete_map=color_discrete_map)
+    fig.update_layout(title=title, xaxis_title=x, yaxis_title='Count')
+    return fig
+
+def create_plotly_histplot(df, x, color, title):
+    # Utilisation de la même palette de couleurs pour la cohérence
+    color_discrete_map = {'Yes': 'blue', 'No': 'red'}
+
+    # Création du graphique avec la palette personnalisée
+    fig = px.histogram(df, x=x, color=color, barmode='overlay', nbins=50, color_discrete_map=color_discrete_map)
+    fig.update_layout(title=title, xaxis_title=x, yaxis_title='Count')
+    return fig
+def get_correlation_plot(variable):
+    if variable in ['age', 'balance','duration','pdays','campaign','previous','day']:
+        return create_plotly_histplot(df, variable, 'deposit', f'Relation entre {variable} et deposit')
+    else:
+        return create_plotly_countplot(df, variable, 'deposit', f'Relation entre {variable} et deposit')
 
 if page == pages[0]:
     df = df
@@ -204,27 +226,9 @@ Nous avons décidé de commun accord le maintien de la variable 'day' dans notre
 #visualisation des corrélations avec la variable cible déposit
 import plotly.express as px
 
-def create_plotly_countplot(df, x, hue, title):
-        # Définition de la palette de couleurs
-    color_discrete_map = {'Yes': 'blue', 'No': 'red'}
-
-    # Création du graphique avec la palette personnalisée
-    fig = px.histogram(df, x=x, color=hue, barmode='group', color_discrete_map=color_discrete_map)
-    fig.update_layout(title=title, xaxis_title=x, yaxis_title='Count')
-    return fig
-
-def create_plotly_histplot(df, x, color, title):
-    # Utilisation de la même palette de couleurs pour la cohérence
-    color_discrete_map = {'Yes': 'blue', 'No': 'red'}
-
-    # Création du graphique avec la palette personnalisée
-    fig = px.histogram(df, x=x, color=color, barmode='overlay', nbins=50, color_discrete_map=color_discrete_map)
-    fig.update_layout(title=title, xaxis_title=x, yaxis_title='Count')
-    return fig
-
 
     # Commentaires pour chaque corrélation
-correlation_comments = {
+    correlation_comments = {
     'previous':"La majorité des clients n'avaient pas été contactés avant cette campagne. Cependant,  un  taux  de  souscription  plus  élevé  est  observé  chez  ceux  ayant  été  contactés  plusieurs  fois auparavant, suggérant que les efforts de marketing répétés peuvent construire une base de clients  fidèles et réceptifs. ",
     'pdays': "Un grand nombre de clients ont été contactés après une longue période (999 jours indiquant probablement une absence  de  contact  antérieur).  Les  clients  contactés  plus  récemment  sont  plus  susceptibles  de  souscrire, soulignant l'importance de maintenir une communication régulière. ",
     'default':"Les graphiques ci-dessus démontrent tout d’abord que la corrélation entre la variable default et la variable cible est en dessous de 0.5 mais existante. Les personnes en défaut de paiement sont moins intéressées par les dépôts à terme par rapport à ceux qui ne le sont pas du fait des difficultés que peuvent présenter leurs trésoreries",
@@ -244,67 +248,62 @@ correlation_comments = {
     }
 
     # Variables explicatives à sélectionner pour la visualisation
-variables_to_choose = ['marital', 'education', 'default', 'housing', 'loan', 'month','previous', 
+    variables_to_choose = ['marital', 'education', 'default', 'housing', 'loan', 'month','previous', 
                        'poutcome', 'day', 'age', 'job', 'balance', 'contact', 'duration','campaign','pdays']
 
-st.header("Analyse de la corrélation des variables explicatives et de la variable cible")
+    st.header("Analyse de la corrélation des variables explicatives et de la variable cible")
 
     # Choix de la variable explicative pour la corrélation
-selected_variable = st.selectbox("Sélectionnez une variable pour visualiser la corrélation avec 'deposit':", 
+    selected_variable = st.selectbox("Sélectionnez une variable pour visualiser la corrélation avec 'deposit':", 
                                  options=variables_to_choose)
 
     
-    # Fonction pour déterminer le type de graphique à utiliser
-def get_correlation_plot(variable):
-    if variable in ['age', 'balance','duration','pdays','campaign','previous','day']:
-        return create_plotly_histplot(df, variable, 'deposit', f'Relation entre {variable} et deposit')
-    else:
-        return create_plotly_countplot(df, variable, 'deposit', f'Relation entre {variable} et deposit')
+ 
 
     # Affichage du graphique sélectionné
-if selected_variable:
+    if selected_variable:
         fig = get_correlation_plot(selected_variable)
         st.plotly_chart(fig)
     
     # Affichage du commentaire
-show_comment = st.checkbox("Afficher le commentaire sur la corrélation")
-if show_comment and selected_variable:
-    st.info(correlation_comments.get(selected_variable, "Pas de commentaire pour cette variable."))
+    show_comment = st.checkbox("Afficher le commentaire sur la corrélation")
+    if show_comment and selected_variable:
+        st.info(correlation_comments.get(selected_variable, "Pas de commentaire pour cette variable."))
 
     
-st.header("validation Statistique")
+    st.header("validation Statistique")
 
     # Checkbox pour la première partie (Test statistique du Chi Carré)
-if st.checkbox("Test statistique du Chi Carré"):
-    st.markdown("""
+    if st.checkbox("Test statistique du Chi Carré"):
+        st.markdown("""
     Afin de vérifier statistiquement l'influence des variables catégorielles sur la variable cible, nous avons utilisé le test statistique du chi carré qui permet de montrer s'il existe 
 ou non une relation entre deux variables catégorielles. 
 Nous  constatons  que  toutes  les  statistiques  de  test  des  variables  catégorielles  respectives  sont  toutes 
 significativement  inférieures  à  5%.  Ce  qui  nous  permet  de  rejeter  l'hypothèse  nulle  d'indépendance  des 
 variables catégorielles par rapport à la variable cible (deposit) et cela sous entend que toutes ces variables ont une influence sur la décision du client à souscrire ou pas au dépot à terme    
     """)
-    cat_features = ['job', 'marital', 'education', 'default', 'housing', 'loan', 'contact', 'month', 'poutcome', 'deposit']
-    chi2_p_values = {}
+        cat_features = ['job', 'marital', 'education', 'default', 'housing', 'loan', 'contact', 'month', 'poutcome', 'deposit']
+        chi2_p_values = {}
 
-    for feature in cat_features:
-        if feature != 'deposit':
-            contingency_table = pd.crosstab(df[feature], df['deposit'])
-            _, p, _, _ = chi2_contingency(contingency_table)
-            chi2_p_values[feature] = p
+        for feature in cat_features:
+            if feature != 'deposit':
+                contingency_table = pd.crosstab(df[feature], df['deposit'])
+                _, p, _, _ = chi2_contingency(contingency_table)
+                chi2_p_values[feature] = p
 
 # Conversion en DataFrame pour la visualisation
-    chi2_df = pd.DataFrame(list(chi2_p_values.items()), columns=['Feature', 'P-value'])
+        chi2_df = pd.DataFrame(list(chi2_p_values.items()), columns=['Feature', 'P-value'])
 
 # Création du graphique à barres
-    fig = px.bar(chi2_df, x='Feature', y='P-value', text='P-value')
-    fig.update_layout(yaxis=dict(range=[0, 0.05]))  
-    fig.add_hline(y=0.05, line_dash="dash", line_color="red")  
+        fig = px.bar(chi2_df, x='Feature', y='P-value', text='P-value')
+        fig.update_layout(yaxis=dict(range=[0, 0.05]))  
+        fig.add_hline(y=0.05, line_dash="dash", line_color="red")  
 
-    st.plotly_chart(fig)
+        st.plotly_chart(fig)
         
     # Checkbox pour la deuxième partie (Test de Student)
-if st.checkbox("Test de Student"):
-    st.markdown("""
+    if st.checkbox("Test de Student"):
+        st.markdown("""
     
     Le test de Student est un test statistique utilisé pour confirmer la dépendance pertinente observée entre des variables numériques et une variable catégorielle.
     Nous constatons que toutes les statistiques de test (t-student) des variables numériques respectives sont toutes < 5%.
@@ -315,29 +314,29 @@ if st.checkbox("Test de Student"):
     import plotly.express as px
     from scipy.stats import ttest_ind
 
-    num_features = ['age', 'balance', 'duration', 'campaign', 'pdays', 'previous']
-    ttest_p_values = {}
+        num_features = ['age', 'balance', 'duration', 'campaign', 'pdays', 'previous']
+        ttest_p_values = {}
 
-    for feature in num_features:
-        group1 = df[df['deposit'] == 'yes'][feature]
-        group2 = df[df['deposit'] == 'no'][feature]
-        _, p = ttest_ind(group1, group2)
-        ttest_p_values[feature] = p
+        for feature in num_features:
+            group1 = df[df['deposit'] == 'yes'][feature]
+            group2 = df[df['deposit'] == 'no'][feature]
+            _, p = ttest_ind(group1, group2)
+            ttest_p_values[feature] = p
 
 # Conversion des résultats en DataFrame pour la visualisation
-    ttest_df = pd.DataFrame(list(ttest_p_values.items()), columns=['Feature', 'P-value'])
+        ttest_df = pd.DataFrame(list(ttest_p_values.items()), columns=['Feature', 'P-value'])
 
 # Création d'un graphique Plotly
-    fig = px.bar(ttest_df, x='Feature', y='P-value', text='P-value')
-    fig.update_layout(yaxis=dict(range=[0, 0.05]), title="Résultats des tests de Student pour les caractéristiques numériques")
-    st.plotly_chart(fig)
+        fig = px.bar(ttest_df, x='Feature', y='P-value', text='P-value')
+        fig.update_layout(yaxis=dict(range=[0, 0.05]), title="Résultats des tests de Student pour les caractéristiques numériques")
+        st.plotly_chart(fig)
 
 
 
     # Suite de l'analyse
 
 
-st.markdown("""
+    st.markdown("""
 En bref, malgré les informations substantielles fournies par l'analyse exploratoire des variables, il est crucial de noter que la relation statistique ne garantit pas la causalité. Une investigation plus approfondie, telle qu'une modélisation prédictive, serait nécessaire pour comprendre comment ces variables influent réellement sur la souscription aux dépôts à terme.
 Nous allons donc procéder à la modélisation de notre jeu de données pour faire de bonnes prédictions, en commençant par le Pre-processing.
 """)

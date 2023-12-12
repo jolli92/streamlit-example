@@ -35,7 +35,7 @@ from plotly.subplots import make_subplots
 from scipy.stats import chi2_contingency
 from scipy.stats import ttest_ind
 df = pd.read_csv('bank.csv')
-euros = "EUROS.jpg"
+#euros = "EUROS.jpg"
 def create_visualisations(df, variables):
     rows = len(variables)
     fig = make_subplots(rows=rows, cols=1, subplot_titles=[f'Distribution de {var}' for var in variables])
@@ -102,7 +102,7 @@ if page == pages[0] :
   de marketing et optimiser la prise de décision dans le secteur financier.")
 
 if page == pages[0] :
-  st.image(euros)
+  #st.image(euros)
 
 if page == pages[1] :
   st.header('Exploration')

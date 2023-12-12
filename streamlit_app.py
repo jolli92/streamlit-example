@@ -54,10 +54,8 @@ def create_visualisations(df, variables):
     return fig
 
 if page == pages[0]:
-    st.title('EXPLORATION')
     df = df
-    st.dataframe(df.head(10))
-    st.write(df.shape)
+    st.title('EXPLORATION')
     st.title('VISUALISATION')
     st.header('Distribution des variables')
     

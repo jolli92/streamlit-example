@@ -101,7 +101,7 @@ if page == pages[0] :
   st.write("Ce projet ne se limite pas seulement à une application académique, mais offre des perspectives concrètes pour améliorer les stratégies \
   de marketing et optimiser la prise de décision dans le secteur financier.")
 
-if page == pages[0] :
+#if page == pages[0] :
   #st.image(euros)
 
 if page == pages[1] :

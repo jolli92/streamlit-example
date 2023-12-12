@@ -126,6 +126,9 @@ heatmap_choices = st.multiselect("Choisissez les heatmaps à afficher:",
 
 # Boucle sur les choix de l'utilisateur et affichage des heatmaps correspondantes
 for choice in heatmap_choices:
+    if choice == "Corr Numérique":
+        # Affichage de la heatmap numérique
+        st.header("Analyse de la corrélation entre les variables numériques")
     # Sélectionner uniquement les colonnes numériques
         numeric_columns = df.select_dtypes(include=['number']).columns
         df_numeric = df[numeric_columns]

@@ -224,21 +224,23 @@ Nous avons décidé de commun accord le maintien de la variable 'day' dans notre
 
     # Commentaires pour chaque corrélation
     correlation_comments = {
-    'previous':"La majorité des clients n'avaient pas été contactés avant cette campagne. Cependant,  un  taux  de  souscription  plus  élevé  est  observé  chez  ceux  ayant  été  contactés  plusieurs  fois auparavant, suggérant que les efforts de marketing répétés peuvent construire une base de clients  fidèles et réceptifs. ",
-    'pdays': "Un grand nombre de clients ont été contactés après une longue période (999 jours indiquant probablement une absence  de  contact  antérieur).  Les  clients  contactés  plus  récemment  sont  plus  susceptibles  de  souscrire, soulignant l'importance de maintenir une communication régulière. ",
-    'default':"Les graphiques ci-dessus démontrent tout d’abord que la corrélation entre la variable default et la variable cible est en dessous de 0.5 mais existante. Les personnes en défaut de paiement sont moins intéressées par les dépôts à terme par rapport à ceux qui ne le sont pas du fait des difficultés que peuvent présenter leurs trésoreries",
-    'campaign': "La plupart des souscriptions se produisent lorsque les clients sont contactés entre une et trois fois. Au-delà,  la  probabilité  de  souscription  diminue,  ce  qui  indique  un  point  de  saturation  dans  les  efforts  de communication.",
-    'duration':"La durée de l'appel semble être un indicateur fort de la souscription, avec des appels plus longs qui impliquent une plus grande probabilité de souscription.",
-    'day':"La distribution de la souscription est relativement uniforme à travers le mois, bien qu'il y  ait des variations mineures qui méritent une analyse plus approfondie pour optimiser le timing des contacts.",
-    'poutcome':"Les  clients  ayant  eu  un  résultat  positif  (« success »)  lors  de  la  campagne  précédente  sont  nettement  plus susceptibles de souscrire à nouveau, soulignant l'importance de construire une relation positive continue avec les clients. ",
-    'month':"Bien que le mois de Mai soit le mois le plus actif en termes de contacts, les mois de Mars, Décembre, Octobre et  Septembre  se  distinguent  par  une  réussite  de  souscription  plus  élevée,  suggérant  une  saisonnalité  dans l'efficacité de nos campagnes",
-    'loan':"De même, les clients sans prêt personnel montrent une propension plus élevée à la souscription, renforçant l'idée qu'une moindre charge de dettes favorise l'engagement envers de nouveaux services financiers. ",
-    'housing':"Il apparaît que les clients sans prêt immobilier sont plus enclins à souscrire, ce qui peut refléter une plus grande flexibilité financière ou une aversion moindre au risque. ",
-    'education':"Nous constatons que les clients avec un niveau d'éducation tertiaire ont un taux de souscription plus élevé par rapport aux autres niveaux d'éducation. Cela indique que le niveau d'éducation peut influencer la propension à souscrire.",
-    'marital':"Les célibataires affichent un taux de souscription légèrement supérieur comparé aux autres statuts maritaux, ce qui suggère que le célibat peut être un indicateur positif pour la souscription à nos services.",
-    'balance': "Ce graphique nous indique que la majeure partie des clients qui souscrivent au dépôt à terme ont des soldes bancaires qui varient entre 0 et 10k euros.",
-    'age' : "En analysant ce graphique, il est évident que les distributions d'âge pour les souscriptions au dépôt ('oui' et 'non') sont remarquablement proches. L'alignement étroit des deux distributions suggère que l'âge seul pourrait ne pas être un déterminant important pour prédire si un client souscrira au dépôt à terme",
-    'job': "Le graphique présente une fréquence élevée de souscription pour les étudiants, les managers et les ouvriers, cela suppose que les personnes de ces corps de métiers ont plus de chance de souscrire à un dépôt à terme que les  autres  catégories.  Tout  en  notant  que  dans  la  majorité  des  métiers  il  y  a  une  fréquence  de  souscription plutôt bonne.",
+    'previous' : "Les clients non contactés auparavant présentent une faible souscription. En revanche, ceux contactés plusieurs fois montrent un taux de souscription plus élevé, suggérant que des efforts marketing répétés favorisent la fidélisation.",
+    'pdays' : "Les clients contactés après une longue période (999 jours suggèrent une absence de contact antérieur) souscrivent moins. Ceux contactés plus récemment sont plus enclins à souscrire, mettant en lumière l'importance de contacts réguliers.",
+    'default' : "La corrélation entre 'default' et la souscription est modeste (inférieure à 0,5). Les clients en défaut de paiement semblent moins intéressés par les dépôts à terme, probablement en raison de contraintes financières.",
+    'campaign' : "La souscription est maximale quand les clients sont contactés 1 à 3 fois. Au-delà, la probabilité de souscrire diminue, indiquant une saturation dans les efforts de communication.",
+    'duration' : "La durée de l'appel est un indicateur clé de souscription, avec des appels plus longs corrélant avec une plus grande probabilité de souscription.",
+   'day' : "La distribution des souscriptions est relativement uniforme sur le mois, malgré de légères variations qui méritent une analyse plus poussée pour optimiser le timing des contacts.",
+    'poutcome' : "Les clients avec un résultat positif ('success') dans la campagne précédente sont beaucoup plus susceptibles de souscrire à nouveau, soulignant l'importance d'une relation client positive et continue.",
+    'month' : "Mai est le mois le plus actif en termes de contact, mais Mars, Décembre, Octobre et Septembre se distinguent par une plus haute réussite de souscription, indiquant une saisonnalité dans l'efficacité des campagnes.",
+    'loan' : "Les clients sans prêt personnel sont plus susceptibles de souscrire, suggérant que moins de dettes favorise l'intérêt pour de nouveaux services financiers.",
+    'housing' : "Les clients sans prêt immobilier ont tendance à souscrire davantage, ce qui peut refléter une plus grande flexibilité financière ou une moindre aversion au risque.",
+    'contact' : "La plupart des contacts ont été établis via les téléphones cellulaires des clients, ce qui peut également expliquer une communication efficace, attribuable à la mobilité des téléphones portables",
+    'education' : "Les clients avec une éducation tertiaire affichent un taux de souscription plus élevé, indiquant une influence possible du niveau d'éducation sur la décision de souscrire.",
+    'marital' : "Les célibataires présentent un taux de souscription légèrement supérieur, suggérant que le célibat peut être un facteur positif pour la souscription aux services.",
+    'balance' : "La majorité des clients souscrivant au dépôt à terme possèdent des soldes bancaires entre 0 et 10 000 euros.",
+    'age' : "Les distributions d'âge des souscripteurs et des non-souscripteurs au dépôt à terme sont similaires, suggérant que l'âge n'est pas un facteur déterminant majeur pour la souscription.",
+    'job' : "Les étudiants, managers et ouvriers présentent une forte propension à souscrire. Bien que la souscription soit généralement bien répartie parmi les différentes professions, ces groupes se distinguent."
+    
   }
 
     # Variables explicatives à sélectionner pour la visualisation

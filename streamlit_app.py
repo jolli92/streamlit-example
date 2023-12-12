@@ -158,7 +158,7 @@ if page == pages[0]:
 L'absence de corrélations élevées est favorable pour éviter la multi-collinéarité dans le modèle d'apprentissage automatique.
 """)
 
-    elif choice == "Corr Catégorielle":
+        elif choice == "Corr Catégorielle":
         # Affichage de la heatmap catégorielle
             st.subheader("Analyse de la corrélation entre les variables catégorielles")
             st.subheader("Heatmap des valeurs-p des tests du Chi-carré")

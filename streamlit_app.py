@@ -224,11 +224,11 @@ Nous avons décidé de commun accord le maintien de la variable 'day' dans notre
 """)
  
 #visualisation des corrélations avec la variable cible déposit
-import plotly.express as px
+
 
 
     # Commentaires pour chaque corrélation
-    correlation_comments = {
+        correlation_comments = {
     'previous':"La majorité des clients n'avaient pas été contactés avant cette campagne. Cependant,  un  taux  de  souscription  plus  élevé  est  observé  chez  ceux  ayant  été  contactés  plusieurs  fois auparavant, suggérant que les efforts de marketing répétés peuvent construire une base de clients  fidèles et réceptifs. ",
     'pdays': "Un grand nombre de clients ont été contactés après une longue période (999 jours indiquant probablement une absence  de  contact  antérieur).  Les  clients  contactés  plus  récemment  sont  plus  susceptibles  de  souscrire, soulignant l'importance de maintenir une communication régulière. ",
     'default':"Les graphiques ci-dessus démontrent tout d’abord que la corrélation entre la variable default et la variable cible est en dessous de 0.5 mais existante. Les personnes en défaut de paiement sont moins intéressées par les dépôts à terme par rapport à ceux qui ne le sont pas du fait des difficultés que peuvent présenter leurs trésoreries",

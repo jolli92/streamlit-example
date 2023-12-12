@@ -153,8 +153,8 @@ if page == pages[0]:
             st.plotly_chart(fig)
 
         # Checkbox pour afficher le commentaire
-        if st.checkbox("Afficher le commentaire sur la corrélation numérique", key="Num"):
-            st.markdown("""L'analyse de corrélation montre peu de liens linéaires forts entre la plupart des variables numériques, à l'exception des paires 'pdays' et 'previous', 'age' et 'balance' ainsi que 'campaign' et 'day', qui montrent des corrélations positives notables. 
+            if st.checkbox("Afficher le commentaire sur la corrélation numérique", key="Num"):
+                st.markdown("""L'analyse de corrélation montre peu de liens linéaires forts entre la plupart des variables numériques, à l'exception des paires 'pdays' et 'previous', 'age' et 'balance' ainsi que 'campaign' et 'day', qui montrent des corrélations positives notables. 
 L'absence de corrélations élevées est favorable pour éviter la multi-collinéarité dans le modèle d'apprentissage automatique.
 """)
 
@@ -182,8 +182,8 @@ L'absence de corrélations élevées est favorable pour éviter la multi-collin�
             st.plotly_chart(fig)
 
         # Checkbox pour afficher le commentaire
-        if st.checkbox("Afficher le commentaire sur la corrélation catégorielle", key="cat"):
-            st.markdown("""la plupart des variables catégorielles dans notre ensemble de données sont interdépendantes, bien que certaines paires, telles que 'marital' et 'default', 'education' et 'default', 'default' et 'housing', ainsi que 'loan' et 'contact', ne montrent pas de dépendance significative. La majorité des tests indiquent des p-values inférieures à 5%, justifiant le rejet de l'indépendance entre ces variables catégorielles.
+            if st.checkbox("Afficher le commentaire sur la corrélation catégorielle", key="cat"):
+                st.markdown("""la plupart des variables catégorielles dans notre ensemble de données sont interdépendantes, bien que certaines paires, telles que 'marital' et 'default', 'education' et 'default', 'default' et 'housing', ainsi que 'loan' et 'contact', ne montrent pas de dépendance significative. La majorité des tests indiquent des p-values inférieures à 5%, justifiant le rejet de l'indépendance entre ces variables catégorielles.
                             """)
 
         elif choice == "Corr Num-Cat":

@@ -49,8 +49,8 @@ def create_visualisations(df, variables):
             data = go.Bar(x=df[var].value_counts().index, y=df[var].value_counts(), name=var)
         else:
             data = go.Histogram(x=df[var], nbinsx=30, name=var)
-            fig.add_trace(data, row=i, col=1)
-            fig.update_layout(height=300 * rows, width=800, showlegend=False)
+        fig.add_trace(data, row=i, col=1)
+    fig.update_layout(height=300 * rows, width=800, showlegend=False)
     return fig
 
 if page == pages[0]:

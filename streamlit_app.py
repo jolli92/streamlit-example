@@ -126,32 +126,31 @@ if page == pages[0]:
 
 
 # Analyses des corrélations et tests statistiques
-
-st.header("Analyse des corrélations avec tests statistiques des variables explicatives")
+    st.header("Analyse des corrélations avec tests statistiques des variables explicatives")
 
 # Widget pour choisir les heatmaps à afficher
-heatmap_choices = st.multiselect("Choisissez les heatmaps à afficher:", 
+    heatmap_choices = st.multiselect("Choisissez les heatmaps à afficher:", 
                                  ["Corr Numérique", "Corr Catégorielle", "Corr Num-Cat"])
 
 # Boucle sur les choix de l'utilisateur et affichage des heatmaps correspondantes
-for choice in heatmap_choices:
-    if choice == "Corr Numérique":
+    for choice in heatmap_choices:
+        if choice == "Corr Numérique":
         # Affichage de la heatmap numérique
-        st.header("Analyse de la corrélation entre les variables numériques")
+            st.header("Analyse de la corrélation entre les variables numériques")
     # Sélectionner uniquement les colonnes numériques
-        numeric_columns = df.select_dtypes(include=['number']).columns
-        df_numeric = df[numeric_columns]
+            numeric_columns = df.select_dtypes(include=['number']).columns
+            df_numeric = df[numeric_columns]
 
         # Calculer la matrice de corrélation pour les variables numériques
-        correlation_matrix = df_numeric.corr()
+            correlation_matrix = df_numeric.corr()
 
         # Créer et afficher la heatmap
-        fig = px.imshow(correlation_matrix, 
+            fig = px.imshow(correlation_matrix, 
                         x=correlation_matrix.columns, 
                         y=correlation_matrix.columns, 
                         text_auto=True,
                         color_continuous_scale='RdBu')
-        st.plotly_chart(fig)
+            st.plotly_chart(fig)
 
         # Checkbox pour afficher le commentaire
         if st.checkbox("Afficher le commentaire sur la corrélation numérique", key="Num"):

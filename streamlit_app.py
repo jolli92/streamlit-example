@@ -51,7 +51,7 @@ def create_visualisations(df, variables):
             data = go.Histogram(x=df[var], nbinsx=30, name=var)
             fig.add_trace(data, row=i, col=1)
             fig.update_layout(height=300 * rows, width=800, showlegend=False)
-        return fig
+    return fig
 
 if page == pages[0]:
     st.title('EXPLORATION')

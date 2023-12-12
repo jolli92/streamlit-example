@@ -297,10 +297,7 @@ if page == pages[0]:
     # Checkbox pour la deuxième partie (Test de Student)
     if st.checkbox("Test de Student"):
         st.markdown("""
-    
-    Le test de Student est un test statistique utilisé pour confirmer la dépendance pertinente observée entre des variables numériques et une variable catégorielle.
-    Nous constatons que toutes les statistiques de test (t-student) des variables numériques respectives sont toutes < 5%.
-    Nous pouvons donc affirmer avec certitude que les caractéristiques numériques que nous avons étudiées sont liées à la décision du client de souscrire ou non au dépôt à terme.
+        Le test de Student est une méthode statistique employée pour vérifier l'existence d'une relation significative entre des variables numériques et une variable catégorielle. Nos analyses révèlent que les valeurs des statistiques de test (t de Student) pour chaque variable numérique sont toutes inférieures à 5%. Cette observation nous permet d'affirmer avec confiance que les caractéristiques numériques examinées jouent un rôle déterminant dans la décision du client de souscrire ou non à un dépôt à terme.
     
     """)
         

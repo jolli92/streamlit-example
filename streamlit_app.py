@@ -342,7 +342,7 @@ Nous allons donc procéder à la modélisation de notre jeu de données pour fai
 
     
 
-if page == pages[2] :
+if page == pages[1] :
     st.write("Pre-processing")
     df = pd.read_csv('df_preprocessed.csv')
      
@@ -465,7 +465,7 @@ if page == pages[2] :
 # Affichage du graphique dans Streamlit
     st.pyplot()
 
-if page == pages[3] :
+if page == pages[2] :
     st.write("Prédictions")
     df = pd.read_csv('bank.csv')
     #On écarte les valeurs -1 de pdays pour ne pas les traiter lors du pre-processing
@@ -697,7 +697,7 @@ if page == pages[3] :
        # st.mardown("**La prédiction est : No**")
 
 
-if page == pages[4] :
+if page == pages[3] :
     st.write("Prédictions_2")
     st.write("Ajout d'une colonne prénom + téléphone(généré aleatoirement) /colonne déposit supprimée et redistribution compléte du dataset sur toutes les colonnes à l'aide de .sample")
     df = pd.read_csv('Banktest.csv')

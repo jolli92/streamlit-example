@@ -32,9 +32,7 @@ st.title("Analyse de bank marketing")
 st.sidebar.title("Sommaire")
 pages=["Exploration", "DataVizualization","Pre-processing", "Prédictions", "Prédictions_2"]
 page=st.sidebar.radio("Aller vers", pages)
-
-if page == pages[0] :
-    def create_visualisations(df, variables):
+def create_visualisations(df, variables):
     rows = len(variables)
     fig = make_subplots(rows=rows, cols=1, subplot_titles=[f'Distribution de {var}' for var in variables])
 
@@ -46,7 +44,7 @@ if page == pages[0] :
             fig.add_trace(data, row=i, col=1)
             fig.update_layout(height=300 * rows, width=800, showlegend=False)
         return fig
-
+if page == pages[0] :
 # Chargement des données
 df = df
 

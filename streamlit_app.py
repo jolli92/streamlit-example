@@ -46,9 +46,8 @@ def create_visualisations(df, variables):
         return fig
 
 if page == pages[0]:
-    df = df
     st.title('EXPLORATION')
-    df = load_data()
+    df = df
     st.dataframe(df.head(10))
     st.write(df.shape)
     st.dataframe(df.describe())

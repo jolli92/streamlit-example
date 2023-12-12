@@ -182,11 +182,11 @@ L'absence de corrélations élevées est favorable pour éviter la multi-collin�
             st.plotly_chart(fig)
 
         # Checkbox pour afficher le commentaire
-            if st.checkbox("Afficher le commentaire sur la corrélation catégorielle", key="cat"):
-                st.markdown("""la plupart des variables catégorielles dans notre ensemble de données sont interdépendantes, bien que certaines paires, telles que 'marital' et 'default', 'education' et 'default', 'default' et 'housing', ainsi que 'loan' et 'contact', ne montrent pas de dépendance significative. La majorité des tests indiquent des p-values inférieures à 5%, justifiant le rejet de l'indépendance entre ces variables catégorielles.
+        if st.checkbox("Afficher le commentaire sur la corrélation catégorielle", key="cat"):
+            st.markdown("""la plupart des variables catégorielles dans notre ensemble de données sont interdépendantes, bien que certaines paires, telles que 'marital' et 'default', 'education' et 'default', 'default' et 'housing', ainsi que 'loan' et 'contact', ne montrent pas de dépendance significative. La majorité des tests indiquent des p-values inférieures à 5%, justifiant le rejet de l'indépendance entre ces variables catégorielles.
                             """)
 
-    elif choice == "Corr Num-Cat":
+        elif choice == "Corr Num-Cat":
         # Affichage de la heatmap ANOVA
             st.header("Analyse de la corrélation entre les variables catégorielles et les variables numériques")
 

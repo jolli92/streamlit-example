@@ -34,209 +34,313 @@ pages=["Exploration", "DataVizualization","Pre-processing", "Prédictions", "Pr�
 page=st.sidebar.radio("Aller vers", pages)
 
 if page == pages[0] :
-    st.write("Exploration")
-    st.header("Informations du DataFrame :")
-    buffer = io.StringIO()
-    df.info(buf=buffer)
-    s = buffer.getvalue()
-    st.text(s)
-    st.write("premier aperçu de la table, nous avons 11 162 enregistrements non null sur 17 variables, dont 7 variables sont de type integer et 10 de type objets.")
-    st.write("des structures des données affichent que toutes les lignes sont remplies, tandis que les premières lignes de données renvoient des valeurs 'Unknown', l'impact de cette valeur à est un point d'attention à voir plus loin..")
-    st.header("Affichage des valeurs uniques prisent par les variables")
-    categorical_columns = ["job", "marital", "education", "default", "housing", "loan", "contact", "month", "poutcome"]
-    for column in categorical_columns:
-        unique_values = df[column].unique()
-        st.markdown(f"Valeurs uniques de la colonne '{column}': {unique_values}\n")
-    st.header("Description statistique du DataFrame :")
+    def create_visualisations(df, variables):
+    rows = len(variables)
+    fig = make_subplots(rows=rows, cols=1, subplot_titles=[f'Distribution de {var}' for var in variables])
+
+    for i, var in enumerate(variables, start=1):
+        if df[var].dtype == 'object':
+            data = go.Bar(x=df[var].value_counts().index, y=df[var].value_counts(), name=var)
+        else:
+            data = go.Histogram(x=df[var], nbinsx=30, name=var)
+        fig.add_trace(data, row=i, col=1)
+
+    fig.update_layout(height=300 * rows, width=800, showlegend=False)
+    return fig
+
+# Chargement des données
+df = load_data()
+
+# Logique de l'application Streamlit
+if page == pages[0]:
+    st.title('EXPLORATION')
+    df = load_data()
+    st.dataframe(df.head(10))
+    st.write(df.shape)
     st.dataframe(df.describe())
-    st.dataframe(df.describe(include=["object"]))
-    st.write(" * Informations client :")
-    st.write("L'aperçu des données numériques montre que l'échantillon de la population varie de 18 à 95 ans, avec un âge moyen de 41 ans et une grande majorité vers 49 ans.")
-    st.write("Le solde de leur compte courant varie entre un déficit de -6 847 et un crédit de 81 204 euros, en moyenne les clients ont 1 528 euros sur leurs comptes.")
-    st.write(" * Informations campagne étudiée :")
-    st.write("Les clients sont contactés durant la campagne en moyenne 2 à 3 fois. La majorité des réponses sont obtenues à partir de la troisième prise de contact.")
-    st.write("Un point d'attention est mis sur la valeur 63 affectée à la prise de contact durant la campagne... Peut-on déjà en déduire que c'est une valeur aberrante ? Pourtant, pas impossible...")
-    st.write("Nous constatons aussi que le dernier contact avec le client se localise vers la fin du mois, le 22, avec une durée comprise entre 2 secondes et 1 heure.")
-    st.write("La majorité des réponses sont obtenues entre 6 et 8 minutes. Peut-on dire que les clients qui nécessitent de rester 1 heure en ligne sont plus difficiles à convaincre ?")
-    st.write(" * Informations campagne précédente :")
-    st.write("On constate que 50% de l'échantillon n'a jamais été contacté (previous=0) avant la campagne, ce qui est cohérent avec le nombre de jours séparant le dernier contact (pdays = -1).")
-    st.write("Peut-on dire que l'échantillon contient essentiellement de nouveaux contacts clients ?")
-    st.write("De plus, 75% de ceux qui ont été contactés l'ont été au bout de 21 jours et n'ont eu en général qu'un seul contact.")
-    st.write("Pour ceux qui ont été régulièrement contactés (previous=58), ils ne l'ont été qu'au bout de plus de deux ans... Ce qui attire notre attention sur la cohérence entre le nombre de fois que le client a été contacté (58) et la durée du dernier contact, plus de deux ans... Peut-on déduire que c'est un client en portefeuille depuis trop longtemps ?")
-    st.write("Ou au contraire, le client n'a été très sollicité puisqu'il l'a été qu'au bout de plus de deux ans... Mais dans ce cas, le nombre de contacts, 58 fois avant la campagne, nous pose quelques questions... 58 fois")
-    st.header("Description des variables")
-    st.write("age (quantitative)")
-    st.write("job: type de job (categorielle: \"admin.\",\"unknown\",\"unemployed\",\"management\",\"housemaid\",\"entrepreneur\",\"student\",\"blue-collar\",\"self-employed\",\"retired\",\"technician\",\"services\")")
-    st.write("marital : Statut marital (categorielle: \"married\",\"divorced\",\"single\"; note: \"divorced\" meansdivorced or widowed)")
-    st.write("education : (categorielle: \"unknown\",\"secondary\",\"primary\",\"tertiary\")")
-    st.write("default : Le client a-t-il des crédits en défaut ? (binaire: \"yes\",\"no\")")
-    st.write("balance : Solde annuel et moyen des clients, en euros (quantitative)")
-    st.write("housing :Le client a-t-il un crédit immobilier ? (binaire: \"yes\",\"no\")")
-    st.write("loan : Le client a-t-il des crédits personnels ? (binaire: \"yes\",\"no\")")
-    st.write("contact : Type de moyen de communication utilisé pour contacter (categorielle: \"unknown\",\"telephone\",\"cellular\")")
-    st.write("day : Dernier jour de contact du mois (quantitative)")
-    st.write("month : Dernier mois de contact de l'année (categorielle: \"jan\", \"feb\", \"mar\", ..., \"nov\", \"dec\")")
-    st.write("duration : Temps d'appel du dernier contact effectué, en secondes (quantitative)")
-    st.write("campaign : Nombre de contacts effectués durant cette campagne et pour ce client (quantitative, includes last contact)")
-    st.write("pdays : Nombre de jours qui se sont écoulés depuis qu'un client a été lors de la campagne précédente (quantitative, -1 signifie que le client n'a jamais été contacté)")
-    st.write("previous : Nombre de contacts effectués lors de la campagne précédente et pour ce client (quantitative)")
-    st.write("poutcome : Résultat de la campagne marketing précédente (categorielle: \"unknown\",\"other\",\"failure\",\"success\")")
-
-if page == pages[1] :
-    st.write("DataVizualization")
-    st.header('_Visualisation de la distribution de la variable cible : deposit_')        
-
-    fig1 = px.histogram(df, x="deposit")
-    deposit_counts = df['deposit'].value_counts()
-    labels = deposit_counts.index
-    sizes = deposit_counts.values
-    fig2 = go.Figure(data=go.Pie(labels=labels, values=sizes, textinfo='percent+label', insidetextorientation='radial'))
-    col1, col2 = st.columns(2)
-    col1.plotly_chart(fig1, use_container_width=True)
-    col2.plotly_chart(fig2, use_container_width=True)
-    st.write('47.4% des clients de la banque ont souscrit un compte à terme')
-    st.write("52.6% des clients de la banque n'ont pas souscrit un compte à terme")
 
 
-    st.header("Analyse de toutes les variables spécifiques aux clients")
-    fig1 = px.histogram(df, x="age", nbins=20, title="Visualisation de la distribution de l'âge",
-               labels={'age': 'Âge'}, marginal='box')
-
-    df['duration_minutes'] = df['duration'] / 60
-    fig2 = px.histogram(df, x="duration_minutes", nbins=20, title="Visualisation de la durée de contact (appel tel)",
-               labels={'duration_minutes': 'Durée (minutes)'}, marginal='box')
-    col1, col2 = st.columns(2)
-    col1.plotly_chart(fig1, use_container_width=True)
-    col2.plotly_chart(fig2, use_container_width=True)
+    st.title('VISUALISATION')
+    st.header('Distribution des variables')
     
-    fig4 = go.Figure(data=go.Histogram(x=df['pdays'], nbinsx=20))
-    fig4.update_layout(title="Distribution de pdays", xaxis_title="pdays")
+    # Widgets pour la sélection des variables et l'affichage des commentaires
+    with st.container():
+        selected_vars = st.multiselect('Sélectionnez les variables à visualiser:', df.columns)
+        show_annotations = st.checkbox('Afficher les commentaires')
 
-    fig = go.Figure(data=go.Bar(x=df['job'].value_counts().index, y=df['job'].value_counts().values))
-    fig.update_layout(title="'Distribution des jobs", xaxis_title="Emploi", yaxis_title="Nombre de clients")
-    fig.update_xaxes(tickangle=45)
-    col1, col2 = st.columns(2)
-    col1.plotly_chart(fig4, use_container_width=True)
-    col2.plotly_chart(fig, use_container_width=True)
+    if selected_vars:
+        fig = create_visualisations(df, selected_vars)
+        st.plotly_chart(fig)
 
-    marital_counts = df['marital'].value_counts()
-    labels = marital_counts.index
-    sizes = marital_counts.values
-    fig1 = go.Figure(data=go.Pie(labels=labels, values=sizes, hoverinfo='label+percent',
-                        textinfo='percent', insidetextorientation='radial'))
-    fig1.update_layout(title='Distribution des états matrimoniaux')
+        if show_annotations:
+            st.header("Commentaire de la variable selectionnée")
+            
+            # Dictionnaire des commentaires pour chaque variable
+            comments = {
+    'job': "JOB est une variable qualitative ou catégorielle qui désigne le métier de chaque client. Il a 12 valeurs uniques à savoir : ['admin.' ,'technician' ,'services' ,'management' ,'retired' ,'blue-collar','unemployed' ,'entrepreneur' ,'housemaid' ,'unknown', 'self-employed','student']  , avec une majorité des clients qui travaillent dans le management soit un taux de 23%. dans la distribution suivi des ouvriers à 17,4%. et des techniciens à 16,3%. On observe aussi une valeur minime 'unknown' 0,6% qui peut signifier que certains clients préfèrent ne pas donner leur situation professionnelle.",
+    'age': "Cette variable représente l'âge de chaque individu dans les données et est de type quantitatif. Il a 76 valeurs uniques avec un minimum de 18 ans et un maximum de 95 ans dont une moyenne de 41 ans avec 50% ayant plus ou moins de 39 ans. Suivant la visualisation, les clients sont majoritairement dans l’intervalle de 25 à 59 ans.",
+    'marital': "Suivant la distribution de la variable “marital” qui est une variable qualitative, désigne le statut matrimonial de chaque client, il existe 3 valeurs uniques à savoir : 'married','divorced','single'. Avec 56,9% des clients mariés, 31,5% célibataire et 11,6% divorcé.",
+    'education': "La variable “education” représente le niveau d'étude de chaque client. Etant une variable qualitative elle a comme valeur unique : 'unknown','secondary','primary','tertiary' avec une majorité de client qui sont aux secondaires soit 49,1%, suivi des clients ayant fait des études universitaires et ceux du primaire soit 33% et 13,4% et on termine avec une valeur « unknow » qui peut désigner des clients qui n’ont pas souhaité renseigner leur niveau d’étude ou même ceux qui n’en ont pas fait d’étude.",
+    'balance': "La variable balance désigne le solde bancaire de chaque client prospecté ce qui signifie que c’est une variable quantitative avec 3 805 valeurs unique dont une moyenne de 1 528,538524 euros pour un minimum de -6 847 euros et un maximum de 81 204 euros. On observe aussi qu’il y a plus et moins 50% de client qui ont un solde de 550 avec la majorité des clients ayant un solde bancaire compris entre 122 et 1 708 euros d’où l’importance de faire attention aux valeur extrême de cette variable qui a un maximum plus élevé que la médiane.",
+    'default': "La variable ‘default’ désigne le risque de solvabilité d’un client il permet de savoir si un client est en défaut de paiement ou pas. Etant une variable catégorielle de type booléen, on peut clairement deviner qu’elle n’a que 2 valeurs unique (Yes et No) on se rend compte que la majorité des clients soit 98,5% n’est pas en défaut de paiement.",
+    'housing': "La variable ‘housing’ représente les clients qui ont un crédit immobilier ou non, c’est donc une variable qualitative de type booléen avec deux valeurs unique (Yes et No). On constate suivant le graphique ci-dessus que 52,7% des clients n’ont pas de crédit immobilier et 47,3% en ont.",
+    'loan': "La variable ‘loan’ représente l’ensemble de client endetté. C’est une variable catégorielle de type booléen à deux valeurs uniques (Yes et No). Le graphique nous renseigne que 86,9% des clients n’ont pas de dette et 13,1% en ont.",
+    'contact': "La variable ‘contact’ désigne la façon dont les clients ont été contacté pendant la campagne, il en ressort que 72% des clients ont été contacté par téléphone et on a 21% de client dont on ne sait comment ils ont été contactés, on peut supposer par mail ou en présentiel ou tout simplement inconnu. C’est une variable catégorielle avec 3 valeurs uniques (cellular, unknown et téléphone)",
+    'day': "La variable « day » désigne le jour où le client a été contacté pour la dernière fois. On se rend compte que la moyenne et la médiane de cette variable est casi similaire à 15 ce qui signifie que la variable est bien répartie, avec plusieurs jours ou on a beaucoup appelé les clients. Le premier jour étant de 1 et le dernier jour le 31 du mois avec des faibles taux d’appel le 1, 10, 24 et 31. C’est une variable quantitative ave 31 valeurs uniques.",
+    'month': "La variable ‘month’ correspond au dernier mois ou on a contacté le client pendant une, c’est une variable catégorielle à 12 valeurs uniques ( 'jan', 'feb', 'mar', ..., 'nov', 'dec'). Suivant le graphique on a contacté les clients beaucoup plus en mai avec 25,3% ensuite juillet, aout et juin, le reste de valeur est relativement en dessous de 10% ",
+    'duration': "La variable ‘duration’ représente le temps d'appel de la dernière fois que le client a été contacté en seconds, c’est une variable quantitative avec une moyenne d’appel de 371,99 secondes, on observe des temps d’appel de plus d’une heure de temps qu’il faut quand même bien analyser pour la suite pour savoir comment les traiter.",
+    'campaign': "La variable ‘campaign’ représente le nombre de fois que le client a été contacté lors de la campagne, c’est une variable quantitative avec 36 valeurs uniques. On constate selon le graphique que la majorité des clients ont été contactés une seule fois avec une variation allant jusqu’à 11 fois. Toute fois il faut qu’on prête attention au client contacté 63 fois pour voir comment le traiter.",
+    'pdays': "La variable ‘pdays’ représente le nombre de jours qui se sont écoulés depuis qu'un client a été contacté lors de la campagne précédente sachant que -1 est une valeur qui signifie que le client n’a pas été contacté lors de la campagne précédente. C’est une variable quantitative de 472 valeurs uniques avec un temps écoulé moyen de 51.330407 jours mais une médiane de -1 ce qui signifie que 50% des clients n’avaient pas été contacté précédemment et 50% avaient déjà été contacté.",
+    'previous': "La variable ‘previous’ représente le nombre de fois qu’un client a été contacté lors de la campagne précédente. C’est une variable quantitative de 34 valeurs uniques avec plus de 8000 clients qui n’ont pas été contacté lors de la précédente campagne. Le nombre moyen de fois est quasi nul avec une médiane et un premier quartil de 0 ce qui signifie que 50% des clients n’avaient pas été contacté lors de la précédente campagne. Le nombre de fois où les clients ont été contactés sur la campagne précédente a rarement dépassé trois fois, ce qui peut être compréhensible puisqu’un client trop sollicité pendant une campagne aura tendance à se désintéresser des dépôts à terme.",
+    'poutcome': "La variable ‘poutcome’ est le resultat de la campagne marketing précédente c’est une variable catégorielle de 4 valeurs uniques ('unknown','other'','failure','success'). On observe qu’il y’a plus de 8000 clients soit 74,6% de clients qui sont dans la catégorie « unknow » mais ceci peut s’expliquer vu le nombre de client qui n’avaient jamais été contacté dans la variable « prévious » ainsi qu’au nombre de fois que le client avait été contacté suivant la variable « pdays ».",
+    'deposit' : "La variable « deposit » est notre variable cible, elle indique si oui ou non un client a souscrit à un dépôt à terme c’est une variable catégorielle de type booléen avec 52,6% de client ayant refusé de souscrire et 47,4% ayant souscrit."
+}
+
+# Affichage des commentaires avec st.info
+            for var in selected_vars:
+                if var in comments:
+                    st.info(f"{var}: {comments[var]}")
+                else:
+                    st.info(f"Aucun commentaire disponible pour {var}.")
+    else:
+        st.write("Veuillez sélectionner des variables pour afficher les graphiques et les commentaires associés.")
+
+
+# Analyses des corrélations et tests statistiques
+
+st.header("Analyse des corrélations avec tests statistiques des variables explicatives")
+
+# Widget pour choisir les heatmaps à afficher
+heatmap_choices = st.multiselect("Choisissez les heatmaps à afficher:", 
+                                 ["Corr Numérique", "Corr Catégorielle", "Corr Num-Cat"])
+
+# Boucle sur les choix de l'utilisateur et affichage des heatmaps correspondantes
+for choice in heatmap_choices:
+    if choice == "Corr Numérique":
+        # Affichage de la heatmap numérique
+        st.header("Analyse de la corrélation entre les variables numériques")
+        import plotly.express as px
+        correlation_matrix = df.corr()
+        fig = px.imshow(correlation_matrix, x=correlation_matrix.columns, y=correlation_matrix.columns, text_auto=True)
+        st.plotly_chart(fig)
+
+        # Checkbox pour afficher le commentaire
+        if st.checkbox("Afficher le commentaire sur la corrélation numérique", key="Num"):
+            st.markdown("""L'analyse de corrélation montre peu de liens linéaires forts entre la plupart des variables numériques, à l'exception des paires 'pdays' et 'previous', 'age' et 'balance' ainsi que 'campaign' et 'day', qui montrent des corrélations positives notables. 
+L'absence de corrélations élevées est favorable pour éviter la multi-collinéarité dans le modèle d'apprentissage automatique.
+""")
+
+    elif choice == "Corr Catégorielle":
+        # Affichage de la heatmap catégorielle
+            st.subheader("Analyse de la corrélation entre les variables catégorielles")
+            st.subheader("Heatmap des valeurs-p des tests du Chi-carré")
+            import numpy as np
+            from scipy.stats import chi2_contingency
+            import plotly.express as px
+
+            def create_p_matrix(df):
+                variables = ['job', 'marital', 'education', 'default', 'housing', 'loan', 'contact', 'month', 'poutcome']
+                p_matrix = pd.DataFrame(np.nan, index=variables, columns=variables)
+
+                for i in range(len(variables)):
+                    for j in range(i+1, len(variables)):
+                        var1 = variables[i]
+                        var2 = variables[j]
+                        contingency_table = pd.crosstab(df[var1], df[var2])
+                        _, p, _, _ = chi2_contingency(contingency_table)
+                        p_matrix.loc[var1, var2] = p
+                        p_matrix.loc[var2, var1] = p
+
+                np.fill_diagonal(p_matrix.values, 1)
+                return p_matrix
+            p_matrix = create_p_matrix(df)  
+            fig = px.imshow(p_matrix, x=p_matrix.columns, y=p_matrix.index, text_auto=True, color_continuous_scale='plasma')
+            st.plotly_chart(fig)
+
+        # Checkbox pour afficher le commentaire
+            if st.checkbox("Afficher le commentaire sur la corrélation catégorielle", key="cat"):
+                st.markdown("""la plupart des variables catégorielles dans notre ensemble de données sont interdépendantes, bien que certaines paires, telles que 'marital' et 'default', 'education' et 'default', 'default' et 'housing', ainsi que 'loan' et 'contact', ne montrent pas de dépendance significative. La majorité des tests indiquent des p-values inférieures à 5%, justifiant le rejet de l'indépendance entre ces variables catégorielles.
+                            """)
+
+    elif choice == "Corr Num-Cat":
+        # Affichage de la heatmap ANOVA
+            st.header("Analyse de la corrélation entre les variables catégorielles et les variables numériques")
+            import numpy as np
+            import itertools
+            import plotly.express as px
+            from statsmodels.formula.api import ols
+            import statsmodels.api as sm
+
+
+# Identification des variables numériques et catégorielles, à l'exception de 'deposit'
+            numeric_vars = df.select_dtypes(include=['int64', 'float64']).columns.tolist()
+            categorical_vars = df.select_dtypes(include=['object']).columns.tolist()
+            categorical_vars.remove('deposit')
+
+# Création d'un DataFrame pour les résultats ANOVA
+            anova_p_values = pd.DataFrame(np.nan, index=numeric_vars, columns=categorical_vars)
+
+# Calcul des valeurs-p pour chaque paire de variables numériques et catégorielles
+            for numeric_var, categorical_var in itertools.product(numeric_vars, categorical_vars):
+                formula = f'{numeric_var} ~ C({categorical_var})'
+                model = ols(formula, data=df).fit()
+                anova_result = sm.stats.anova_lm(model, typ=2)
+                p_value = anova_result["PR(>F)"][0]
+                anova_p_values.loc[numeric_var, categorical_var] = p_value
+
+# Création de la heatmap avec Plotly
+            fig = px.imshow(anova_p_values, text_auto=True)
+            fig.update_layout(title="Heatmap des valeurs-p de l'ANOVA", xaxis_title="Variables Catégorielles", yaxis_title="Variables Numériques")
+            st.plotly_chart(fig)
+
+        # Checkbox pour afficher le commentaire
+            if st.checkbox("Afficher le commentaire sur la Corrélation Numérique-Catégorielle", key="Num-Cat"):
+                st.markdown("""La majorité des tests ont révélé des relations statistiquement significatives. Des exceptions notables concernent certaines interactions impliquant le jour du dernier contact, bien que quelques-unes d'entre elles, notamment avec le mois du contact, le résultat de la campagne précédente, et la variable cible 'deposit', aient montré une significativité statistique élevée. 
+Nous avons décidé de commun accord le maintien de la variable 'day' dans notre analyse.
+""")
+ 
+#visualisation des corrélations avec la variable cible déposit
+import plotly.express as px
+
+def create_plotly_countplot(df, x, hue, title):
+        # Définition de la palette de couleurs
+    color_discrete_map = {'Yes': 'blue', 'No': 'red'}
+
+    # Création du graphique avec la palette personnalisée
+    fig = px.histogram(df, x=x, color=hue, barmode='group', color_discrete_map=color_discrete_map)
+    fig.update_layout(title=title, xaxis_title=x, yaxis_title='Count')
+    return fig
+
+def create_plotly_histplot(df, x, color, title):
+    # Utilisation de la même palette de couleurs pour la cohérence
+    color_discrete_map = {'Yes': 'blue', 'No': 'red'}
+
+    # Création du graphique avec la palette personnalisée
+    fig = px.histogram(df, x=x, color=color, barmode='overlay', nbins=50, color_discrete_map=color_discrete_map)
+    fig.update_layout(title=title, xaxis_title=x, yaxis_title='Count')
+    return fig
+
+
+    # Commentaires pour chaque corrélation
+correlation_comments = {
+    'previous':"La majorité des clients n'avaient pas été contactés avant cette campagne. Cependant,  un  taux  de  souscription  plus  élevé  est  observé  chez  ceux  ayant  été  contactés  plusieurs  fois auparavant, suggérant que les efforts de marketing répétés peuvent construire une base de clients  fidèles et réceptifs. ",
+    'pdays': "Un grand nombre de clients ont été contactés après une longue période (999 jours indiquant probablement une absence  de  contact  antérieur).  Les  clients  contactés  plus  récemment  sont  plus  susceptibles  de  souscrire, soulignant l'importance de maintenir une communication régulière. ",
+    'default':"Les graphiques ci-dessus démontrent tout d’abord que la corrélation entre la variable default et la variable cible est en dessous de 0.5 mais existante. Les personnes en défaut de paiement sont moins intéressées par les dépôts à terme par rapport à ceux qui ne le sont pas du fait des difficultés que peuvent présenter leurs trésoreries",
+    'campaign': "La plupart des souscriptions se produisent lorsque les clients sont contactés entre une et trois fois. Au-delà,  la  probabilité  de  souscription  diminue,  ce  qui  indique  un  point  de  saturation  dans  les  efforts  de communication.",
+    'duration':"La durée de l'appel semble être un indicateur fort de la souscription, avec des appels plus longs qui impliquent une plus grande probabilité de souscription.",
+    'day':"La distribution de la souscription est relativement uniforme à travers le mois, bien qu'il y  ait des variations mineures qui méritent une analyse plus approfondie pour optimiser le timing des contacts.",
+    'poutcome':"Les  clients  ayant  eu  un  résultat  positif  (« success »)  lors  de  la  campagne  précédente  sont  nettement  plus susceptibles de souscrire à nouveau, soulignant l'importance de construire une relation positive continue avec les clients. ",
+    'month':"Bien que le mois de Mai soit le mois le plus actif en termes de contacts, les mois de Mars, Décembre, Octobre et  Septembre  se  distinguent  par  une  réussite  de  souscription  plus  élevée,  suggérant  une  saisonnalité  dans l'efficacité de nos campagnes",
+    'loan':"De même, les clients sans prêt personnel montrent une propension plus élevée à la souscription, renforçant l'idée qu'une moindre charge de dettes favorise l'engagement envers de nouveaux services financiers. ",
+    'housing':"Il apparaît que les clients sans prêt immobilier sont plus enclins à souscrire, ce qui peut refléter une plus grande flexibilité financière ou une aversion moindre au risque. ",
+    'education':"Nous constatons que les clients avec un niveau d'éducation tertiaire ont un taux de souscription plus élevé par rapport aux autres niveaux d'éducation. Cela indique que le niveau d'éducation peut influencer la propension à souscrire.",
+    'marital':"Les célibataires affichent un taux de souscription légèrement supérieur comparé aux autres statuts maritaux, ce qui suggère que le célibat peut être un indicateur positif pour la souscription à nos services.",
+    'balance': "Ce graphique nous indique que la majeure partie des clients qui souscrivent au dépôt à terme ont des soldes bancaires qui varient entre 0 et 10k euros.",
+    'age' : "En analysant ce graphique, il est évident que les distributions d'âge pour les souscriptions au dépôt ('oui' et 'non') sont remarquablement proches. L'alignement étroit des deux distributions suggère que l'âge seul pourrait ne pas être un déterminant important pour prédire si un client souscrira au dépôt à terme",
+    'job': "Le graphique présente une fréquence élevée de souscription pour les étudiants, les managers et les ouvriers, cela suppose que les personnes de ces corps de métiers ont plus de chance de souscrire à un dépôt à terme que les  autres  catégories.  Tout  en  notant  que  dans  la  majorité  des  métiers  il  y  a  une  fréquence  de  souscription plutôt bonne.",
+  
+    }
+
+    # Variables explicatives à sélectionner pour la visualisation
+variables_to_choose = ['marital', 'education', 'default', 'housing', 'loan', 'month','previous', 
+                       'poutcome', 'day', 'age', 'job', 'balance', 'contact', 'duration','campaign','pdays']
+
+st.header("Analyse de la corrélation des variables explicatives et de la variable cible")
+
+    # Choix de la variable explicative pour la corrélation
+selected_variable = st.selectbox("Sélectionnez une variable pour visualiser la corrélation avec 'deposit':", 
+                                 options=variables_to_choose)
 
     
-    fig2 = go.Figure(data=go.Bar(x=df['education'].value_counts().index, y=df['education'].value_counts().values))
-    fig2.update_layout(title="Distribution du niveau d'étude", xaxis_title="Niveau d'éducation", yaxis_title="Décompte")
-    fig2.update_xaxes(tickangle=45)
-    col1, col2 = st.columns(2)
-    col1.plotly_chart(fig1, use_container_width=True)
-    col2.plotly_chart(fig2, use_container_width=True)
-    st.write("Les clients ayant des emplois de gestion et des emplois d'ouvrier qualifié sont les plus nombreux dans la banque.")
-    st.write("Il y a très peu d'étudiants parmi les clients de la banque.")
-    st.write("Les métiers les plus représentés chez les clients de la banque sont le management et les blue-collar.")
-    st.write("La majorité des clients de la banque sont mariés (56.9%) ou célibataires (31.5%).")
-    st.write("La majorité des clients de la banque ont suivi un cursus de second cycle (49.1%) ou de troisième cycle (33%).")
-    st.write("Seulement 11% des clients ont suivi un cursus de premier cycle.")
+    # Fonction pour déterminer le type de graphique à utiliser
+def get_correlation_plot(variable):
+    if variable in ['age', 'balance','duration','pdays','campaign','previous','day']:
+        return create_plotly_histplot(df, variable, 'deposit', f'Relation entre {variable} et deposit')
+    else:
+        return create_plotly_countplot(df, variable, 'deposit', f'Relation entre {variable} et deposit')
+
+    # Affichage du graphique sélectionné
+if selected_variable:
+        fig = get_correlation_plot(selected_variable)
+        st.plotly_chart(fig)
+    
+    # Affichage du commentaire
+show_comment = st.checkbox("Afficher le commentaire sur la corrélation")
+if show_comment and selected_variable:
+    st.info(correlation_comments.get(selected_variable, "Pas de commentaire pour cette variable."))
+
+    
+st.header("validation Statistique")
+
+    # Checkbox pour la première partie (Test statistique du Chi Carré)
+if st.checkbox("Test statistique du Chi Carré"):
+    st.markdown("""
+    Afin de vérifier statistiquement l'influence des variables catégorielles sur la variable cible, nous avons utilisé le test statistique du chi carré qui permet de montrer s'il existe 
+ou non une relation entre deux variables catégorielles. 
+Nous  constatons  que  toutes  les  statistiques  de  test  des  variables  catégorielles  respectives  sont  toutes 
+significativement  inférieures  à  5%.  Ce  qui  nous  permet  de  rejeter  l'hypothèse  nulle  d'indépendance  des 
+variables catégorielles par rapport à la variable cible (deposit) et cela sous entend que toutes ces variables ont une influence sur la décision du client à souscrire ou pas au dépot à terme    
+    """)
+    cat_features = ['job', 'marital', 'education', 'default', 'housing', 'loan', 'contact', 'month', 'poutcome', 'deposit']
+    chi2_p_values = {}
+
+    for feature in cat_features:
+        if feature != 'deposit':
+            contingency_table = pd.crosstab(df[feature], df['deposit'])
+            _, p, _, _ = chi2_contingency(contingency_table)
+            chi2_p_values[feature] = p
+
+# Conversion en DataFrame pour la visualisation
+    chi2_df = pd.DataFrame(list(chi2_p_values.items()), columns=['Feature', 'P-value'])
+
+# Création du graphique à barres
+    fig = px.bar(chi2_df, x='Feature', y='P-value', text='P-value')
+    fig.update_layout(yaxis=dict(range=[0, 0.05]))  
+    fig.add_hline(y=0.05, line_dash="dash", line_color="red")  
+
+    st.plotly_chart(fig)
+        
+    # Checkbox pour la deuxième partie (Test de Student)
+if st.checkbox("Test de Student"):
+    st.markdown("""
+    
+    Le test de Student est un test statistique utilisé pour confirmer la dépendance pertinente observée entre des variables numériques et une variable catégorielle.
+    Nous constatons que toutes les statistiques de test (t-student) des variables numériques respectives sont toutes < 5%.
+    Nous pouvons donc affirmer avec certitude que les caractéristiques numériques que nous avons étudiées sont liées à la décision du client de souscrire ou non au dépôt à terme.
+    
+    """)
+        
+    import plotly.express as px
+    from scipy.stats import ttest_ind
+
+    num_features = ['age', 'balance', 'duration', 'campaign', 'pdays', 'previous']
+    ttest_p_values = {}
+
+    for feature in num_features:
+        group1 = df[df['deposit'] == 'yes'][feature]
+        group2 = df[df['deposit'] == 'no'][feature]
+        _, p = ttest_ind(group1, group2)
+        ttest_p_values[feature] = p
+
+# Conversion des résultats en DataFrame pour la visualisation
+    ttest_df = pd.DataFrame(list(ttest_p_values.items()), columns=['Feature', 'P-value'])
+
+# Création d'un graphique Plotly
+    fig = px.bar(ttest_df, x='Feature', y='P-value', text='P-value')
+    fig.update_layout(yaxis=dict(range=[0, 0.05]), title="Résultats des tests de Student pour les caractéristiques numériques")
+    st.plotly_chart(fig)
 
 
-    variables = ["default", "housing", "loan"]
-    for variable in variables:
-        counts = df[variable].value_counts()
-        labels = counts.index
-        sizes = counts.values
-        plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
-        plt.axis('equal')
-        plt.title(f"Répartition de la variable '{variable}'")
-        st.pyplot(plt.gcf())
-        plt.clf()
 
-    contact_counts = df['contact'].value_counts()
-    labels = contact_counts.index
-    sizes = contact_counts.values
-    plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
-    plt.axis('equal')
-    plt.title('Répartition des types de contact')
-    st.pyplot(plt.gcf())
-    plt.clf()
+    # Suite de l'analyse
 
-    month_counts = df['month'].value_counts().sort_index()
-    months_ordered = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
-    month_counts_ordered = month_counts.reindex(months_ordered)
-    plt.bar(month_counts_ordered.index, month_counts_ordered.values)
-    plt.title('Décompte des contacts par mois')
-    plt.xlabel('Mois')
-    plt.ylabel('Décompte')
-    st.pyplot(plt.gcf())
-    plt.clf()
 
-    poutcome_counts = df['poutcome'].value_counts()
-    labels = poutcome_counts.index
-    counts = poutcome_counts.values
-    plt.bar(labels, counts)
-    plt.title('Décompte des résultats de la campagne précédente')
-    plt.xlabel('Résultat de la campagne précédente')
-    plt.ylabel('Décompte')
-    plt.xticks(rotation=45)
-    st.pyplot(plt.gcf())
-    plt.clf()
+st.markdown("""
+En bref, malgré les informations substantielles fournies par l'analyse exploratoire des variables, il est crucial de noter que la relation statistique ne garantit pas la causalité. Une investigation plus approfondie, telle qu'une modélisation prédictive, serait nécessaire pour comprendre comment ces variables influent réellement sur la souscription aux dépôts à terme.
+Nous allons donc procéder à la modélisation de notre jeu de données pour faire de bonnes prédictions, en commençant par le Pre-processing.
+""")
 
-    poutcome_counts = df['poutcome'].value_counts()
-    labels = poutcome_counts.index
-    sizes = poutcome_counts.values
-    plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
-    plt.axis('equal')
-    plt.title('Répartition des résultats de la campagne précédente')
-    st.pyplot(plt.gcf())
-    plt.clf()
-
-    job_balance_mean = df.groupby('job')['balance'].mean()
-    job_balance_mean = job_balance_mean.sort_values(ascending=False)
-    plt.bar(job_balance_mean.index, job_balance_mean.values)
-    plt.title('Solde moyen par profession')
-    plt.xlabel('Profession')
-    plt.ylabel('Solde moyen')
-    plt.xticks(rotation=45)
-    st.pyplot(plt.gcf())
-    plt.clf()
-
-    sns.boxplot(x="job", y="age", data=df)
-    plt.title("Distribution de l'âge par type de job")
-    plt.xlabel("Type de job")
-    plt.ylabel("Âge")
-    plt.xticks(rotation=45)
-    st.pyplot(plt.gcf())
-    plt.clf()
-
-    sns.boxplot(x="marital", y="age", data=df)
-    plt.title("Distribution de l'âge par état matrimonial")
-    plt.xlabel("État matrimonial")
-    plt.ylabel("Âge")
-    st.pyplot(plt.gcf())
-    plt.clf()
-
-    sns.boxplot(x="education", y="age", data=df)
-    plt.title("Distribution de l'âge par niveau d'éducation")
-    plt.xlabel("Niveau d'éducation")
-    plt.ylabel("Âge")
-    plt.xticks(rotation=45)
-    st.pyplot(plt.gcf())
-    plt.clf()
-
-    fig, ax = plt.subplots(figsize=(6, 6))
-    sns.boxplot(ax=ax, x="loan", y="age", data=df)
-    ax.set_title("Distribution de l'âge selon les prêts personnels")
-    ax.set_xlabel("Prêt personnel")
-    ax.set_ylabel("Âge")
-    st.pyplot(fig)
-
-    fig, ax = plt.subplots(figsize=(6, 6))
-    sns.boxplot(ax=ax, x="housing", y="age", data=df)
-    ax.set_title("Distribution de l'âge selon les prêts immobiliers")
-    ax.set_xlabel("Prêt immobilier")
-    ax.set_ylabel("Âge")
-    st.pyplot(fig)
+    
 
 if page == pages[2] :
     st.write("Pre-processing")

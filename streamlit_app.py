@@ -297,7 +297,7 @@ variables catégorielles par rapport à la variable cible (deposit) et cela sous
         
     # Checkbox pour la deuxième partie (Test de Student)
     if st.checkbox("Test de Student"):
-        st.markdown("""
+       st.markdown("""
     
     Le test de Student est un test statistique utilisé pour confirmer la dépendance pertinente observée entre des variables numériques et une variable catégorielle.
     Nous constatons que toutes les statistiques de test (t-student) des variables numériques respectives sont toutes < 5%.
@@ -310,14 +310,14 @@ variables catégorielles par rapport à la variable cible (deposit) et cela sous
     num_features = ['age', 'balance', 'duration', 'campaign', 'pdays', 'previous']
     ttest_p_values = {}
 
-        for feature in num_features:
-            group1 = df[df['deposit'] == 'yes'][feature]
-            group2 = df[df['deposit'] == 'no'][feature]
-            _, p = ttest_ind(group1, group2)
-            ttest_p_values[feature] = p
+    for feature in num_features:
+        group1 = df[df['deposit'] == 'yes'][feature]
+        group2 = df[df['deposit'] == 'no'][feature]
+        _, p = ttest_ind(group1, group2)
+        ttest_p_values[feature] = p
 
 # Conversion des résultats en DataFrame pour la visualisation
-        ttest_df = pd.DataFrame(list(ttest_p_values.items()), columns=['Feature', 'P-value'])
+    ttest_df = pd.DataFrame(list(ttest_p_values.items()), columns=['Feature', 'P-value'])
 
 # Création d'un graphique Plotly
         fig = px.bar(ttest_df, x='Feature', y='P-value', text='P-value')

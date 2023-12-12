@@ -31,6 +31,7 @@ import itertools
 import plotly.express as px
 from statsmodels.formula.api import ols
 import statsmodels.api as sm
+from plotly.subplots import make_subplots
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 df = pd.read_csv('bank.csv')

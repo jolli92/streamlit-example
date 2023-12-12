@@ -320,9 +320,9 @@ variables catégorielles par rapport à la variable cible (deposit) et cela sous
     ttest_df = pd.DataFrame(list(ttest_p_values.items()), columns=['Feature', 'P-value'])
 
 # Création d'un graphique Plotly
-        fig = px.bar(ttest_df, x='Feature', y='P-value', text='P-value')
-        fig.update_layout(yaxis=dict(range=[0, 0.05]), title="Résultats des tests de Student pour les caractéristiques numériques")
-        st.plotly_chart(fig)
+    fig = px.bar(ttest_df, x='Feature', y='P-value', text='P-value')
+    fig.update_layout(yaxis=dict(range=[0, 0.05]), title="Résultats des tests de Student pour les caractéristiques numériques")
+    st.plotly_chart(fig)
 
 
 

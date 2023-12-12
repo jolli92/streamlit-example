@@ -38,7 +38,7 @@ st.set_option('deprecation.showPyplotGlobalUse', False)
 df = pd.read_csv('bank.csv')
 st.title("Analyse de bank marketing")
 st.sidebar.title("Sommaire")
-pages=["Exploration", "DataVizualization","Pre-processing", "Prédictions", "Prédictions_2"]
+pages=["DataVizualization","Pre-processing", "Prédictions", "Prédictions_2"]
 page=st.sidebar.radio("Aller vers", pages)
 def create_visualisations(df, variables):
     rows = len(variables)

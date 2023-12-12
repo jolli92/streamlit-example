@@ -25,6 +25,7 @@ from joblib import load
 from sklearn.preprocessing import StandardScaler
 import joblib
 import dill
+import statsmodels
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 df = pd.read_csv('bank.csv')

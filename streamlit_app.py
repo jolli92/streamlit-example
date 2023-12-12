@@ -57,7 +57,16 @@ if page == pages[0]:
     df = df
     st.dataframe(df.head(10))
     st.write(df.shape)
-    st.write(df.info(verbose=True, memory_usage='deep', show_counts=True))
+    # Créer un tampon d'E/S en mémoire
+    buffer = StringIO()
+# Rediriger la sortie de df.info() vers le tampon
+    df.info(buf=buffer)
+# Récupérer la chaîne du tampon
+    s = buffer.getvalue()
+
+# Afficher la chaîne dans Streamlit
+    st.text("Résumé du DataFrame:")
+    st.text_area("Info", s, height=300)
     st.dataframe(df.describe())
 
 

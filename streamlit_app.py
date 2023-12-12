@@ -228,7 +228,7 @@ Nous avons décidé de commun accord le maintien de la variable 'day' dans notre
 
 
     # Commentaires pour chaque corrélation
-        correlation_comments = {
+    correlation_comments = {
     'previous':"La majorité des clients n'avaient pas été contactés avant cette campagne. Cependant,  un  taux  de  souscription  plus  élevé  est  observé  chez  ceux  ayant  été  contactés  plusieurs  fois auparavant, suggérant que les efforts de marketing répétés peuvent construire une base de clients  fidèles et réceptifs. ",
     'pdays': "Un grand nombre de clients ont été contactés après une longue période (999 jours indiquant probablement une absence  de  contact  antérieur).  Les  clients  contactés  plus  récemment  sont  plus  susceptibles  de  souscrire, soulignant l'importance de maintenir une communication régulière. ",
     'default':"Les graphiques ci-dessus démontrent tout d’abord que la corrélation entre la variable default et la variable cible est en dessous de 0.5 mais existante. Les personnes en défaut de paiement sont moins intéressées par les dépôts à terme par rapport à ceux qui ne le sont pas du fait des difficultés que peuvent présenter leurs trésoreries",
@@ -244,8 +244,7 @@ Nous avons décidé de commun accord le maintien de la variable 'day' dans notre
     'balance': "Ce graphique nous indique que la majeure partie des clients qui souscrivent au dépôt à terme ont des soldes bancaires qui varient entre 0 et 10k euros.",
     'age' : "En analysant ce graphique, il est évident que les distributions d'âge pour les souscriptions au dépôt ('oui' et 'non') sont remarquablement proches. L'alignement étroit des deux distributions suggère que l'âge seul pourrait ne pas être un déterminant important pour prédire si un client souscrira au dépôt à terme",
     'job': "Le graphique présente une fréquence élevée de souscription pour les étudiants, les managers et les ouvriers, cela suppose que les personnes de ces corps de métiers ont plus de chance de souscrire à un dépôt à terme que les  autres  catégories.  Tout  en  notant  que  dans  la  majorité  des  métiers  il  y  a  une  fréquence  de  souscription plutôt bonne.",
-  
-    }
+  }
 
     # Variables explicatives à sélectionner pour la visualisation
     variables_to_choose = ['marital', 'education', 'default', 'housing', 'loan', 'month','previous', 

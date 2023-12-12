@@ -33,6 +33,7 @@ from statsmodels.formula.api import ols
 import statsmodels.api as sm
 from plotly.subplots import make_subplots
 from scipy.stats import chi2_contingency
+from scipy.stats import ttest_ind
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 df = pd.read_csv('bank.csv')
@@ -310,11 +311,10 @@ variables catégorielles par rapport à la variable cible (deposit) et cela sous
     
     """)
         
-    import plotly.express as px
-    from scipy.stats import ttest_ind
+    
 
-        num_features = ['age', 'balance', 'duration', 'campaign', 'pdays', 'previous']
-        ttest_p_values = {}
+    num_features = ['age', 'balance', 'duration', 'campaign', 'pdays', 'previous']
+    ttest_p_values = {}
 
         for feature in num_features:
             group1 = df[df['deposit'] == 'yes'][feature]

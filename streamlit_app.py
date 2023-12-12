@@ -215,7 +215,7 @@ L'absence de corrélations élevées est favorable pour éviter la multi-collin�
         # Checkbox pour afficher le commentaire
             if st.checkbox("Afficher le commentaire sur la Corrélation Numérique-Catégorielle", key="Num-Cat"):
                 st.markdown("""La majorité des tests ont révélé des relations statistiquement significatives. Des exceptions notables concernent certaines interactions impliquant le jour du dernier contact, bien que quelques-unes d'entre elles, notamment avec le mois du contact, le résultat de la campagne précédente, et la variable cible 'deposit', aient montré une significativité statistique élevée. 
-Nous avons décidé de commun accord le maintien de la variable 'day' dans notre analyse.
+Nous avons décidé d'un commun accord le maintien de la variable 'day' dans notre analyse.
 """)
  
 #visualisation des corrélations avec la variable cible déposit
@@ -273,11 +273,7 @@ if page == pages[0]:
     # Checkbox pour la première partie (Test statistique du Chi Carré)
     if st.checkbox("Test statistique du Chi Carré"):
         st.markdown("""
-    Afin de vérifier statistiquement l'influence des variables catégorielles sur la variable cible, nous avons utilisé le test statistique du chi carré qui permet de montrer s'il existe 
-ou non une relation entre deux variables catégorielles. 
-Nous  constatons  que  toutes  les  statistiques  de  test  des  variables  catégorielles  respectives  sont  toutes 
-significativement  inférieures  à  5%.  Ce  qui  nous  permet  de  rejeter  l'hypothèse  nulle  d'indépendance  des 
-variables catégorielles par rapport à la variable cible (deposit) et cela sous entend que toutes ces variables ont une influence sur la décision du client à souscrire ou pas au dépot à terme    
+    Afin d'évaluer l'impact des variables catégorielles sur la variable cible, nous avons mis en œuvre le test du chi carré. Cette méthode statistique est conçue pour déterminer l'existence d'une corrélation entre deux variables catégorielles. Nos résultats montrent que les valeurs des statistiques de test pour chaque variable catégorielle sont significativement inférieures au seuil de 5%. Cela nous amène à rejeter l'hypothèse nulle, qui postule l'indépendance entre les variables catégorielles et la variable cible (dépôt à terme). Par conséquent, nous concluons que ces variables exercent une influence notable sur la décision des clients de souscrire ou non à un dépôt à terme   
     """)
         cat_features = ['job', 'marital', 'education', 'default', 'housing', 'loan', 'contact', 'month', 'poutcome', 'deposit']
         chi2_p_values = {}

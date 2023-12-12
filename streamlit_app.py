@@ -34,22 +34,22 @@ pages=["Exploration", "DataVizualization","Pre-processing", "Prédictions", "Pr�
 page=st.sidebar.radio("Aller vers", pages)
 
 if page == pages[0] :
-    def create_visualisations(df, variables):
-    rows = len(variables)
-    fig = make_subplots(rows=rows, cols=1, subplot_titles=[f'Distribution de {var}' for var in variables])
+def create_visualisations(df, variables):
+rows = len(variables)
+fig = make_subplots(rows=rows, cols=1, subplot_titles=[f'Distribution de {var}' for var in variables])
 
-    for i, var in enumerate(variables, start=1):
-        if df[var].dtype == 'object':
-            data = go.Bar(x=df[var].value_counts().index, y=df[var].value_counts(), name=var)
-        else:
-            data = go.Histogram(x=df[var], nbinsx=30, name=var)
+for i, var in enumerate(variables, start=1):
+    if df[var].dtype == 'object':
+        data = go.Bar(x=df[var].value_counts().index, y=df[var].value_counts(), name=var)
+    else:
+        data = go.Histogram(x=df[var], nbinsx=30, name=var)
         fig.add_trace(data, row=i, col=1)
 
-    fig.update_layout(height=300 * rows, width=800, showlegend=False)
+        fig.update_layout(height=300 * rows, width=800, showlegend=False)
     return fig
 
 # Chargement des données
-df = load_data()
+df = df
 
 # Logique de l'application Streamlit
 if page == pages[0]:

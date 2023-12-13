@@ -201,7 +201,7 @@ if page == pages[1] :
     )
 
     # Text with adjusted styling
-    st.markdown('<p class="highlight">Distribution des variables</p>', unsafe_allow_html=True)
+  st.markdown('<p class="highlight">Distribution des variables</p>', unsafe_allow_html=True)
 
 
     # Widgets pour la sélection des variables et l'affichage des commentaires

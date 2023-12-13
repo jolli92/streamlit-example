@@ -209,7 +209,8 @@ if page == pages[1] :
       st.write("**PREVIOUS** : Variable quantitative indiquant le nombre de contacts avec le client lors de la campagne précédente.")
       st.write("**POUTCOME** : Variable catégorielle montrant le résultat de la campagne de marketing précédente.")
   
-  st.header('Visualisation')
+  #st.header('Visualisation')
+  st.markdown('<p class="big-font">Visualisation</p>', unsafe_allow_html=True)
   #st.subheader('Distribution des variables')
   st.markdown(
         """

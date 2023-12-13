@@ -1122,7 +1122,7 @@ if page == pages[3] :
       prediction = model.predict(dtest)
     # XGBoost donne des probabilités pour la classification binaire, donc vous devez définir un seuil
     # Par exemple, si la prédiction est supérieure à 0.5, on considère que la classe prédite est 1
-      predicted_class = (prediction > 0.5).astype(int)
+      predicted_class = (prediction > 0.7).astype(int)
       if predicted_class[0] == 1:
           st.info("La prédiction est : Yes")
       else:

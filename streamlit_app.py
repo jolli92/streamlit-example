@@ -1,6 +1,7 @@
 # Base Python Libraries
 import os
 import io
+import streamlit as st
 from io import StringIO
 
 # Data Manipulation

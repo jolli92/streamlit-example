@@ -15,6 +15,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
 from plotly.subplots import make_subplots
+import plotly.graph_objs as go
 
 # Machine Learning - Preprocessing
 from sklearn.preprocessing import StandardScaler, OneHotEncoder, LabelEncoder

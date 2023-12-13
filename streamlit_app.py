@@ -74,6 +74,41 @@ def get_correlation_plot(variable):
         return create_plotly_histplot(df, variable, 'deposit', f'Relation entre {variable} et deposit')
     else:
         return create_plotly_countplot(df, variable, 'deposit', f'Relation entre {variable} et deposit')
+def plot_knn_scores(X_train, y_train, X_test, y_test):
+    score_mi = []
+    score_eu = []
+    score_ma = []
+    score_ch = []
+
+    for k in range(1, 100):
+        knn_mi = KNeighborsClassifier(n_neighbors=k, metric="minkowski")
+        knn_mi.fit(X_train, y_train)
+        score_mi.append(knn_mi.score(X_test, y_test))
+
+    for k in range(1, 100):
+        knn_eu = KNeighborsClassifier(n_neighbors=k, metric="euclidean")
+        knn_eu.fit(X_train, y_train)
+        score_eu.append(knn_eu.score(X_test, y_test))
+
+    for k in range(1, 100):
+        knn_ma = KNeighborsClassifier(n_neighbors=k, metric="manhattan")
+        knn_ma.fit(X_train, y_train)
+        score_ma.append(knn_ma.score(X_test, y_test))
+
+    for k in range(1, 100):
+        knn_ch = KNeighborsClassifier(n_neighbors=k, metric="chebyshev")
+        knn_ch.fit(X_train, y_train)
+        score_ch.append(knn_ch.score(X_test, y_test))
+
+    plt.plot(range(1, 100), score_mi, color='blue', linestyle='dashed', lw=2, label='Minkowski')
+    plt.plot(range(1, 100), score_eu, color='black', linestyle='dashed', lw=2, label='Euclidean')
+    plt.plot(range(1, 100), score_ma, color='orange', linestyle='dashed', lw=2, label='Manhattan')
+    plt.plot(range(1, 100), score_ch, color='red', linestyle='dashed', lw=2, label='Chebyshev')
+    plt.title('Accuracy Score - valeur de K')
+    plt.xlabel('Valeur de K')
+    plt.ylabel('Accuracy')
+    plt.legend()
+    return plt
 st.title('Projet : MARKETING BANCAIRE')
 st.sidebar.title("SOMMAIRE")
 pages=["Présentation du Projet", "Datavisualisation","Modélisation","Prédictions", "Utilisation professionnelle du projet", "Conclusion"]
@@ -357,7 +392,541 @@ if page == pages[1]:
 
  st.markdown("""En bref, malgré les informations substantielles fournies par l'analyse exploratoire des variables, il est crucial de noter que la relation statistique ne garantit pas la causalité. Une investigation plus approfondie, telle qu'une modélisation prédictive, serait nécessaire pour comprendre comment ces variables influent réellement sur la souscription aux dépôts à terme.
 Nous allons donc procéder à la modélisation de notre jeu de données pour faire de bonnes prédictions, en commençant par le Pre-processing.""")
-  
+if page == pages[1]:
+    st.markdown(
+        """
+        <style>
+            .big-font {
+                font-size: 32px !important;
+                color: #1E90FF;  /* Dodger Blue */
+                text-align: center;
+            }
+            .highlight {
+                padding: 20px;
+                border-radius: 8px;
+                text-align: center;
+            }
+            .section {
+                background-color: #F0F8FF;  /* Alice Blue */
+                padding: 30px;
+                border-radius: 20px;
+                text-align: center;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+# Section 1: Modélisation
+    st.markdown('<p class="big-font">Modélisation</p>', unsafe_allow_html=True)
+
+# Section 2: Preprocessing
+    st.markdown('<p class="highlight">Preprocessing</p>', unsafe_allow_html=True)
+
+    
+    #st.write("### **Modélisation**")
+    #st.write("### I - Preprocessing")
+
+    #On écarte les valeurs -1 de pdays pour ne pas les traiter lors du pre-processing
+    pdays_filtered = df['pdays'][df['pdays'] != -1]
+# Pour 'campaign'
+    Q1_campaign = df['campaign'].quantile(0.25)
+    Q3_campaign = df['campaign'].quantile(0.75)
+    IQR_campaign = Q3_campaign - Q1_campaign
+    Sbas_campaign = Q1_campaign - 1.5 * IQR_campaign
+    Shaut_campaign = Q3_campaign + 1.5 * IQR_campaign
+
+# Pour 'pdays' (excluding -1 values)
+    Q1_pdays = pdays_filtered.quantile(0.25)
+    Q3_pdays = pdays_filtered.quantile(0.75)
+    IQR_pdays = Q3_pdays - Q1_pdays
+    Sbas_pdays = Q1_pdays - 1.5 * IQR_pdays
+    Shaut_pdays = Q3_pdays + 1.5 * IQR_pdays
+
+# Pour 'previous'
+    Q1_previous = df['previous'].quantile(0.25)
+    Q3_previous = df['previous'].quantile(0.75)
+    IQR_previous = Q3_previous - Q1_previous
+
+
+    Sbas_previous = Q1_previous - 1.5 * IQR_previous
+    Shaut_bound_previous = Q3_previous + 1.5 * IQR_previous
+
+#Pour 'Duration'
+    Q1_duration = df['duration'].quantile(0.25)
+    Q3_duration = df['duration'].quantile(0.75)
+    IQR_duration = Q3_duration - Q1_duration
+    Sbas_duration = Q1_duration - 1.5 * IQR_duration
+    Shaut_bound_duration = Q3_duration + 1.5 * IQR_duration
+
+    moyenne_pdays = pdays_filtered.mean()
+    moyenne_campaign = df['campaign'].mean()
+    moyenne_previous = df['previous'].mean()
+    moyenne_duration = df['duration'].mean()
+
+# Remplacer les valeurs aberrantes de 'pdays' par sa moyenne (en excluant les valeurs -1)
+    df.loc[(df['pdays'] > Shaut_pdays) & (df['pdays'] != -1), 'pdays'] = moyenne_pdays
+
+# Remplacer les valeurs aberrantes de 'campaign' par sa moyenne
+    df.loc[df['campaign'] > Shaut_campaign, 'campaign'] = moyenne_campaign
+
+# Remplacer les valeurs aberrantes de 'previous' par la moyenne de 'campaign'
+    df.loc[df['previous'] > Shaut_bound_previous, 'previous'] = moyenne_previous
+
+# Remplacer les valeurs aberrantes de 'duration' par la moyenne de 'campaign'
+    df.loc[df['duration'] > Shaut_bound_duration, 'duration'] = moyenne_duration
+
+  #Transformation des colonnes age et balance
+
+    age_bins = [18, 25, 35, 50, 65, 100]
+    age_labels = ["18_25", "25_35", "35_50", "50_65", "65_100"]
+# On applique le changement sur le dataset pour creer la colonne
+    df['age_group'] = pd.cut(df['age'], bins=age_bins, labels=age_labels, right=False)
+#Création du bins et des étiquettes
+    balance_bins = [-6848, 0, 122, 550, 1708, 81205]
+    balance_labels = ["negatif", "tres_faible", "faible", "moyen", "eleve"]
+# Cut the balance column into bins
+    df['balance_group'] = pd.cut(df['balance'], bins=balance_bins, labels=balance_labels, right=False)
+# On applique le changement sur le dataset pour creer la colonne
+    df['age_group'] = pd.cut(df['age'], bins=age_bins, labels=age_labels, right=False)
+    df['age_group'] = df['age_group'].astype('object')
+    df['balance_group'] = df['balance_group'].astype('object')
+
+    # Séparation des données en ensembles d'entraînement et de test
+    X = df.drop(columns=['deposit'])
+    y = df['deposit']
+    TEST_SIZE = 0.25
+    RAND_STATE = 42
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=TEST_SIZE, random_state=RAND_STATE)
+
+# Encodage de la variable cible
+    label_encoder = LabelEncoder()
+    y_train = label_encoder.fit_transform(y_train)
+    y_test = label_encoder.transform(y_test)
+
+# Sélection des colonnes catégorielles
+    categorical_columns = X_train.select_dtypes(include=['object']).columns
+
+# Encodage des caractéristiques catégorielles
+    encoder = OneHotEncoder(drop=None, sparse=False)
+
+# Utilisation de  fit sur l'ensemble d'entraînement
+    encoder.fit(X_train[categorical_columns])
+
+# Transformations des ensembles d'entraînement et de test
+    encoded_train = encoder.transform(X_train[categorical_columns])
+    encoded_test = encoder.transform(X_test[categorical_columns])
+
+# Conversion des caractéristiques encodées en dataframes
+    encoded_train_df = pd.DataFrame(encoded_train, columns=encoder.get_feature_names_out(categorical_columns))
+    encoded_test_df = pd.DataFrame(encoded_test, columns=encoder.get_feature_names_out(categorical_columns))
+
+# Fusion des dataframes encodés avec les originaux
+    X_train_encoded = X_train.drop(columns=categorical_columns).reset_index(drop=True).merge(encoded_train_df, left_index=True, right_index=True)
+    X_test_encoded = X_test.drop(columns=categorical_columns).reset_index(drop=True).merge(encoded_test_df, left_index=True, right_index=True)
+
+# Suppression des colonnes inutiles
+    X_train_encoded = X_train_encoded.drop(columns=['balance', 'age'])
+    X_test_encoded  = X_test_encoded.drop(columns=['balance', 'age'])
+
+  #Création d'un X_train et X_test normalisé pour les besoins de certains modéles
+
+  # Identifier les colonnes numériques
+    cols_numeriques = X_train_encoded.select_dtypes(include=['int64', 'float64']).columns
+    X_train_normalised = X_train_encoded
+    X_test_normalised = X_test_encoded
+# Initialiser le StandardScaler
+    scaler = StandardScaler()
+
+# Normaliser les colonnes numériques dans l'ensemble d'entraînement
+    X_train_normalised[cols_numeriques] = scaler.fit_transform(X_train_encoded[cols_numeriques])
+
+# Normaliser les colonnes numériques dans l'ensemble de test
+    X_test_normalised[cols_numeriques] = scaler.transform(X_test_encoded[cols_numeriques])
+
+
+    st.write("#### A - Étapes du prétraitement des données")
+
+    # Étape 1: Gestion des valeurs aberrantes
+    #st.write("**Étape 1 - Gestion des valeurs aberrantes**")
+
+    # Expliquer la méthode IQR
+    with st.expander("**Étape 1 - Gestion des valeurs aberrantes**"):
+        highlighted_text = "La méthode des IQR nous a permis de remplacer les valeurs extrêmes par la moyenne respective de chaque variable."
+
+        # Colored box with highlighted text
+        colored_box = f'<div style="background-color:#ECECEC; padding:10px; border-radius:5px;">{highlighted_text}</div>'
+
+        # Display the colored box with highlighted text
+        st.markdown(colored_box, unsafe_allow_html=True)
+
+    # Étape 2: Transformation des colonnes 'age' et 'balance'
+    #st.write("**Étape 2 - Transformation des colonnes 'age' et 'balance'**")
+
+    # Expliquer la transformation pour atténuer l'impact des valeurs extrêmes
+    with st.expander("**Étape 2 - Transformation des colonnes 'age' et 'balance'**"):
+        highlighted_text = "Afin d'atténuer l'impact des valeurs extrêmes tout en les conservant pour ne pas perdre plus de données."
+
+        # Colored box with highlighted text
+        colored_box = f'<div style="background-color:#ECECEC; padding:10px; border-radius:5px;">{highlighted_text}</div>'
+
+        # Display the colored box with highlighted text
+        st.markdown(colored_box, unsafe_allow_html=True)
+
+    # Étape 3: Séparation en ensembles d'entraînement et de test
+    #st.write("**Étape 3 - Séparation en ensembles d'entraînement et de test**")
+
+    # Expliquer la séparation des ensembles
+    with st.expander("**Étape 3 - Séparation en ensembles d'entraînement et de test**"):
+        highlighted_text = "Nous avons séparé les données en ensembles d'entraînement et de test pour évaluer notre modèle."
+
+        # Colored box with highlighted text
+        colored_box = f'<div style="background-color:#ECECEC; padding:10px; border-radius:5px;">{highlighted_text}</div>'
+
+        # Display the colored box with highlighted text
+        st.markdown(colored_box, unsafe_allow_html=True)
+
+    # Étape 4: Encodage de la variable cible
+    #st.write("**Étape 4 - Encodage de la variable cible**")
+
+    # Expliquer l'encodage de la variable cible 'deposit'
+    with st.expander("**Étape 4 - Encodage de la variable cible**"):
+        highlighted_text = "La variable cible 'deposit' a été encodée en valeurs numériques."
+
+        # Colored box with highlighted text
+        colored_box = f'<div style="background-color:#ECECEC; padding:10px; border-radius:5px;">{highlighted_text}</div>'
+
+        # Display the colored box with highlighted text
+        st.markdown(colored_box, unsafe_allow_html=True)
+
+    # Étape 5: Encodage One-Hot des variables catégorielles
+    #st.write("**Étape 5 - Encodage One-Hot des variables catégorielles**")
+
+    # Expliquer l'encodage One-Hot des variables catégorielles
+    with st.expander("**Étape 5 - Encodage One-Hot des variables catégorielles**"):
+        highlighted_text = "Les variables catégorielles ont été transformées en utilisant l'encodage One-Hot."
+
+        # Colored box with highlighted text
+        colored_box = f'<div style="background-color:#ECECEC; padding:10px; border-radius:5px;">{highlighted_text}</div>'
+
+        # Display the colored box with highlighted text
+        st.markdown(colored_box, unsafe_allow_html=True)
+
+    # Étape 6: Nettoyage final
+    #st.write("**Étape 6 - Nettoyage final**")
+
+    # Expliquer le nettoyage final
+    with st.expander("**Étape 6 - Nettoyage final**"):
+        highlighted_text = "Les colonnes redondantes ou non nécessaires (« balance » et « age ») ont été retirées des ensembles de données."
+
+        # Colored box with highlighted text
+        colored_box = f'<div style="background-color:#ECECEC; padding:10px; border-radius:5px;">{highlighted_text}</div>'
+
+        # Display the colored box with highlighted text
+        st.markdown(colored_box, unsafe_allow_html=True)
+        
+    st.write("#### B - Quelques visualisations pour notre preprocessing")
+
+    # On cree la variable du checkboxe
+    show_boxplots = st.checkbox("Visualisez les boxplots des variables affichant des valeurs extrêmes et abérantes avant leurs traitements")
+    
+    # On ajoute un séparateur entre les boxplots et le tableau
+    st.markdown("---")
+
+    # On cree les boxplots à l'aide d'une fonction et on génère le tout sur deux ligne
+
+    # La fonction pour génerer et afficher les boxplots
+    def generate_boxplot(column_name, title, axis):
+       sns.boxplot(data=df, x=column_name, ax=axis)
+       axis.set_title(f"Boxplot of {column_name}")
+
+    if show_boxplots:
+    # On crée un subplot avec les boxplots
+        # On crée un subplot avec deux lignes
+        fig, ax = plt.subplots(2, 2, figsize=(10, 8))
+
+    # Boxeplot sur la première ligne
+        generate_boxplot("pdays", "pdays", ax[0, 0])
+        generate_boxplot("campaign", "campaign", ax[0, 1])
+
+    # Boxeplot sur la deuxième ligne
+        generate_boxplot("previous", "previous", ax[1, 0])
+        generate_boxplot("duration", "duration", ax[1, 1])
+        plt.tight_layout()
+        st.pyplot(fig)
+
+    # On ajoute un séparateur entre les boxplots et le tableau
+    #On definit la variable checboxe
+    button_show_data = st.checkbox("Affichez le nouveau jeu de données résultant du preprocessing")
+
+    # Condition pour afficher les données grace au checkboxe
+    if button_show_data:
+        buffer = io.StringIO()
+        X_train_encoded.info(buf=buffer)
+        s = buffer.getvalue()
+        st.text(s)
+
+    st.markdown("---")
+
+
+      # Set the background color and font size for the text
+    st.markdown(
+        """
+        <style>
+            .highlight {
+                background-color: #F0F8FF;  /* Alice Blue */
+                padding: 15px;
+                border-radius: 8px;
+                text-align: center;
+                font-size: 24px;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Text with adjusted styling
+    st.markdown('<p class="highlight">Machine Learning</p>', unsafe_allow_html=True)
+
+
+    #st.write("### Machine Learning")
+    st.write("#### Nous avons entrainé et testé les models suivants :")
+    st.write("**- Regression Logistique**")
+    st.write("**- KNN**")
+    st.write("**- Decision Tree**")
+    st.write("**- Random Forest**")
+    st.write("**- XGBoost**")
+
+    # On cree un selecteur qui nouspermettra de choisir parmi les differents modèles
+
+    def plot_learning_curve(train_sizes, train_scores, test_scores, title):
+        fig, ax = plt.subplots(figsize=(10, 6))
+        ax.set_title(f"Learning Curve - {title}")
+        ax.set_xlabel("Training examples")
+        ax.set_ylabel("Score")
+        ax.grid()
+
+        train_scores_mean = np.mean(train_scores, axis=1)
+        train_scores_std = np.std(train_scores, axis=1)
+        test_scores_mean = np.mean(test_scores, axis=1)
+        test_scores_std = np.std(test_scores, axis=1)
+
+        ax.fill_between(train_sizes, train_scores_mean - train_scores_std, train_scores_mean + train_scores_std, alpha=0.1,
+                        color="r")
+        ax.fill_between(train_sizes, test_scores_mean - test_scores_std, test_scores_mean + test_scores_std, alpha=0.1,
+                        color="g")
+        ax.plot(train_sizes, train_scores_mean, 'o-', color="r", label="Training score")
+        ax.plot(train_sizes, test_scores_mean, 'o-', color="g", label="Cross-validation score")
+        ax.legend(loc="best")
+
+        return fig
+
+    # 
+    st.write("#### Evaluation des modèles Machine Learning")
+
+    # Choix du modèle
+    model_choisi = st.selectbox(label="Choisissez un modèle à évaluer",
+                                options=['-- Sélectionnez un modèle --', 'Regression Logistique', 'KNN', 'Decision Tree', 'Random Forest', 'XGBoost'])
+    model_folder = 'C:\\Users\\hbago\\OneDrive\\Bureau\\Data\\Bank_market\\'
+    loaded_bst = xgboost.Booster()
+
+    # On charge le modèle selectionné 
+    if model_choisi == 'Regression Logistique':
+        model = load(model_folder + 'LogisticRegression.joblib')
+        y_pred = model.predict(X_test_normalised)
+        accuracy = accuracy_score(y_test, y_pred)
+        st.success(f"Accuracy: {accuracy:.2%}")
+        train_sizes, train_scores, test_scores = learning_curve(model, X_train_normalised, y_train, n_jobs=-1,
+                                                                train_sizes=np.linspace(.1, 1.0, 5))
+
+        # On affiche le composant select pour choisir le metric desiré
+        selected_metric = st.selectbox("Sélectionnez une métrique d'evaluation du modèle choisi",
+                                       options=['-- Sélectionnez une métric --', 'Learning Curve', 'Confusion Matrix', 'Classification Report', 'ROC Curve'])
+
+        # On affiche l'information choisie
+        if selected_metric == 'Learning Curve':
+            st.pyplot(plot_learning_curve(train_sizes, train_scores, test_scores, model_choisi))
+        elif selected_metric == 'Confusion Matrix':
+            st.subheader("Confusion Matrix")
+            cm = confusion_matrix(y_test, y_pred)
+            # On affiche la confusion matrice avec une heatmap
+            plt.figure(figsize=(8, 6))
+            sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", cbar=False)
+            plt.xlabel("Classe prédite")
+            plt.ylabel("Classe réelle")
+            st.pyplot(plt)
+        elif selected_metric == 'Classification Report':
+            st.text(classification_report(y_test, y_pred))
+        elif selected_metric == 'ROC Curve':
+            fig, ax = plt.subplots(figsize=(8, 8))
+            if hasattr(model, 'predict_proba'):
+                y_prob = model.predict_proba(X_test_normalised)[:, 1]
+                fpr, tpr, seuils = roc_curve(y_test, y_prob)
+                roc_auc = auc(fpr, tpr)
+                ax.plot(fpr, tpr, color='darkorange', lw=2, label='ROC curve (area = {:.2f})'.format(roc_auc))
+                ax.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--', label='Aléatoire (auc = 0.5)')
+                ax.axhline(y=0.35, color='red', lw=2, label='Seuil = 0.35')
+                ax.set_xlim([0.0, 1.0])
+                ax.set_ylim([0.0, 1.05])
+                ax.set_xlabel('False Positive Rate')
+                ax.set_ylabel('True Positive Rate')
+                ax.set_title('Receiver Operating Characteristic (ROC) Curve')
+                ax.legend(loc="lower right")
+                st.pyplot(fig)
+            else:
+                st.warning("This option is only available for classifiers that support predict_proba (e.g., Logistic Regression).")
+
+        with st.expander("Obsevation"):
+            highlighted_text = "Ceci est un texte de test, à votre avis serait-il pertinent de faire de petites observations comme ceci pour chaque evaluation ?"
+        # Colored box avec mise en avant du texte
+            colored_box = f'<div style="background-color:#ADD8E6; padding:10px; border-radius:5px;">{highlighted_text}</div>'
+        # On affiche le Colored box avec mise en avant du texte
+            st.markdown(colored_box, unsafe_allow_html=True)
+
+    elif model_choisi == 'KNN':
+        model = load(model_folder + 'knn_ma.joblib')
+        X_test_contiguous = np.ascontiguousarray(X_test_normalised.values)
+        y_pred = model.predict(X_test_contiguous)
+        accuracy = accuracy_score(y_test, y_pred)
+        st.success(f"Accuracy: {accuracy:.2%}")
+        train_sizes, train_scores, test_scores = learning_curve(model, X_train_normalised.values, y_train, n_jobs=-1,
+                                                                train_sizes=np.linspace(.1, 1.0, 5))
+
+        # On affiche le composant select pour choisir le metric desiré
+        selected_metric = st.selectbox("Sélectionnez une métrique d'evaluation du modèle choisi",
+                                       options=['-- Sélectionnez une métric --', 'Learning Curve', 'Confusion Matrix', 'Classification Report', 'KNN Metrics'])
+
+        if selected_metric == 'Learning Curve':
+            st.pyplot(plot_learning_curve(train_sizes, train_scores, test_scores, model_choisi))
+        elif selected_metric == 'Confusion Matrix':
+            st.subheader("Confusion Matrix")
+            cm = confusion_matrix(y_test, y_pred)
+            #On affiche la confusion matrice avec une heatmap
+            plt.figure(figsize=(8, 6))
+            sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", cbar=False)
+            plt.xlabel("Classe prédite")
+            plt.ylabel("Classe réelle")
+            st.pyplot(plt)
+        elif selected_metric == 'Classification Report':
+            st.text(classification_report(y_test, y_pred))
+        
+        elif selected_metric == 'KNN Metrics':
+        #On génère le graphe sur streamlit grace à la fonction
+            st.subheader("KNN Accuracy Scores with Different Distance Metrics")
+            #plot_knn_scores(X_train_normalised, y_train, X_test_normalised, y_test)
+            st.pyplot(plot_knn_scores(X_train_normalised, y_train, X_test_normalised, y_test))
+
+    elif model_choisi == 'Decision Tree':
+        with open('clf_dt_gini.dill', 'rb') as f:
+            clf_dt_ginis = dill.load(f)
+            # On permet à l'utilisateur de modifier la profondeur
+            max_depth = st.slider("Maximum Depth", min_value=3, max_value=20, value=10)
+
+            # On reentraine le Decision Tree model avec la max_depth souhaitée
+            clf_dt_ginis = DecisionTreeClassifier(max_depth=max_depth, criterion ='gini')
+            clf_dt_ginis.fit(X_train_normalised, y_train)
+
+            y_pred = clf_dt_ginis.predict(X_test_encoded)
+            accuracy = accuracy_score(y_test, y_pred)
+            st.success(f"Accuracy: {accuracy:.2%}")
+            train_sizes, train_scores, test_scores = learning_curve(clf_dt_ginis, X_train_normalised, y_train,
+                                                                n_jobs=-1, train_sizes=np.linspace(.1, 1.0, 5))
+            
+
+        # On affiche le composant select pour choisir le metric desiré
+        selected_metric = st.selectbox("Sélectionnez une métrique d'evaluation du modèle choisi",
+                                       options=['-- Sélectionnez une métric --', 'Learning Curve', 'Confusion Matrix', 'Classification Report', 'Decision Tree'])
+
+        if selected_metric == 'Decision Tree':
+            if model_choisi == 'Decision Tree':
+                plt.figure(figsize=(20, 10))
+                if isinstance(clf_dt_ginis, DecisionTreeClassifier):
+                    plot_tree(clf_dt_ginis, filled=True, feature_names=X_train_encoded.columns,
+                              class_names=["No", "Yes"], rounded=True)
+                    st.pyplot(plt.gcf())
+                else:
+                    st.warning("Cette option n'est possible que pour le Model Decision Tree.")
+
+        elif selected_metric == 'Learning Curve':
+            st.pyplot(plot_learning_curve(train_sizes, train_scores, test_scores, model_choisi))
+
+        elif selected_metric == 'Confusion Matrix':
+            st.subheader("Confusion Matrix")
+            cm = confusion_matrix(y_test, y_pred)
+            # On affiche la confusion matrice avec une heatmap
+            plt.figure(figsize=(8, 6))
+            sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", cbar=False)
+            plt.xlabel("Classe prédite")
+            plt.ylabel("Classe réelle")
+            st.pyplot(plt)
+
+        elif selected_metric == 'Classification Report':
+            st.text(classification_report(y_test, y_pred))
+
+    elif model_choisi == 'Random Forest':
+        with open('random_forest_model.dill', 'rb') as f:
+            clf_optimizedd = dill.load(f)
+            y_pred = clf_optimizedd.predict(X_test_encoded)
+            accuracy = accuracy_score(y_test, y_pred)
+            st.success(f"Accuracy: {accuracy:.2%}")
+            train_sizes, train_scores, test_scores = learning_curve(clf_optimizedd, X_train_encoded, y_train,
+                                                                    n_jobs=-1,
+                                                                    train_sizes=np.linspace(.1, 1.0, 5))
+
+        # On affiche la metric a selectionner
+            selected_metric = st.selectbox("Sélectionnez une métrique d'evaluation du modèle choisi", 
+                                           options=['-- Sélectionnez une métric --', 'Learning Curve', 'Confusion Matrix', 'Classification Report'])
+
+            if selected_metric == 'Learning Curve':
+                st.pyplot(plot_learning_curve(train_sizes, train_scores, test_scores, model_choisi))
+            
+            elif selected_metric == 'Confusion Matrix':
+                st.subheader("Confusion Matrix")
+                cm = confusion_matrix(y_test, y_pred)
+                # On affiche la confusion matrice avec une heatmap
+                plt.figure(figsize=(8, 6))
+                sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", cbar=False)
+                plt.xlabel("Classe prédite")
+                plt.ylabel("Classe réelle")
+                st.pyplot(plt)
+            elif selected_metric == 'Classification Report':
+                st.text(classification_report(y_test, y_pred))
+
+    elif model_choisi == 'XGBoost':
+     # On charge le model xgboost
+      XGBoost = joblib.load("xgb_optimized")
+      X_test_encoded = xgboost.DMatrix(X_test_encoded)
+      loaded_bst = xgboost.Booster() 
+
+      loaded_bst.load_model('xgb_optimizedbst.model')
+      y_pred = loaded_bst.predict(X_test_encoded)
+      #y_pred2 = XGBoost.predict(X_test_encoded)
+      y_pred_labels = (y_pred > 0.5).astype(int)
+      accuracy = accuracy_score(y_test, y_pred_labels)
+      st.success(f"Accuracy: {accuracy:.2%}")
+      train_sizes, train_scores, test_scores = learning_curve(XGBoost, X_train_encoded, y_train, n_jobs=-1,
+                                                            train_sizes=np.linspace(.1, 1.0, 5))
+
+    # On affiche la metric a selectionner
+      selected_metric = st.selectbox("Sélectionnez une métrique d'evaluation du modèle choisi", 
+                                     options=['-- Sélectionnez une métric --', 'Learning Curve', 'Confusion Matrix', 'Classification Report'])
+
+      if selected_metric == 'Learning Curve':
+        st.pyplot(plot_learning_curve(train_sizes, train_scores, test_scores, model_choisi))
+
+      elif selected_metric == 'Confusion Matrix':
+          st.subheader("Confusion Matrix")
+          cm = confusion_matrix(y_test, y_pred_labels)
+          # On affiche la confusion matrice avec une heatmap
+          fig, ax = plt.subplots(figsize=(8, 6))
+          sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", cbar=False, ax=ax)
+          ax.set_xlabel("Classe prédite")
+          ax.set_ylabel("Classe réelle")
+          st.pyplot(fig)
+      elif selected_metric == 'Classification Report':
+        st.text(classification_report(y_test, y_pred_labels))
+
+    
 if page == pages[3] :
   st.header("Prédictions")
   df = pd.read_csv('bank.csv')

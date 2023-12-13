@@ -1582,3 +1582,6 @@ if page == pages[5]:
 
 # Afficher le résumé
     st.write(summary)
+    print(filtered_df.describe(include=['object', 'category']))
+
+

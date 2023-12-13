@@ -1575,7 +1575,7 @@ if page == pages[5]:
     # Afficher l'histogramme dans Streamlit
     st.pyplot(fig)
 # Filtrer le DataFrame pour ne garder que les lignes avec probability > 0.5
-    filtered_df = filtered_df[filtered_df['probability'] > 0.5]
+    filtered_df = filtered_df[filtered_df['probability'] > 0.65]
 
 # Obtenir le résumé statistique du DataFrame filtré
     summary = filtered_df.describe()

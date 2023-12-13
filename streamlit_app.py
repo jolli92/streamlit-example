@@ -195,7 +195,7 @@ if page == pages[1] :
   else:
       st.write("Veuillez sélectionner des variables pour afficher les graphiques et les commentaires associés.")
   st.write("L'étude sur les profils clients a révélé que la majorité se situe entre 30 et 60 ans, avec une éducation majoritairement au niveau secondaire et un statut matrimonial principalement marié. Les professions sont variées, dominées par les managers, suivis des ouvriers, techniciens et employés administratifs. La plupart des soldes bancaires annuels sont inférieurs à 20 000€. Les prêts immobiliers sont les crédits les plus courants, tandis que les prêts personnels et autres types de crédits sont moins fréquents.")
-
+  st.write("En ce qui concerne la campagne marketing précédente, l en ressort que les clients ont été plus réceptifs durant l'été, surtout en mai, avec une baisse de contact en septembre, octobre, décembre, et mars. La plupart des contacts ont été faits par téléphone cellulaire. Les interactions avec les clients ont rarement dépassé trois contacts, pour éviter de les agacer. Concernant la variable « poutcome », 74,6% des clients sont classifiés comme « unknown », souvent dû à l'absence de contact antérieur. La variable cible « deposit » montre que 52,6% des clients ont refusé de souscrire, contre 47,4% ayant souscrit. L'analyse a révélé l'importance de toutes les variables, malgré la présence de nombreux outliers et la valeur « unknown » fréquente, qui ne doit pas être supprimée pour éviter la perte de données, surtout pour les nouveaux clients.")
 # Analyses des corrélations et tests statistiques
   st.subheader("Analyse des corrélations avec tests statistiques des variables explicatives")
 

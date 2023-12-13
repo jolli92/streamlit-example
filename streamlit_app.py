@@ -257,7 +257,7 @@ if page == pages[1] :
   for choice in heatmap_choices:
       if choice == "Corr Numérique":
         # Affichage de la heatmap numérique
-          st.subheader("Analyse de la corrélation entre les variables numériques")
+          #st.subheader("Analyse de la corrélation entre les variables numériques")
           st.markdown(
         """
         <style>

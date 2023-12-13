@@ -385,7 +385,25 @@ Nous avons décidé d'un commun accord le maintien de la variable 'day' dans not
   variables_to_choose = ['marital', 'education', 'default', 'housing', 'loan', 'month','previous',
                        'poutcome', 'day', 'age', 'job', 'balance', 'contact', 'duration','campaign','pdays']
 
-  st.subheader("Analyse de la corrélation des variables explicatives et de la variable cible")
+  #st.subheader("Analyse de la corrélation des variables explicatives et de la variable cible")
+  st.markdown(
+        """
+        <style>
+            .highlight {
+                background-color: #F0F8FF;  /* Alice Blue */
+                padding: 15px;
+                border-radius: 8px;
+                text-align: center;
+                font-size: 24px;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Text with adjusted styling
+  st.markdown('<p class="highlight">Analyse de la corrélation des variables explicatives et de la variable cible</p>', unsafe_allow_html=True)
+  
 
     # Choix de la variable explicative pour la corrélation
   selected_variable = st.selectbox("Sélectionnez une variable pour visualiser la corrélation avec 'deposit':",
@@ -405,7 +423,24 @@ Nous avons décidé d'un commun accord le maintien de la variable 'day' dans not
       st.info(correlation_comments.get(selected_variable, "Pas de commentaire pour cette variable."))
 
 
-  st.subheader("validation Statistique")
+  #st.subheader("validation Statistique")
+  st.markdown(
+        """
+        <style>
+            .highlight {
+                background-color: #F0F8FF;  /* Alice Blue */
+                padding: 15px;
+                border-radius: 8px;
+                text-align: center;
+                font-size: 24px;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Text with adjusted styling
+  st.markdown('<p class="highlight">validation Statistique</p>', unsafe_allow_html=True)
 if page == pages[1]:
     # Checkbox pour la première partie (Test statistique du Chi Carré)
   if st.checkbox("Test statistique du Chi Carré"):

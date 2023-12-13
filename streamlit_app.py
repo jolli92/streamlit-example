@@ -1587,4 +1587,4 @@ if page == pages[4]:
     summary = filtered_df.describe()
 
 # Afficher le résumé
-   st.write(summary)
+    st.write(summary)

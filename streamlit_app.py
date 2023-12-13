@@ -152,7 +152,7 @@ if page == pages[0] :
 
 if page == pages[1] :
   st.header('Exploration')
-  explo_choisi = st.selectbox(label = "Choix", options = ['Source et présentation du jeu de données', 'description du jeu de données'])
+  #explo_choisi = st.selectbox(label = "Choix", options = ['Source et présentation du jeu de données', 'description du jeu de données'])
   def data_explo(explo_choisi):
     if explo_choisi == 'Source et présentation du jeu de Données':
         st.write("Le jeu de données du projet provient de Kaggle dont le lien se trouve ci-dessous:")
@@ -182,6 +182,7 @@ if page == pages[1] :
         st.write("**PDAYS** : Variable quantitative indiquant le nombre de jours écoulé depuis le dernier contact échangé avec le client (lors de la campagne précédente). Sachant que -1 signifie que le client n’a pas été contacté lors de la campagne précédente")
         st.write("**PREVIOUS** : Variable quantitative indiquant le nombre de contacts avec le client lors de la campagne précédente.")
         st.write("**POUTCOME** : Variable catégorielle montrant le résultat de la campagne de marketing précédente.")
+  explo_choisi = st.selectbox(label = "Choix", options = ['Source et présentation du jeu de données', 'description du jeu de données'])
   st.header('Visualisation')
   st.subheader('Distribution des variables')
 

@@ -9,3 +9,4 @@ scikit-learn
 joblib
 dill
 statsmodels
+shap

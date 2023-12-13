@@ -1558,9 +1558,6 @@ if page == pages[5]:
     y_pred = model.predict(encoded_df)
     df['prediction'] = y_pred
     
-    # Concatenate the columns "prénom" and "téléphone" and sort by prediction
-    df = pd.concat([df_prenom_telephone, df], axis=1)
-    
     #df_sorted = df.sort_values(by='prediction', ascending=False)
     y_proba = model.predict_proba(encoded_df)
     df['probability'] = y_proba[:,1]  # Pour une classification binaire, cela donnerait la probabilité de la classe 1

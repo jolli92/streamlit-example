@@ -161,6 +161,7 @@ if page == pages[1] :
         st.write("Le jeu présente les détails sur une campagne marketing menée par une institution financière.")
         st.write("L'objectif du projet est d’analyser ces données pour identifier les opportunités, développer des stratégies futures, \
         améliorer les campagnes marketing à venir de la banque afin d'aboutir à une hausse du taux de souscription d'un compte de dépôts à terme.")
+        return explo_choisi
     elif explo_choisi.lower() == 'description du jeu de Données':
         st.write("Le jeu de Données se présente sur **11 162 lignes et 17 colonnes**, aucune lignes dupliquées, ni de valeurs manquantes avec **7 variables quantitatives (int64) et 10 variables qualitatives (Object)**")
         st.dataframe(df.head())
@@ -182,7 +183,7 @@ if page == pages[1] :
         st.write("**PDAYS** : Variable quantitative indiquant le nombre de jours écoulé depuis le dernier contact échangé avec le client (lors de la campagne précédente). Sachant que -1 signifie que le client n’a pas été contacté lors de la campagne précédente")
         st.write("**PREVIOUS** : Variable quantitative indiquant le nombre de contacts avec le client lors de la campagne précédente.")
         st.write("**POUTCOME** : Variable catégorielle montrant le résultat de la campagne de marketing précédente.")
-     return explo_choisi
+        return explo_choisi
    data_explo(explo_choisi)
    explo_choisi = st.selectbox(label = "Choix", options = ['Source et présentation du jeu de données', 'description du jeu de données'])
   st.header('Visualisation')

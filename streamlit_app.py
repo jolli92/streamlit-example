@@ -1,39 +1,47 @@
-import pandas as pd
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-import streamlit as st
-import seaborn as sns
-from sklearn.svm import SVC
-import xgboost
-from sklearn.model_selection import train_test_split #split
-from sklearn.metrics import accuracy_score #metrics
-from sklearn.model_selection import StratifiedKFold
-from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.preprocessing import LabelEncoder
-from sklearn.metrics import classification_report
+# Base Python Libraries
+import os
 import io
 from io import StringIO
-import plotly.graph_objs as go
+
+# Data Manipulation
+import numpy as np
+import pandas as pd
+import itertools
+
+# Data Visualization
+import matplotlib.pyplot as plt
+import seaborn as sns
 import plotly.express as px
+from plotly.subplots import make_subplots
+
+# Machine Learning - Preprocessing
+from sklearn.preprocessing import StandardScaler, OneHotEncoder, LabelEncoder
+
+# Machine Learning - Model Selection & Evaluation
+from sklearn.model_selection import train_test_split, StratifiedKFold, RandomizedSearchCV, GridSearchCV, learning_curve
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, roc_curve, auc, r2_score, mean_squared_error, mean_squared_log_error
+
+# Machine Learning - Models
+from sklearn.svm import SVC
+from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+
+# Model Persistence
 import pickle
-from sklearn.metrics import confusion_matrix
-from sklearn.model_selection import learning_curve
-from sklearn.metrics import r2_score
-from joblib import load
-from sklearn.preprocessing import StandardScaler
 import joblib
 import dill
-import statsmodels
-import numpy as np
-import itertools
-import plotly.express as px
-from statsmodels.formula.api import ols
+
+# Statistical Analysis
+from scipy.stats import chi2_contingency, ttest_ind, pearsonr
 import statsmodels.api as sm
-from plotly.subplots import make_subplots
-from scipy.stats import chi2_contingency
-from scipy.stats import ttest_ind
+from statsmodels.formula.api import ols
+
+# Advanced ML & Explanation Tools
+import xgboost
+import shap
+
 df = pd.read_csv('bank.csv')
 #euros = "EUROS.jpg"
 def create_visualisations(df, variables):

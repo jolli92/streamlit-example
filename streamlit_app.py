@@ -1084,7 +1084,31 @@ if page == pages[2]:
 
     
 if page == pages[3] :
-  st.header("Prédictions")
+  st.markdown(
+        """
+        <style>
+            .big-font {
+                font-size: 32px !important;
+                color: #1E90FF;  /* Dodger Blue */
+                text-align: center;
+            }
+            .highlight {
+                padding: 20px;
+                border-radius: 8px;
+                text-align: center;
+            }
+            .section {
+                background-color: #F0F8FF;  /* Alice Blue */
+                padding: 30px;
+                border-radius: 20px;
+                text-align: center;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+  st.markdown('<p class="big-font">Prédictions</p>', unsafe_allow_html=True)  
+  #st.header("Prédictions")
   df = pd.read_csv('bank.csv')
     #On écarte les valeurs -1 de pdays pour ne pas les traiter lors du pre-processing
   st.write("Ce script démontre l'utilisation standard de Streamlit et XGBoost pour développer une application web \
@@ -1301,7 +1325,31 @@ if page == pages[3] :
    # else:
        # st.mardown("**La prédiction est : No**")
 if page == pages[4] :
-  st.header("Utilisation professionnelle du projet")
+  st.markdown(
+        """
+        <style>
+            .big-font {
+                font-size: 32px !important;
+                color: #1E90FF;  /* Dodger Blue */
+                text-align: center;
+            }
+            .highlight {
+                padding: 20px;
+                border-radius: 8px;
+                text-align: center;
+            }
+            .section {
+                background-color: #F0F8FF;  /* Alice Blue */
+                padding: 30px;
+                border-radius: 20px;
+                text-align: center;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+  st.markdown('<p class="big-font">Utilisation professionnelle du projet</p>', unsafe_allow_html=True)
+  #st.header("Utilisation professionnelle du projet")
   df = pd.read_csv('Banktest.csv')
   
   st.write("Partant du principe qu'il est essentiel pour un service marketing de pouvoir contacter les clients efficacement, \

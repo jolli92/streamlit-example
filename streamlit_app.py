@@ -1583,5 +1583,12 @@ if page == pages[5]:
 # Afficher le résumé
     st.write(summary)
     st.write(summary2)
+    with st.container():
+        selected_vars = st.multiselect('Sélectionnez les variables à visualiser:', filtered_df.columns)
+        show_annotations = st.checkbox('Afficher les commentaires')
+
+    if selected_vars:
+        fig = create_visualisations(filtered_df, selected_vars)
+        st.plotly_chart(fig)
 
 

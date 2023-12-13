@@ -151,7 +151,33 @@ if page == pages[0] :
   #st.image(euros)
 
 if page == pages[1] :
-  st.header('Exploration')
+  st.markdown(
+        """
+        <style>
+            .big-font {
+                font-size: 32px !important;
+                color: #1E90FF;  /* Dodger Blue */
+                text-align: center;
+            }
+            .highlight {
+                padding: 20px;
+                border-radius: 8px;
+                text-align: center;
+            }
+            .section {
+                background-color: #F0F8FF;  /* Alice Blue */
+                padding: 30px;
+                border-radius: 20px;
+                text-align: center;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+# Section 1: Modélisation
+  st.markdown('<p class="big-font">Exploration</p>', unsafe_allow_html=True)
+  #st.header('Exploration')
   explo_choisi = st.selectbox(label = "Choix", options = ['-- Sélectionnez un menu --', 'Source et présentation du jeu de données', 'description du jeu de données'])
   if explo_choisi == 'Source et présentation du jeu de données':
       st.write("Le jeu de données du projet provient de Kaggle dont le lien se trouve ci-dessous:")

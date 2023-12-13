@@ -274,7 +274,7 @@ if page == pages[1] :
     )
 
     # Text with adjusted styling
-        st.markdown('<p class="highlight">Analyse de la corrélation entre les variables numériques</p>', unsafe_allow_html=True)
+          st.markdown('<p class="highlight">Analyse de la corrélation entre les variables numériques</p>', unsafe_allow_html=True)
     # Sélectionner uniquement les colonnes numériques
           numeric_columns = df.select_dtypes(include=['number']).columns
           df_numeric = df[numeric_columns]

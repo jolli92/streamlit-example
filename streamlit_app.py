@@ -735,7 +735,7 @@ if page == pages[2]:
 
     # On charge le modèle selectionné 
     if model_choisi == 'Regression Logistique':
-        model = load(model_folder + 'LogisticRegression.joblib')
+        model = joblib.load('LogisticRegression')
         y_pred = model.predict(X_test_normalised)
         accuracy = accuracy_score(y_test, y_pred)
         st.success(f"Accuracy: {accuracy:.2%}")
@@ -779,7 +779,7 @@ if page == pages[2]:
             else:
                 st.warning("This option is only available for classifiers that support predict_proba (e.g., Logistic Regression).")
 
-        with st.expander("Obsevation"):
+        with st.expander("Observation"):
             highlighted_text = "Ceci est un texte de test, à votre avis serait-il pertinent de faire de petites observations comme ceci pour chaque evaluation ?"
         # Colored box avec mise en avant du texte
             colored_box = f'<div style="background-color:#ADD8E6; padding:10px; border-radius:5px;">{highlighted_text}</div>'
@@ -787,7 +787,7 @@ if page == pages[2]:
             st.markdown(colored_box, unsafe_allow_html=True)
 
     elif model_choisi == 'KNN':
-        model = load(model_folder + 'knn_ma.joblib')
+        model = joblib.load('knn_ma')
         X_test_contiguous = np.ascontiguousarray(X_test_normalised.values)
         y_pred = model.predict(X_test_contiguous)
         accuracy = accuracy_score(y_test, y_pred)

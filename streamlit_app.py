@@ -1120,14 +1120,17 @@ if page == pages[3] :
   dtest = xgboost.DMatrix(encoded_data)
   if st.button('Predictions'):
       prediction = model.predict(dtest)
-      print("Probabilités de prédiction :", prediction)
+      st.write("Probabilités de prédiction :", prediction)
 
-    # Visualiser les probabilités sous forme d'histogramme
-      plt.hist(prediction, bins=10, range=(0,1))
-      plt.title("Distribution des Probabilités de Prédiction")
-      plt.xlabel("Probabilité")
-      plt.ylabel("Nombre de Prédictions")
-      plt.show()
+    # Créer un histogramme des probabilités
+      fig, ax = plt.subplots()
+      ax.hist(prediction, bins=10, range=(0,1))
+      ax.set_title("Distribution des Probabilités de Prédiction")
+      ax.set_xlabel("Probabilité")
+      ax.set_ylabel("Nombre de Prédictions")
+
+    # Afficher l'histogramme dans Streamlit
+      st.pyplot(fig)
 
     # XGBoost donne des probabilités pour la classification binaire, donc vous devez définir un seuil
     # Par exemple, si la prédiction est supérieure à 0.5, on considère que la classe prédite est 1

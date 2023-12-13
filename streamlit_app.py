@@ -1563,7 +1563,7 @@ if page == pages[5]:
     df['probability'] = y_proba[:,1]  # Pour une classification binaire, cela donnerait la probabilité de la classe 1
     filtered_df = df.sort_values(by='probability', ascending=False)
 # Display the top 50 clients
-    st.dataframe(df_sorted.head(50))
+    st.dataframe(filtered_df.head(50))
     prediction = model.predict(encoded_df)
 # Créer un histogramme des probabilités
     fig, ax = plt.subplots()

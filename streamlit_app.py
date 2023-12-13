@@ -1461,6 +1461,7 @@ if page == pages[4]:
   y_proba = model.predict_proba(encoded_df)
   df['probability'] = y_proba[:,1]  # Pour une classification binaire, cela donnerait la probabilité de la classe 1
   df_sorted = df.sort_values(by='probability', ascending=False)
+  df_sorted1 = df_sorted
   df_sorted = df_sorted[['prénom', 'téléphone','probability']]
 # Display the top 50 clients
   st.dataframe(df_sorted.head(50))
@@ -1475,7 +1476,8 @@ if page == pages[4]:
     # Afficher l'histogramme dans Streamlit
   st.pyplot(fig)
 # Filtrer le DataFrame pour ne garder que les lignes avec probability > 0.5
-  filtered_df = df_sorted[df_sorted['probability'] > 0.5]
+  filtered_df = df_sorted1.drop(columns=['prénom', 'téléphone'])
+  filtered_df = filtered_df[filtered_df['probability'] > 0.5]
 
 # Obtenir le résumé statistique du DataFrame filtré
   summary = filtered_df.describe()

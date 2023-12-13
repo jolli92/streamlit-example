@@ -258,6 +258,23 @@ if page == pages[1] :
       if choice == "Corr Numérique":
         # Affichage de la heatmap numérique
           st.subheader("Analyse de la corrélation entre les variables numériques")
+          st.markdown(
+        """
+        <style>
+            .highlight {
+                background-color: #F0F8FF;  /* Alice Blue */
+                padding: 15px;
+                border-radius: 8px;
+                text-align: center;
+                font-size: 24px;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Text with adjusted styling
+         st.markdown('<p class="highlight">Analyse de la corrélation entre les variables numériques</p>', unsafe_allow_html=True)
     # Sélectionner uniquement les colonnes numériques
           numeric_columns = df.select_dtypes(include=['number']).columns
           df_numeric = df[numeric_columns]

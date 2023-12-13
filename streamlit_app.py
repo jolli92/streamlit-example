@@ -194,7 +194,7 @@ if page == pages[1] :
                   st.info(f"Aucun commentaire disponible pour {var}.")
   else:
       st.write("Veuillez sélectionner des variables pour afficher les graphiques et les commentaires associés.")
-
+  st.write("L'étude sur les profils clients a révélé que la majorité se situe entre 30 et 60 ans, avec une éducation majoritairement au niveau secondaire et un statut matrimonial principalement marié. Les professions sont variées, dominées par les managers, suivis des ouvriers, techniciens et employés administratifs. La plupart des soldes bancaires annuels sont inférieurs à 20 000€. Les prêts immobiliers sont les crédits les plus courants, tandis que les prêts personnels et autres types de crédits sont moins fréquents.")
 
 # Analyses des corrélations et tests statistiques
   st.subheader("Analyse des corrélations avec tests statistiques des variables explicatives")

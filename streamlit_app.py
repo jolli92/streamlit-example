@@ -1579,7 +1579,7 @@ if page == pages[5]:
 
 # Obtenir le résumé statistique du DataFrame filtré
     #summary = filtered_df.describe()
-    summary2 = iltered_df.describe(include=['object', 'category'])
+    summary2 = filtered_df.describe(include=['object', 'category'])
 # Afficher le résumé
     #st.write(summary)
     st.write(summary2)

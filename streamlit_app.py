@@ -1486,7 +1486,7 @@ if page == pages[4]:
   st.write(summary)
 
 if page == pages[5]:
-    df = pd.read_csv('Bank.csv')
+    df = pd.read_csv('bank.csv')
     def calculate_outlier_bounds(df, column):
         Q1 = df[column].quantile(0.25)
         Q3 = df[column].quantile(0.75)

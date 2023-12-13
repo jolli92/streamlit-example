@@ -1126,7 +1126,7 @@ if page == pages[3] :
       if predicted_class[0] == 1:
           st.info("La prédiction est : Yes")
       else:
-          st.warning("La prédiction est : No")
+          st.info("La prédiction est : No")
         
    # prediction = model.predict(encoded_data)
     #if prediction == 1:

@@ -184,7 +184,25 @@ if page == pages[1] :
       st.write("**POUTCOME** : Variable catégorielle montrant le résultat de la campagne de marketing précédente.")
   
   st.header('Visualisation')
-  st.subheader('Distribution des variables')
+  #st.subheader('Distribution des variables')
+  st.markdown(
+        """
+        <style>
+            .highlight {
+                background-color: #F0F8FF;  /* Alice Blue */
+                padding: 15px;
+                border-radius: 8px;
+                text-align: center;
+                font-size: 24px;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Text with adjusted styling
+    st.markdown('<p class="highlight">Distribution des variables</p>', unsafe_allow_html=True)
+
 
     # Widgets pour la sélection des variables et l'affichage des commentaires
   with st.container():

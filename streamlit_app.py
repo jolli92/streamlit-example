@@ -1261,3 +1261,13 @@ if page == pages[4]:
   df_sorted = df_sorted[['prénom', 'téléphone','probability']]
 # Display the top 50 clients
   st.dataframe(df_sorted.head(50))
+  st.write("Probabilités de prédiction :", prediction)
+# Créer un histogramme des probabilités
+  fig, ax = plt.subplots()
+  ax.hist(prediction, bins=10, range=(0,1))
+  ax.set_title("Distribution des Probabilités de Prédiction")
+  ax.set_xlabel("Probabilité")
+  ax.set_ylabel("Nombre de Prédictions")
+
+    # Afficher l'histogramme dans Streamlit
+  st.pyplot(fig)

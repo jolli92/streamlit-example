@@ -152,6 +152,36 @@ if page == pages[0] :
 
 if page == pages[1] :
   st.header('Exploration')
+  explo_choisi = st.selectbox(label = "Choix", options = ['Source et présentation du jeu de données', 'description du jeu de données'])
+  def data_explo(explo_choisi):
+    if explo_choisi == 'Source et présentation du jeu de Données':
+        st.write("Le jeu de données du projet provient de Kaggle dont le lien se trouve ci-dessous:")
+        lien_http = "[https://www.kaggle.com/datasets/janiobachmann/bank-marketing-dataset](https://www.kaggle.com/datasets/janiobachmann/bank-marketing-dataset)"
+        st.markdown(lien_http, unsafe_allow_html=True)
+        st.write("Le jeu présente les détails sur une campagne marketing menée par une institution financière.")
+        st.write("L'objectif du projet est d’analyser ces données pour identifier les opportunités, développer des stratégies futures, \
+        améliorer les campagnes marketing à venir de la banque afin d'aboutir à une hausse du taux de souscription d'un compte de dépôts à terme.")
+    elif explo_choisi.lower() == 'description du jeu de Données':
+        st.write("Le jeu de Données se présente sur **11 162 lignes et 17 colonnes**, aucune lignes dupliquées, ni de valeurs manquantes avec **7 variables quantitatives (int64) et 10 variables qualitatives (Object)**")
+        st.dataframe(df.head())
+        st.write("Nous constatons ici que le jeu de Données affiche une variable cible **déposit** et **deux axes d'analyses** dont le premier axe est sur **le profil des clients** et le deuxième axe est sur **le déroulement de la campagne déjà réalisée** et les retours de cette dernière.")
+        st.write("**Description des variables utilisées**")
+        st.write("**AGE** : Variable quantitative qui représente l'âge de la personne.")
+        st.write("**JOB** : Variable catégorielle qui désigne le métier de la personne.")
+        st.write("**MARITAL** : Variable qualitative indiquant le statut matrimonial de la personne.")
+        st.write("**EDUCATION** : Variable qualitative qui annonce le niveau d'études de la personne.")
+        st.write("**DEFAULT** : Variable catégorielle désignant le risque de solvabilité d’un client, cela nous permet de savoir si un client est en défaut de paiement ou pas.")
+        st.write("**BALANCE** : Variable quantitative désignant le solde bancaire de la personne prospectée.")
+        st.write("**HOUSING**: Variable qualitative informant si la personne a un crédit immobilier ou non.")
+        st.write("**LOAN** : Variable catégorielle représentant l'ensemble des clients endettés par un crédit de consommation.")
+        st.write("**CONTACT** : Variable catégorielle désignant la façon dont les clients ont été contacté pendant la campagne marketing précédente.")
+        st.write("**DAY** : Variable quantitative désignant le jour où le client a été contacté pour la dernière fois.")
+        st.write("**MONTH** : Variable catégorielle correspondant au dernier mois ou l’on a contacté le client.")
+        st.write("**DURATION** : Variable quantitative représentant le temps en seconde échangé lors du dernier contact.")
+        st.write("**CAMPAIGN** : Variable quantitative indiquant le nombre de contacts réalisé durant la campagne par individu.")
+        st.write("**PDAYS** : Variable quantitative indiquant le nombre de jours écoulé depuis le dernier contact échangé avec le client (lors de la campagne précédente). Sachant que -1 signifie que le client n’a pas été contacté lors de la campagne précédente")
+        st.write("**PREVIOUS** : Variable quantitative indiquant le nombre de contacts avec le client lors de la campagne précédente.")
+        st.write("**POUTCOME** : Variable catégorielle montrant le résultat de la campagne de marketing précédente.")
   st.header('Visualisation')
   st.subheader('Distribution des variables')
 

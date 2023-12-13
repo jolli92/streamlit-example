@@ -127,7 +127,31 @@ st.sidebar.markdown("- [Thi-Thuy Tran](https://www.linkedin.com/in/thi-thuy-tran
 st.sidebar.markdown("- [Basile Tekam](https://www.linkedin.com/in/basile-tekam-49a267156)")
 
 if page == pages[0] :
-  st.header("Présentation du projet")
+  st.markdown(
+        """
+        <style>
+            .big-font {
+                font-size: 32px !important;
+                color: #1E90FF;  /* Dodger Blue */
+                text-align: center;
+            }
+            .highlight {
+                padding: 20px;
+                border-radius: 8px;
+                text-align: center;
+            }
+            .section {
+                background-color: #F0F8FF;  /* Alice Blue */
+                padding: 30px;
+                border-radius: 20px;
+                text-align: center;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+  st.markdown('<p class="big-font">Présentation du projet</p>', unsafe_allow_html=True)  
+  #st.header("Présentation du projet")
   
   st.write("Dans le cadre de notre formation de Data Analyst, nous avons eu l\'opportunité de développer \
   un projet axé sur la prédiction de souscription à un compte à terme (CAT) par les clients d\'une institution financière.")

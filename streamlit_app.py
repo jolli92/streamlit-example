@@ -950,7 +950,7 @@ if page == pages[2]:
 
         # On affiche le composant select pour choisir le metric desiré
         selected_metric = st.selectbox("Sélectionnez une métrique d'evaluation du modèle choisi",
-                                       options=['-- Sélectionnez une métric --', 'Learning Curve', 'Confusion Matrix', 'Classification Report', 'KNN Metrics'])
+                                       options=['-- Sélectionnez une métric --', 'Learning Curve', 'Confusion Matrix', 'Classification Report'])
 
         if selected_metric == 'Learning Curve':
             st.pyplot(plot_learning_curve(train_sizes, train_scores, test_scores, model_choisi))
@@ -966,11 +966,11 @@ if page == pages[2]:
         elif selected_metric == 'Classification Report':
             st.text(classification_report(y_test, y_pred))
         
-        elif selected_metric == 'KNN Metrics':
+        #elif selected_metric == 'KNN Metrics':
         #On génère le graphe sur streamlit grace à la fonction
-            st.subheader("KNN Accuracy Scores with Different Distance Metrics")
+            #st.subheader("KNN Accuracy Scores with Different Distance Metrics")
             #plot_knn_scores(X_train_normalised, y_train, X_test_normalised, y_test)
-            st.pyplot(plot_knn_scores(X_train_normalised, y_train, X_test_normalised, y_test))
+            #st.pyplot(plot_knn_scores(X_train_normalised, y_train, X_test_normalised, y_test))
 
     elif model_choisi == 'Decision Tree':
         with open('clf_dt_gini.dill', 'rb') as f:

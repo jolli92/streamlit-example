@@ -1261,6 +1261,7 @@ if page == pages[4]:
   df_sorted = df_sorted[['prénom', 'téléphone','probability']]
 # Display the top 50 clients
   st.dataframe(df_sorted.head(50))
+  prediction = model.predict(dtest)
   st.write("Probabilités de prédiction :", prediction)
 # Créer un histogramme des probabilités
   fig, ax = plt.subplots()

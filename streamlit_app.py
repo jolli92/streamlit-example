@@ -1115,11 +1115,13 @@ if page == pages[3] :
     "balance_group_moyen", "balance_group_negatif", "balance_group_tres_faible"
 ]
   encoded_data = encoded_data[cols]
-  model = xgboost.Booster()
-  model.load_model("xgb_optimizedbst.model")
-  dtest = xgboost.DMatrix(encoded_data)
+  with open('xgb_optimizedpickle', 'rb') as model_file:
+      model = pickle.load(model_file)
+  #model = xgboost.Booster()
+  #model.load_model("xgb_optimizedbst.model")
+  #dtest = xgboost.DMatrix(encoded_data)
   if st.button('Predictions'):
-      prediction = model.predict(dtest)
+      prediction = model.predict(encoded_data)
       st.write("Probabilités de prédiction :", prediction)
 
     # Créer un histogramme des probabilités
@@ -1262,7 +1264,6 @@ if page == pages[4]:
 # Display the top 50 clients
   st.dataframe(df_sorted.head(50))
   prediction = model.predict(encoded_df)
-  st.write("Probabilités de prédiction :", prediction)
 # Créer un histogramme des probabilités
   fig, ax = plt.subplots()
   ax.hist(prediction, bins=10, range=(0,1))

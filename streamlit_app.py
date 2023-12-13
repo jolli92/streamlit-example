@@ -269,23 +269,23 @@ if page == pages[1] :
 
             # Dictionnaire des commentaires pour chaque variable
           comments = {
-          'JOB' : "Variable indiquant le métier des clients avec 12 catégories uniques, notamment 'admin.', 'technician', 'services', etc. La majorité (23%) travaille dans le management, suivie des ouvriers (17,4%) et des techniciens (16,3%). Un faible pourcentage (0,6%) est classé comme 'unknown', indiquant une absence de déclaration professionnelle.",
-          'AGE' : "Variable représentant l'âge des individus, variant de 18 à 95 ans avec une moyenne de 41 ans. La moitié des individus a 39 ans ou moins. La majorité se situe entre 25 et 59 ans.",
-          'MARITAL' : "Variable décrivant le statut matrimonial avec trois catégories : 'married' (56,9%), 'single' (31,5%) et 'divorced' (11,6%).",
-          'EDUCATION' : "Variable annonçant le niveau d'études des clients en 'unknown', 'secondary', 'primary', 'tertiary'. La majorité (49,1%) a un niveau secondaire, suivie par l'enseignement supérieur (33%) et primaire (13,4%). 'unknown' peut indiquer une non-disclosure ou l'absence d'éducation formelle.",
-          'BALANCE' : "Variable reflétant le solde bancaire des clients, variant de -6 847 à 81 204 euros, avec une moyenne de 1 528,54 euros. La moitié des clients a un solde autour de 550 euros, la plupart se situant entre 122 et 1 708 euros. Des valeurs extrêmes existent, nécessitant une attention particulière.",
-          'DEFAULT' : "'Variable booléenne indiquant si un client est en défaut de paiement (Yes/No). La grande majorité (98,5%) n'est pas en défaut.",
-          'HOUSING' : "Variable indiquant la possession d'un crédit immobilier (Yes/No), avec 52,7% des clients sans crédit immobilier et 47,3% en ayant un.",
-          'LOAN' : "Variable booléenne indiquant si un client a des dettes (Yes/No). 86,9% des clients n'ont pas de dette et 13,1% en ont.",
-          'CONTACT' : "Variable catégorisant le mode de contact pendant la campagne en 'cellular', 'unknown', et 'telephone'. 72% ont été contactés par téléphone, et 21% de manière inconnue, possiblement par mail ou en présentiel.",
-          'DAY' : "Variable représentant le jour du dernier contact avec le client, avec une répartition équilibrée (moyenne et médiane = 15), et des pics d'appels les jours 1, 10, 24, et 31.",
-          'MONTH' : "Variable indiquant le dernier mois de contact, avec 12 catégories (jan, feb, mar, ..., nov, dec). Mai est le mois le plus actif (25,3%), suivi par juillet, août, et juin.",
-          'DURATION' : "Variable mesurant la durée du dernier appel en secondes, une variable quantitative avec une moyenne de 371,99 secondes. Des appels dépassant une heure sont à analyser attentivement.",
-          'CAMPAIGN' : "Variable quantifiant le nombre de contacts par client pendant la campagne, variant jusqu'à 36 fois. La majorité a été contactée une seule fois. Un pic à 63 contacts nécessite une analyse approfondie.",
-          'PDAYS' : "Variable représentant le nombre de jours écoulés depuis le dernier contact de la campagne précédente, avec -1 indiquant aucun contact antérieur. La moyenne est de 51,33 jours, mais la médiane à -1 suggère que 50% des clients n'avaient pas été contactés auparavant.",
-          'PREVIOUS' : "Variable indiquant le nombre des contacts lors de la campagne précédente. Avec une majorité de clients (plus de 8000) non contactés auparavant, la moyenne est presque nulle, soulignant un contact rarement répété.",
-          'POUTCOME' : "Variable révélant le résultat de la campagne marketing précédente avec 'unknown', 'other', 'failure', 'success'. Une majorité (74,6%) est classée 'unknown', souvent due à l'absence de contact précédent.",
-          'DEPOSIT' : "Variable cible, indiquant si un client a souscrit à un dépôt à terme (Yes/No), avec 52,6% de refus et 47,4% de souscriptions."}
+          'job' : "Variable indiquant le métier des clients avec 12 catégories uniques, notamment 'admin.', 'technician', 'services', etc. La majorité (23%) travaille dans le management, suivie des ouvriers (17,4%) et des techniciens (16,3%). Un faible pourcentage (0,6%) est classé comme 'unknown', indiquant une absence de déclaration professionnelle.",
+          'age' : "Variable représentant l'âge des individus, variant de 18 à 95 ans avec une moyenne de 41 ans. La moitié des individus a 39 ans ou moins. La majorité se situe entre 25 et 59 ans.",
+          'marital' : "Variable décrivant le statut matrimonial avec trois catégories : 'married' (56,9%), 'single' (31,5%) et 'divorced' (11,6%).",
+          'education' : "Variable annonçant le niveau d'études des clients en 'unknown', 'secondary', 'primary', 'tertiary'. La majorité (49,1%) a un niveau secondaire, suivie par l'enseignement supérieur (33%) et primaire (13,4%). 'unknown' peut indiquer une non-disclosure ou l'absence d'éducation formelle.",
+          'balance' : "Variable reflétant le solde bancaire des clients, variant de -6 847 à 81 204 euros, avec une moyenne de 1 528,54 euros. La moitié des clients a un solde autour de 550 euros, la plupart se situant entre 122 et 1 708 euros. Des valeurs extrêmes existent, nécessitant une attention particulière.",
+          'default' : "'Variable booléenne indiquant si un client est en défaut de paiement (Yes/No). La grande majorité (98,5%) n'est pas en défaut.",
+          'housing' : "Variable indiquant la possession d'un crédit immobilier (Yes/No), avec 52,7% des clients sans crédit immobilier et 47,3% en ayant un.",
+          'loan' : "Variable booléenne indiquant si un client a des dettes (Yes/No). 86,9% des clients n'ont pas de dette et 13,1% en ont.",
+          'contact' : "Variable catégorisant le mode de contact pendant la campagne en 'cellular', 'unknown', et 'telephone'. 72% ont été contactés par téléphone, et 21% de manière inconnue, possiblement par mail ou en présentiel.",
+          'day' : "Variable représentant le jour du dernier contact avec le client, avec une répartition équilibrée (moyenne et médiane = 15), et des pics d'appels les jours 1, 10, 24, et 31.",
+          'month' : "Variable indiquant le dernier mois de contact, avec 12 catégories (jan, feb, mar, ..., nov, dec). Mai est le mois le plus actif (25,3%), suivi par juillet, août, et juin.",
+          'duration' : "Variable mesurant la durée du dernier appel en secondes, une variable quantitative avec une moyenne de 371,99 secondes. Des appels dépassant une heure sont à analyser attentivement.",
+          'campaign' : "Variable quantifiant le nombre de contacts par client pendant la campagne, variant jusqu'à 36 fois. La majorité a été contactée une seule fois. Un pic à 63 contacts nécessite une analyse approfondie.",
+          'pdays' : "Variable représentant le nombre de jours écoulés depuis le dernier contact de la campagne précédente, avec -1 indiquant aucun contact antérieur. La moyenne est de 51,33 jours, mais la médiane à -1 suggère que 50% des clients n'avaient pas été contactés auparavant.",
+          'previous' : "Variable indiquant le nombre des contacts lors de la campagne précédente. Avec une majorité de clients (plus de 8000) non contactés auparavant, la moyenne est presque nulle, soulignant un contact rarement répété.",
+          'poutcome' : "Variable révélant le résultat de la campagne marketing précédente avec 'unknown', 'other', 'failure', 'success'. Une majorité (74,6%) est classée 'unknown', souvent due à l'absence de contact précédent.",
+          'deposit' : "Variable cible, indiquant si un client a souscrit à un dépôt à terme (Yes/No), avec 52,6% de refus et 47,4% de souscriptions."}
 
 # Affichage des commentaires avec st.info
           for var in selected_vars:

@@ -1578,10 +1578,10 @@ if page == pages[5]:
     filtered_df = filtered_df[filtered_df['probability'] > 0.65]
 
 # Obtenir le résumé statistique du DataFrame filtré
-    #summary = filtered_df.describe()
+    summary = filtered_df.describe()
     summary2 = filtered_df.describe(include=['object', 'category'])
 # Afficher le résumé
-    #st.write(summary)
+    st.write(summary)
     st.write(summary2)
 
 

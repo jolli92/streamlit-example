@@ -152,7 +152,7 @@ if page == pages[0] :
 
 if page == pages[1] :
   st.header('Exploration')
-  explo_choisi = st.selectbox(label = "Choix", options = ['Source et présentation du jeu de données', 'description du jeu de données'])
+  explo_choisi = st.selectbox(label = "Choix", options = ['-- Sélectionnez un menu --', 'Source et présentation du jeu de données', 'description du jeu de données'])
   if explo_choisi == 'Source et présentation du jeu de données':
       st.write("Le jeu de données du projet provient de Kaggle dont le lien se trouve ci-dessous:")
       lien_http = "[https://www.kaggle.com/datasets/janiobachmann/bank-marketing-dataset](https://www.kaggle.com/datasets/janiobachmann/bank-marketing-dataset)"

@@ -60,7 +60,7 @@ def create_visualisations(df, variables):
 
             # Adding percentage annotations
             for x, pct in zip(counts.index, percentages):
-                fig.add_annotation(x=x, y=counts.loc[x], text=f'{pct}%', showarrow=False, row=i, col=1)
+                fig.add_annotation(x=x, y=counts.loc[x], text=f'{pct}%', showarrow=False, row=i, col=1, font=dict(color='black'))
         else:
             data = go.Histogram(x=df[var], nbinsx=30, name=var)
 
@@ -80,7 +80,7 @@ def create_plotly_countplot(df, x, hue, title):
 
     # Add percentage annotations
     for _, row in group_counts.iterrows():
-        fig.add_annotation(x=row[x], y=row['count'], text=f"{row['percentage']}%", showarrow=False)
+        fig.add_annotation(x=row[x], y=row['count'], text=f"{row['percentage']}%", showarrow=False, font=dict(color='black'))
 
     fig.update_layout(title=title, xaxis_title=x, yaxis_title='Count')
     return fig
@@ -97,7 +97,7 @@ def create_plotly_histplot(df, x, color, title):
         percentages = (counts / total * 100).round(2)
 
         for pct, bin_edge in zip(percentages, bins):
-            fig.add_annotation(x=bin_edge, y=pct, text=f"{pct}%", showarrow=False)
+            fig.add_annotation(x=bin_edge, y=pct, text=f"{pct}%", showarrow=False, font=dict(color='black'))
 
     fig.update_layout(title=title, xaxis_title=x, yaxis_title='Count')
     return fig

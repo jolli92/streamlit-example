@@ -1578,7 +1578,7 @@ if page == pages[5] :
         """,
         unsafe_allow_html=True
     )
-  st.markdown('<p class="big-font">DataFrame avec probabilité de conversion</p>', unsafe_allow_html=True)
+  st.markdown('<p class="big-font">CONCLUSION</p>', unsafe_allow_html=True)
   st.dataframe(filtered_df.head(50))
   prediction = model.predict(encoded_df)
 

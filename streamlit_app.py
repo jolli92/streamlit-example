@@ -58,11 +58,19 @@ def create_visualisations(df, variables):
             percentages = (counts / total * 100).round(2)
             data = go.Bar(x=counts.index, y=counts, name=var)
 
-            # Adding percentage annotations
+            # Adding percentage annotations for categorical data
             for x, pct in zip(counts.index, percentages):
                 fig.add_annotation(x=x, y=counts.loc[x], text=f'{pct}%', showarrow=False, row=i, col=1, font=dict(color='black'))
         else:
+            # For numerical data, calculate the histogram counts and percentages
+            counts, bins = np.histogram(df[var], bins=30)
+            total = counts.sum()
+            percentages = (counts / total * 100).round(2)
             data = go.Histogram(x=df[var], nbinsx=30, name=var)
+
+            # Adding percentage annotations for numerical data
+            for pct, bin_edge in zip(percentages, bins):
+                fig.add_annotation(x=bin_edge, y=pct, text=f"{pct}%", showarrow=False, row=i, col=1, font=dict(color='black'))
 
         fig.add_trace(data, row=i, col=1)
 

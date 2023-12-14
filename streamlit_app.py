@@ -50,65 +50,42 @@ euros = "euro.jpg"
 def create_visualisations(df, variables):
     rows = len(variables)
     fig = make_subplots(rows=rows, cols=1, subplot_titles=[f'Distribution de {var}' for var in variables])
-
     for i, var in enumerate(variables, start=1):
         if df[var].dtype == 'object':
-            counts = df[var].value_counts()
-            total = counts.sum()
-            percentages = (counts / total * 100).round(2)
-            data = go.Bar(x=counts.index, y=counts, name=var)
-
-            # Adding percentage annotations for categorical data
-            for x, pct in zip(counts.index, percentages):
-                fig.add_annotation(x=x, y=counts.loc[x], text=f'{pct}%', showarrow=False, row=i, col=1, font=dict(color='black'))
+            value_counts = df[var].value_counts()
+            percentages = (value_counts / value_counts.sum() * 100).round(2)
+            data = go.Bar(
+                x=value_counts.index,
+                y=value_counts,
+                name=var,
+                hovertemplate='%{x}: %{y}<br>Pourcentage: %{text:.2f}%',  # Formatage du texte de survol
+                text=percentages
+            )
         else:
-            # For numerical data, calculate the histogram counts and percentages
-            counts, bins = np.histogram(df[var], bins=30)
-            total = counts.sum()
-            percentages = (counts / total * 100).round(2)
             data = go.Histogram(x=df[var], nbinsx=30, name=var)
-
-            # Adding percentage annotations for numerical data
-            for pct, bin_edge in zip(percentages, bins):
-                fig.add_annotation(x=bin_edge, y=pct, text=f"{pct}%", showarrow=False, row=i, col=1, font=dict(color='black'))
-
         fig.add_trace(data, row=i, col=1)
-
     fig.update_layout(height=300 * rows, width=800, showlegend=False)
     return fig
-
+    
 def create_plotly_countplot(df, x, hue, title):
+        # Définition de la palette de couleurs
     color_discrete_map = {'Yes': 'blue', 'No': 'red'}
+    # Création du graphique avec la palette personnalisée
     fig = px.histogram(df, x=x, color=hue, barmode='group', color_discrete_map=color_discrete_map)
-
-    # Calculate percentages for each group
-    group_counts = df.groupby([x, hue]).size().reset_index(name='count')
-    total_counts = df.groupby(x).size()
-    group_counts['percentage'] = group_counts.apply(lambda row: (row['count'] / total_counts[row[x]] * 100).round(2), axis=1)
-
-    # Add percentage annotations
-    for _, row in group_counts.iterrows():
-        fig.add_annotation(x=row[x], y=row['count'], text=f"{row['percentage']}%", showarrow=False, font=dict(color='black'))
-
     fig.update_layout(title=title, xaxis_title=x, yaxis_title='Count')
     return fig
-
 def create_plotly_histplot(df, x, color, title):
+    # Utilisation de la même palette de couleurs pour la cohérence
     color_discrete_map = {'Yes': 'blue', 'No': 'red'}
+    # Création du graphique avec la palette personnalisée
     fig = px.histogram(df, x=x, color=color, barmode='overlay', nbins=50, color_discrete_map=color_discrete_map)
-
-    # Calculate and add percentage annotations
-    for col_val in df[color].unique():
-        subset = df[df[color] == col_val]
-        counts, bins = np.histogram(subset[x], bins=50)
-        total = counts.sum()
-        percentages = (counts / total * 100).round(2)
-
-        for pct, bin_edge in zip(percentages, bins):
-            fig.add_annotation(x=bin_edge, y=pct, text=f"{pct}%", showarrow=False, font=dict(color='black'))
-
     fig.update_layout(title=title, xaxis_title=x, yaxis_title='Count')
     return fig
+def get_correlation_plot(variable):
+    if variable in ['age', 'balance','duration','pdays','campaign','previous','day']:
+        return create_plotly_histplot(df, variable, 'deposit', f'Relation entre {variable} et deposit')
+    else:
+        return create_plotly_countplot(df, variable, 'deposit', f'Relation entre {variable} et deposit')
 
 def plot_knn_scores(X_train, y_train, X_test, y_test):
     score_mi = []

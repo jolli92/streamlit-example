@@ -1653,21 +1653,12 @@ if page == pages[5] :
   st.markdown(
         """
         <style>
-            .big-font {
-                font-size: 32px !important;
-                color: #1E90FF;  /* Dodger Blue */
-                text-align: center;
-            }
             .highlight {
-                padding: 20px;
+                background-color: #F0F8FF;  /* Alice Blue */
+                padding: 15px;
                 border-radius: 8px;
                 text-align: center;
-            }
-            .section {
-                background-color: #F0F8FF;  /* Alice Blue */
-                padding: 30px;
-                border-radius: 20px;
-                text-align: center;
+                font-size: 24px;
             }
         </style>
         """,

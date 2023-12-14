@@ -1483,7 +1483,7 @@ if page == pages[4]:
 # Obtenir le résumé statistique du DataFrame filtré
   summary = filtered_df.describe()
 
-if page == pages[0] :
+if page == pages[5] :
   df = pd.read_csv('bank.csv')
   def calculate_outlier_bounds(df, column):
         Q1 = df[column].quantile(0.25)

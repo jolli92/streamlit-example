@@ -156,9 +156,7 @@ if page == pages[0] :
   st.write("Dans le cadre de notre formation de Data Analyste, nous avons eu l\'opportunité de développer \
   un projet axé sur la prédiction de souscription à un compte à terme (CAT) par les clients d\'une institution financière.")
   
-  st.write("Dans un contexte économique marqué par le blocage du taux de rémunération du livret A, une remontée des taux et une forte inflation,\
-  les comptes à terme sont devenus une alternative de plus en plus privilégiée, comme en témoigne l\'augmentation significative de leurs encours,\
-  passant de 80 milliards d’euros en janvier 2023 à 122 milliards en juillet 2023 selon la Banque de France.")
+  st.write("Le milieu économique actuel, caractérisé par une inflation généralisée et une augmentation des taux directeurs par la Banque Centrale Européenne, combiné à la stagnation des rémunérations sur les comptes d'épargne à court terme, a rendu les comptes à terme (CAT) de plus en plus séduisants en tant que produits financiers. Les CAT gagnent en popularité comme option alternative, ce qui se reflète dans l'augmentation notable de leur volume total, qui est passé de 80 milliards d'euros en janvier 2023 à 122 milliards en juillet 2023, d'après les données de la Banque de France.")
 
   st.write("Notre objectif principal était de construire un modèle prédictif fiable, capable de déterminer la probabilité de souscription à un CAT.")
 

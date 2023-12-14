@@ -1620,8 +1620,8 @@ if page == pages[5] :
   if selected_vars:
         fig = create_visualisations(filtered_df, selected_vars)
         st.plotly_chart(fig)
-  if show_annotations:
-        st.header("commentaire de la variable selectionnée")
+  #if show_annotations:
+        #st.header("commentaire de la variable selectionnée")
             #dictionnaire des commentaires pour chaque variable
 
   commentpred= {

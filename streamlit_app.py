@@ -1483,58 +1483,58 @@ if page == pages[4]:
 # Obtenir le résumé statistique du DataFrame filtré
   summary = filtered_df.describe()
 
-
-df = pd.read_csv('bank.csv')
-def calculate_outlier_bounds(df, column):
+if page == pages[0] :
+  df = pd.read_csv('bank.csv')
+  def calculate_outlier_bounds(df, column):
         Q1 = df[column].quantile(0.25)
         Q3 = df[column].quantile(0.75)
         IQR = Q3 - Q1
         return Q1 - 1.5 * IQR, Q3 + 1.5 * IQR
-def replace_outliers_with_mean(df, column, upper_bound):
+  def replace_outliers_with_mean(df, column, upper_bound):
         mean_value = df[column].mean()
         df.loc[df[column] > upper_bound, column] = mean_value
-def encode_categorical_features(df, categorical_columns):
+  def encode_categorical_features(df, categorical_columns):
         encoder = OneHotEncoder(drop=None, sparse=False)
         encoder.fit(df[categorical_columns])
         encoded_df_2 = encoder.transform(df[categorical_columns])
         encoded_df = pd.DataFrame(encoded_df_2, columns=encoder.get_feature_names_out(categorical_columns))
         return encoded_df
-columns_to_convert = ['day', 'duration', 'campaign', 'pdays', 'previous']
-for column in columns_to_convert:
+  columns_to_convert = ['day', 'duration', 'campaign', 'pdays', 'previous']
+  for column in columns_to_convert:
         df[column] = df[column].astype(int)
-if 'pdays' not in df:
+  if 'pdays' not in df:
         st.write("XDLa colonne 'pdays' a disparu!")
-if 'pdays' not in df:
+  if 'pdays' not in df:
         st.write("VLa colonne 'pdays' a disparu!")
     # Filter for pdays column
-pdays_filtered = df['pdays'][df['pdays'] != -1]
-if 'pdays' not in df:
+  pdays_filtered = df['pdays'][df['pdays'] != -1]
+  if 'pdays' not in df:
         st.write("XLa colonne 'pdays' a disparu!")
     # Calculate outlier bounds for the respective columns
-_, upper_campaign = calculate_outlier_bounds(df, 'campaign')
-_, upper_pdays = calculate_outlier_bounds(df, 'pdays')
-_, upper_previous = calculate_outlier_bounds(df, 'previous')
-_, upper_duration = calculate_outlier_bounds(df, 'duration')
-if 'pdays' not in df:
+  _, upper_campaign = calculate_outlier_bounds(df, 'campaign')
+  _, upper_pdays = calculate_outlier_bounds(df, 'pdays')
+  _, upper_previous = calculate_outlier_bounds(df, 'previous')
+  _, upper_duration = calculate_outlier_bounds(df, 'duration')
+  if 'pdays' not in df:
         st.write("6La colonne 'pdays' a disparu!")
     # Replace outliers with mean
-replace_outliers_with_mean(df, 'pdays', upper_pdays)
-replace_outliers_with_mean(df, 'campaign', upper_campaign)
-replace_outliers_with_mean(df, 'previous', upper_previous)
-replace_outliers_with_mean(df, 'duration', upper_duration)
+  replace_outliers_with_mean(df, 'pdays', upper_pdays)
+  replace_outliers_with_mean(df, 'campaign', upper_campaign)
+  replace_outliers_with_mean(df, 'previous', upper_previous)
+  replace_outliers_with_mean(df, 'duration', upper_duration)
     # Bin 'age' and 'balance' columns
-age_bins = [18, 25, 35, 50, 65, 100]
-age_labels = ["18_25", "25_35", "35_50", "50_65", "65_100"]
-df['age_group'] = pd.cut(df['age'], bins=age_bins, labels=age_labels, right=False).astype('object')
-balance_bins = [-6848, 0, 122, 550, 1708, 81205]
-balance_labels = ["negatif", "tres_faible", "faible", "moyen", "eleve"]
-df['balance_group'] = pd.cut(df['balance'], bins=balance_bins, labels=balance_labels, right=False).astype('object')
+  age_bins = [18, 25, 35, 50, 65, 100]
+  age_labels = ["18_25", "25_35", "35_50", "50_65", "65_100"]
+  df['age_group'] = pd.cut(df['age'], bins=age_bins, labels=age_labels, right=False).astype('object')
+  balance_bins = [-6848, 0, 122, 550, 1708, 81205]
+  balance_labels = ["negatif", "tres_faible", "faible", "moyen", "eleve"]
+  df['balance_group'] = pd.cut(df['balance'], bins=balance_bins, labels=balance_labels, right=False).astype('object')
     # Encode categorical columns
-categorical_columns = df.select_dtypes(include=['object']).columns
-encoded_df = encode_categorical_features(df, categorical_columns)
-columns_to_add = ['day', 'duration', 'campaign', 'pdays', 'previous']
-encoded_df = pd.concat([df[columns_to_add], encoded_df], axis=1)
-cols = [
+  categorical_columns = df.select_dtypes(include=['object']).columns
+  encoded_df = encode_categorical_features(df, categorical_columns)
+  columns_to_add = ['day', 'duration', 'campaign', 'pdays', 'previous']
+  encoded_df = pd.concat([df[columns_to_add], encoded_df], axis=1)
+  cols = [
     "day", "duration", "campaign", "pdays", "previous", "job_admin.", "job_blue-collar", "job_entrepreneur", "job_housemaid",
     "job_management", "job_retired", "job_self-employed", "job_services", "job_student", "job_technician", "job_unemployed",
     "job_unknown", "marital_divorced", "marital_married", "marital_single", "education_primary", "education_secondary",
@@ -1545,17 +1545,17 @@ cols = [
     "age_group_35_50", "age_group_50_65", "age_group_65_100", "balance_group_eleve", "balance_group_faible",
     "balance_group_moyen", "balance_group_negatif", "balance_group_tres_faible"
 ]
-encoded_df = encoded_df[cols]
-with open('xgb_optimizedpickle', 'rb') as model_file:
+  encoded_df = encoded_df[cols]
+  with open('xgb_optimizedpickle', 'rb') as model_file:
         model = pickle.load(model_file)
-y_pred = model.predict(encoded_df)
-df['prediction'] = y_pred
+  y_pred = model.predict(encoded_df)
+  df['prediction'] = y_pred
     #df_sorted = df.sort_values(by='prediction', ascending=False)
-y_proba = model.predict_proba(encoded_df)
-df['probability'] = y_proba[:,1]  # Pour une classification binaire, cela donnerait la probabilité de la classe 1
-filtered_df = df.sort_values(by='probability', ascending=False)
+  y_proba = model.predict_proba(encoded_df)
+  df['probability'] = y_proba[:,1]  # Pour une classification binaire, cela donnerait la probabilité de la classe 1
+  filtered_df = df.sort_values(by='probability', ascending=False)
 # Display the top 50 clients
-st.markdown(
+  st.markdown(
         """
         <style>
             .big-font {
@@ -1578,17 +1578,17 @@ st.markdown(
         """,
         unsafe_allow_html=True
     )
-st.markdown('<p class="big-font">DataFrame avec probabilité de conversion</p>', unsafe_allow_html=True)
-st.dataframe(filtered_df.head(50))
-prediction = model.predict(encoded_df)
+  st.markdown('<p class="big-font">DataFrame avec probabilité de conversion</p>', unsafe_allow_html=True)
+  st.dataframe(filtered_df.head(50))
+  prediction = model.predict(encoded_df)
 # Créer un histogramme des probabilités
-fig, ax = plt.subplots()
-ax.hist(prediction, bins=10, range=(0,1))
-ax.set_title("Distribution des Probabilités de Prédiction")
-ax.set_xlabel("Probabilité")
-ax.set_ylabel("Nombre de Prédictions")
+  fig, ax = plt.subplots()
+  ax.hist(prediction, bins=10, range=(0,1))
+  ax.set_title("Distribution des Probabilités de Prédiction")
+  ax.set_xlabel("Probabilité")
+  ax.set_ylabel("Nombre de Prédictions")
     # Afficher l'histogramme dans Streamlit
-st.markdown(
+  st.markdown(
         """
         <style>
             .big-font {
@@ -1611,15 +1611,15 @@ st.markdown(
         """,
         unsafe_allow_html=True
     )
-st.markdown('<p class="big-font">Histogramme des probabilités</p>', unsafe_allow_html=True)
-st.pyplot(fig)
+  st.markdown('<p class="big-font">Histogramme des probabilités</p>', unsafe_allow_html=True)
+  st.pyplot(fig)
 # Filtrer le DataFrame pour ne garder que les lignes avec probability > 0.65
-filtered_df = filtered_df[filtered_df['probability'] > 0.65]
+  filtered_df = filtered_df[filtered_df['probability'] > 0.65]
 # Obtenir le résumé statistique du DataFrame filtré
-summary = filtered_df.describe()
-summary2 = filtered_df.describe(include=['object', 'category'])
+  summary = filtered_df.describe()
+  summary2 = filtered_df.describe(include=['object', 'category'])
 # Afficher le résumé
-st.markdown(
+  st.markdown(
         """
         <style>
             .big-font {
@@ -1642,20 +1642,20 @@ st.markdown(
         """,
         unsafe_allow_html=True
     )
-st.markdown('<p class="big-font">Résultat des profils à démarcher</p>', unsafe_allow_html=True)
-st.write(summary)
-st.write(summary2)
-with st.container():
+  st.markdown('<p class="big-font">Résultat des profils à démarcher</p>', unsafe_allow_html=True)
+  st.write(summary)
+  st.write(summary2)
+  with st.container():
         selected_vars = st.multiselect('Sélectionnez les variables à visualiser:', filtered_df.columns)
         show_annotations = st.checkbox('Afficher les commentaires')
-if selected_vars:
+  if selected_vars:
         fig = create_visualisations(filtered_df, selected_vars)
         st.plotly_chart(fig)
-if show_annotations:
+  if show_annotations:
         st.header("commentaire de la variable selectionnée")
             #dictionnaire des commentaires pour chaque variable
 
-commentpred= {
+  commentpred= {
             'job' : "La majorité des individus du seuil de probabilité sont les managers, suivis par les techniciens et les ouvriers. Néanmoins, il y a une très bonne répartition avec le reste des metiers",
           'age' : "Les individus avec une probabilité de souscription supérieure à 0,65 ont des âges variant entre 18 et 95 ans avec une moyenne de 38 ans. La moitié des individus a moins de 39 ans. La majorité des personnes qui accepte le dépot à terme se situe entre 30 et 34 ans.",
           'marital' : "Le statut matrimonial des clients de notre seuil de probabilité de souscription est : 'married' (2570), suivi des 'single' (1830) puis des 'divorced' (586).",
@@ -1674,14 +1674,14 @@ commentpred= {
           'poutcome' : "Ayant constaté qu'il y'avait un grand nombre de personne qui n'ont jamais été contacté, nous nous rendons compte que ce sont ces personnes qui souscrivent le plus, suivi par ceux qui avaient déjà souscrit auparavant, et en comptant quelques personnes qui avaient refusé de souscrire.",
           }
         #affichage
-for var in selected_vars:
+  for var in selected_vars:
             if var in commentpred:
                     st.info(f"{var}: {commentpred[var]}")
             else:
                     st.info(f"aucun commentaire disponible pour {var}.")
-else:
+  else:
         st.write("Veuillez sélectionner les variables pour afficher les graphiques et commentaires associés.")
-st.markdown(
+  st.markdown(
         """
         <style>
             .big-font {
@@ -1704,24 +1704,24 @@ st.markdown(
         """,
         unsafe_allow_html=True
     )
-st.markdown('<p class="big-font">Proposition de Profil client à contacter</p>', unsafe_allow_html=True)
-st.write("""Notre analyse des données de souscription au dépôt à terme révèle des tendances intéressantes parmi les clients les plus susceptibles de souscrire.
+  st.markdown('<p class="big-font">Proposition de Profil client à contacter</p>', unsafe_allow_html=True)
+  st.write("""Notre analyse des données de souscription au dépôt à terme révèle des tendances intéressantes parmi les clients les plus susceptibles de souscrire.
     Majoritairement, ce sont des managers, techniciens et ouvriers, avec une répartition variée parmi d'autres métiers.""")
-st.write("""L'âge moyen des clients potentiels se situe autour de 38 ans, principalement dans la tranche de 30 à 34 ans.
+  st.write("""L'âge moyen des clients potentiels se situe autour de 38 ans, principalement dans la tranche de 30 à 34 ans.
     Concernant le statut matrimonial, les clients mariés sont plus enclins à souscrire, suivis des célibataires et des divorcés.
     Le niveau d'éducation le plus courant est le secondaire, suivi de près par le tertiaire.""")
-st.write("""Sur le plan financier, les soldes bancaires varient généralement de 0 à 5 000K, bien que quelques cas extrêmes soient observés. La plupart des clients potentiels ne sont pas en défaut de paiement et n'ont pas de crédit immobilier ou de prêt personnel.
+  st.write("""Sur le plan financier, les soldes bancaires varient généralement de 0 à 5 000K, bien que quelques cas extrêmes soient observés. La plupart des clients potentiels ne sont pas en défaut de paiement et n'ont pas de crédit immobilier ou de prêt personnel.
     Il est recommandé de les contacter principalement par téléphone portable, particulièrement entre le 12 et le 15 du mois.
     Mai est identifié comme le mois le plus propice aux souscriptions, suivant une durée d'appel moyenne de 7 minutes. Les clients potentiels ont généralement été contactés une seule fois et n'avaient souvent jamais été démarchés lors des campagnes précédentes.""")
-st.write("""Finalement, ceux n'ayant jamais été contactés ou ayant eu des expériences positives dans les campagnes précédentes montrent une plus grande propension à souscrire.""")
+  st.write("""Finalement, ceux n'ayant jamais été contactés ou ayant eu des expériences positives dans les campagnes précédentes montrent une plus grande propension à souscrire.""")
 
     # Afficher l'histogramme dans Streamlit
-st.pyplot(fig)
+  st.pyplot(fig)
 # Filtrer le DataFrame pour ne garder que les lignes avec probability > 0.65
-filtered_df = filtered_df[filtered_df['probability'] > 0.65]
+  filtered_df = filtered_df[filtered_df['probability'] > 0.65]
 
 # Obtenir le résumé statistique du DataFrame filtré
-summary = filtered_df.describe()
+  summary = filtered_df.describe()
 
 # Afficher le résumé
-st.write(summary)
+  st.write(summary)

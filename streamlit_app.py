@@ -1635,7 +1635,7 @@ if page == pages[5] :
 
 # Ajouter une checkbox dans l'application Streamlit pour afficher les DataFrames modifiés
   if st.checkbox('Afficher les DataFrames'):
-    st.write("Dataframe contenant les probabilités de souscription supérieur à 65%")
+    st.write("Dataframe contenant les clients avec une probabilité de souscription supérieur à 65%")
     st.dataframe(filtered_df_excluded.head(50))
     st.write("Affichage des descriptions globales du dataframe")
     st.write(summary_excluded)

@@ -1481,7 +1481,7 @@ if page == pages[4]:
   filtered_df = filtered_df1[filtered_df1['probability'] > 0.5]
 
 # Obtenir le résumé statistique du DataFrame filtré
-  summary = filtered_df.describe()
+  #summary = filtered_df.describe()
 
 if page == pages[5] :
   df = pd.read_csv('bank.csv')
@@ -1579,7 +1579,7 @@ if page == pages[5] :
         unsafe_allow_html=True
     )
   st.markdown('<p class="big-font">Conclusion</p>', unsafe_allow_html=True)
-  st.dataframe(filtered_df.head(50))
+  #st.dataframe(filtered_df.head(50))
   prediction = model.predict(encoded_df)
 
 # Filtrer le DataFrame pour ne garder que les lignes avec probability > 0.65
@@ -1613,9 +1613,16 @@ if page == pages[5] :
     )
   #st.write(summary)
   #st.write(summary2)
+  columns_to_exclude = ['age', 'balance', 'deposit']
+  filtered_df_excluded = filtered_df.drop(columns=columns_to_exclude, errors='ignore')
+  summary_excluded = summary.drop(columns=columns_to_exclude, errors='ignore')
+  summary2_excluded = summary2.drop(columns=columns_to_exclude, errors='ignore')
+
+# Ajouter une checkbox dans l'application Streamlit pour afficher les DataFrames modifiés
   if st.checkbox('Afficher les DataFrames'):
-    st.write(summary)
-    st.write(summary2)
+    st.dataframe(filtered_df_excluded.head(50))
+    st.write(summary_excluded)
+    st.write(summary2_excluded)
   with st.container():
         selected_vars = st.multiselect('Sélectionnez les variables à visualiser:', filtered_df.columns)
         #show_annotations = st.checkbox('Afficher les commentaires')

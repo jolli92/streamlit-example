@@ -1581,38 +1581,7 @@ if page == pages[5] :
   st.markdown('<p class="big-font">DataFrame avec probabilité de conversion</p>', unsafe_allow_html=True)
   st.dataframe(filtered_df.head(50))
   prediction = model.predict(encoded_df)
-# Créer un histogramme des probabilités
-  fig, ax = plt.subplots()
-  ax.hist(prediction, bins=10, range=(0,1))
-  ax.set_title("Distribution des Probabilités de Prédiction")
-  ax.set_xlabel("Probabilité")
-  ax.set_ylabel("Nombre de Prédictions")
-    # Afficher l'histogramme dans Streamlit
-  st.markdown(
-        """
-        <style>
-            .big-font {
-                font-size: 32px !important;
-                color: #1E90FF;  /* Dodger Blue */
-                text-align: center;
-            }
-            .highlight {
-                padding: 20px;
-                border-radius: 8px;
-                text-align: center;
-            }
-            .section {
-                background-color: #F0F8FF;  /* Alice Blue */
-                padding: 30px;
-                border-radius: 20px;
-                text-align: center;
-            }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-  st.markdown('<p class="big-font">Histogramme des probabilités</p>', unsafe_allow_html=True)
-  st.pyplot(fig)
+
 # Filtrer le DataFrame pour ne garder que les lignes avec probability > 0.65
   filtered_df = filtered_df[filtered_df['probability'] > 0.65]
 # Obtenir le résumé statistique du DataFrame filtré
@@ -1715,13 +1684,3 @@ if page == pages[5] :
     Mai est identifié comme le mois le plus propice aux souscriptions, suivant une durée d'appel moyenne de 7 minutes. Les clients potentiels ont généralement été contactés une seule fois et n'avaient souvent jamais été démarchés lors des campagnes précédentes.""")
   st.write("""Finalement, ceux n'ayant jamais été contactés ou ayant eu des expériences positives dans les campagnes précédentes montrent une plus grande propension à souscrire.""")
 
-    # Afficher l'histogramme dans Streamlit
-  st.pyplot(fig)
-# Filtrer le DataFrame pour ne garder que les lignes avec probability > 0.65
-  filtered_df = filtered_df[filtered_df['probability'] > 0.65]
-
-# Obtenir le résumé statistique du DataFrame filtré
-  summary = filtered_df.describe()
-
-# Afficher le résumé
-  st.write(summary)

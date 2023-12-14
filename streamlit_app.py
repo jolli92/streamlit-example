@@ -1578,7 +1578,7 @@ if page == pages[5] :
         """,
         unsafe_allow_html=True
     )
-  st.markdown('<p class="big-font">CONCLUSION</p>', unsafe_allow_html=True)
+  st.markdown('<p class="big-font">Conclusion</p>', unsafe_allow_html=True)
   st.dataframe(filtered_df.head(50))
   prediction = model.predict(encoded_df)
 
@@ -1673,7 +1673,7 @@ if page == pages[5] :
         """,
         unsafe_allow_html=True
     )
-  st.markdown('<p class="big-font">Proposition de Profil client à contacter</p>', unsafe_allow_html=True)
+  st.markdown('<p class="highlight">Proposition de Profil client à contacter</p>', unsafe_allow_html=True)
   st.write("""Notre analyse des données de souscription au dépôt à terme révèle des tendances intéressantes parmi les clients les plus susceptibles de souscrire.
     Majoritairement, ce sont des managers, techniciens et ouvriers, avec une répartition variée parmi d'autres métiers.""")
   st.write("""L'âge moyen des clients potentiels se situe autour de 38 ans, principalement dans la tranche de 30 à 34 ans.

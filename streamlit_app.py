@@ -63,8 +63,6 @@ def create_visualisations(df, variables):
                 fig.add_annotation(x=x, y=counts.loc[x], text=f'{pct}%', showarrow=False, row=i, col=1, font=dict(color='black'))
         else:
             data = go.Histogram(x=df[var], nbinsx=30, name=var)
-            for x, pct in zip(counts.index, percentages):
-                fig.add_annotation(x=x, y=counts.loc[x], text=f'{pct}%', showarrow=False, row=i, col=1, font=dict(color='black'))
 
         fig.add_trace(data, row=i, col=1)
 

@@ -47,7 +47,7 @@ import shap
 
 df = pd.read_csv('bank.csv')
 euros = "euro.jpg"
-def modified_create_visualisations(df, variables):
+def create_visualisations(df, variables):
     rows = len(variables)
     fig = make_subplots(rows=rows, cols=1, subplot_titles=[f'Distribution de {var}' for var in variables])
 
@@ -69,7 +69,7 @@ def modified_create_visualisations(df, variables):
     fig.update_layout(height=300 * rows, width=800, showlegend=False)
     return fig
 
-def modified_create_plotly_countplot(df, x, hue, title):
+def create_plotly_countplot(df, x, hue, title):
     color_discrete_map = {'Yes': 'blue', 'No': 'red'}
     fig = px.histogram(df, x=x, color=hue, barmode='group', color_discrete_map=color_discrete_map)
 
@@ -85,7 +85,7 @@ def modified_create_plotly_countplot(df, x, hue, title):
     fig.update_layout(title=title, xaxis_title=x, yaxis_title='Count')
     return fig
 
-def modified_create_plotly_histplot(df, x, color, title):
+def create_plotly_histplot(df, x, color, title):
     color_discrete_map = {'Yes': 'blue', 'No': 'red'}
     fig = px.histogram(df, x=x, color=color, barmode='overlay', nbins=50, color_discrete_map=color_discrete_map)
 

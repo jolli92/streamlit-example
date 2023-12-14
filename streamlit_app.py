@@ -1613,6 +1613,9 @@ if page == pages[5] :
     )
   #st.write(summary)
   #st.write(summary2)
+  if st.checkbox('Afficher les DataFrames'):
+    st.write(summary)
+    st.write(summary2)
   with st.container():
         selected_vars = st.multiselect('Sélectionnez les variables à visualiser:', filtered_df.columns)
         #show_annotations = st.checkbox('Afficher les commentaires')
@@ -1622,9 +1625,6 @@ if page == pages[5] :
   #if show_annotations:
         #st.header("commentaire de la variable selectionnée")
             #dictionnaire des commentaires pour chaque variable
-  if st.checkbox('Afficher les DataFrames'):
-    st.write(summary)
-    st.write(summary2)
   commentpred= {
           'job' : "La majorité des individus du seuil de probabilité sont les managers, suivis par les techniciens et les ouvriers. Néanmoins, il y a une très bonne répartition avec le reste des metiers",
           'age' : "Les individus avec une probabilité de souscription supérieure à 0,65 ont des âges variant entre 18 et 95 ans avec une moyenne de 38 ans. La moitié des individus a moins de 39 ans. La majorité des personnes qui accepte le dépot à terme se situe entre 30 et 34 ans.",

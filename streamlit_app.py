@@ -1613,6 +1613,21 @@ if page == pages[5] :
     )
   #st.write(summary)
   #st.write(summary2)
+  st.markdown(
+        """
+        <style>
+            .highlight {
+                background-color: #F0F8FF;  /* Alice Blue */
+                padding: 15px;
+                border-radius: 8px;
+                text-align: center;
+                font-size: 24px;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+  st.markdown('<p class="highlight">Recherche des profils optimaux</p>', unsafe_allow_html=True)
   columns_to_exclude = ['age', 'balance', 'deposit']
   filtered_df_excluded = filtered_df.drop(columns=columns_to_exclude, errors='ignore')
   summary_excluded = summary.drop(columns=columns_to_exclude, errors='ignore')

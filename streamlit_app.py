@@ -124,7 +124,7 @@ def plot_knn_scores(X_train, y_train, X_test, y_test):
     return plt
 st.title('Projet : MARKETING BANCAIRE')
 st.sidebar.title("SOMMAIRE")
-pages=["Présentation du Projet", "Datavisualisation","Modélisation","Prédictions", "Utilisation professionnelle du projet", "Conclusion"]
+pages=["Présentation du Projet", "Datavisualisation","Modélisation","Prédiction pour un Conseiller Bancaire", "Prédiction pour le Marketing Téléphonique", "Conclusion"]
 
 page=st.sidebar.radio("Aller vers", pages)
 

@@ -1115,7 +1115,7 @@ if page == pages[3] :
         """,
         unsafe_allow_html=True
     )
-  st.markdown('<p class="big-font">Prédictions</p>', unsafe_allow_html=True)  
+  st.markdown('<p class="big-font">Prédiction pour un Conseiller Bancaire </p>', unsafe_allow_html=True)  
   #st.header("Prédictions")
   df = pd.read_csv('bank.csv')
     #On écarte les valeurs -1 de pdays pour ne pas les traiter lors du pre-processing
@@ -1357,7 +1357,7 @@ if page == pages[4] :
         """,
         unsafe_allow_html=True
     )
-  st.markdown('<p class="big-font">Utilisation professionnelle du projet</p>', unsafe_allow_html=True)
+  st.markdown('<p class="big-font">Prédiction pour le Marketing Téléphonique </p>', unsafe_allow_html=True)
   #st.header("Utilisation professionnelle du projet")
   df = pd.read_csv('Banktest.csv')
   

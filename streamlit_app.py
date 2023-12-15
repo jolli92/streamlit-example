@@ -1473,17 +1473,18 @@ if page == pages[4]:
   df_sorted1 = df_sorted
   df_sorted = df_sorted[['prénom', 'téléphone','probability']]
 # Display the top 50 clients
-  st.dataframe(df_sorted.head(50))
+  if st.checkbox('Afficher les 50 clients avec la probabilité la plus forte'):
+    st.dataframe(df_sorted.head(50))
   prediction = model.predict(encoded_df)
 # Créer un histogramme des probabilités
-  fig, ax = plt.subplots()
-  ax.hist(prediction, bins=10, range=(0,1))
-  ax.set_title("Distribution des Probabilités de Prédiction")
-  ax.set_xlabel("Probabilité")
-  ax.set_ylabel("Nombre de Prédictions")
+  #fig, ax = plt.subplots()
+  #ax.hist(prediction, bins=10, range=(0,1))
+  #ax.set_title("Distribution des Probabilités de Prédiction")
+  #ax.set_xlabel("Probabilité")
+  #ax.set_ylabel("Nombre de Prédictions")
 
     # Afficher l'histogramme dans Streamlit
-  st.pyplot(fig)
+  #st.pyplot(fig)
 # Filtrer le DataFrame pour ne garder que les lignes avec probability > 0.5
   filtered_df1 = df_sorted1.drop(columns=['prénom', 'téléphone'])
   filtered_df = filtered_df1[filtered_df1['probability'] > 0.5]

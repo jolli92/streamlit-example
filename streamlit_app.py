@@ -1388,6 +1388,23 @@ if page == pages[4]:
     st.write("- Tri : Organisation du DataFrame 'df' par ordre décroissant de probabilité.")
     st.write("- Sélection des Données : Réduction du DataFrame trié pour ne conserver que les colonnes 'Prénom', 'Téléphone' et 'Probability'.")
     st.write("- Affichage : Présentation des 50 premiers clients avec st.dataframe(df_sorted.head(50)), dans l'application Streamlit.")
+  st.markdown(
+        """
+        <style>
+            .highlight {
+                background-color: #F0F8FF;  /* Alice Blue */
+                padding: 15px;
+                border-radius: 8px;
+                text-align: center;
+                font-size: 24px;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Text with adjusted styling
+  st.markdown('<p class="highlight">Nouveau dataset</p>', unsafe_allow_html=True)
   st.dataframe(df)
   def calculate_outlier_bounds(df, column):
         Q1 = df[column].quantile(0.25)

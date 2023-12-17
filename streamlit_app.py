@@ -240,6 +240,7 @@ if page == pages[1] :
       st.write("**pdays** : Variable quantitative indiquant le nombre de jours écoulé depuis le dernier contact échangé avec le client (lors de la campagne précédente). Sachant que -1 signifie que le client n’a pas été contacté lors de la campagne précédente")
       st.write("**previous** : Variable quantitative indiquant le nombre de contacts avec le client lors de la campagne précédente.")
       st.write("**poutcome** : Variable catégorielle montrant le résultat de la campagne de marketing précédente.")
+      st.write("**deposit** : Elle est notre variable cible, elle indique si oui ou non un client a souscrit à un dépôt à terme, c’est une variable catégorielle de type booléen et dont la distribution est analysée dans la partie qui suit.")
   
   #st.header('Visualisation')
   st.markdown('<p class="big-font">Visualisation</p>', unsafe_allow_html=True)
@@ -553,7 +554,7 @@ if page == pages[1]:
 
     # Suite de l'analyse
 
- st.markdown("""En bref, malgré les informations substantielles fournies par l'analyse exploratoire des variables, il est crucial de noter que la relation statistique ne garantit pas la causalité. Une investigation plus approfondie, telle qu'une modélisation prédictive, serait nécessaire pour comprendre comment ces variables influent réellement sur la souscription aux dépôts à terme.
+ st.markdown("""En résumé, malgré les informations substantielles fournies par l'analyse exploratoire des variables, il est crucial de noter que la relation statistique ne garantit pas la causalité. Une investigation plus approfondie, telle qu'une modélisation prédictive, serait nécessaire pour comprendre comment ces variables influent réellement sur la souscription aux dépôts à terme.
 Nous allons donc procéder à la modélisation de notre jeu de données pour faire de bonnes prédictions, en commençant par le Pre-processing.""")
     
 if page == pages[2]:

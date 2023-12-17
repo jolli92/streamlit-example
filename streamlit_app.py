@@ -1089,6 +1089,26 @@ if page == pages[2]:
           st.pyplot(fig)
       elif selected_metric == 'Classification Report':
         st.text(classification_report(y_test, y_pred_labels))
+      elif selected_metric == 'Optimisation du modéle':
+        st.write('Dans l'optimisation de notre modèle XGBoost, nous avons méticuleusement ajusté plusieurs paramètres clés pour améliorer les performances et l'efficacité. Voici un aperçu des paramètres modifiés et de leur impact sur le modèle :
+
+    colsample_bytree (0.8) : Ce paramètre définit la proportion de caractéristiques (colonnes) à utiliser pour chaque arbre. Un réglage de 0.8 signifie que 80% des caractéristiques sont sélectionnées aléatoirement, contribuant à la diversité des arbres et à la réduction du risque de surajustement.
+
+    learning_rate (0.1) : Connu sous le nom de "taux d'apprentissage", ce paramètre est crucial pour la convergence du modèle. Un taux de 0.1 équilibre efficacement la vitesse et la précision, permettant à chaque arbre de contribuer modérément, mais de manière significative, au modèle final.
+
+    max_depth (5) : La profondeur maximale de chaque arbre est fixée à 5. Cette limite garantit que les arbres sont suffisamment profonds pour capturer des relations complexes, tout en évitant un surajustement excessif.
+
+    n_estimators (200) : Le modèle construit 200 arbres. Ce nombre offre une bonne complexité au modèle, lui permettant de capturer diverses nuances dans les données tout en restant gérable en termes de calcul.
+
+    subsample (0.8) : Chaque arbre est construit en utilisant 80% des données d'entraînement choisies au hasard. Cette technique, connue sous le nom de "sous-échantillonnage", aide à améliorer la robustesse du modèle en réduisant la variance.
+
+    use_label_encoder (False) : Nous désactivons l'encodeur de label interne, une recommandation pour les dernières versions de XGBoost, en particulier lors de l'utilisation de données non numériques.
+
+    eval_metric ("logloss") : Nous utilisons la perte logarithmique comme métrique d'évaluation pour la validation des données. Cette métrique est particulièrement adaptée aux problèmes de classification binaire.
+
+    reg_alpha (0.1) & reg_lambda (1.0) : Ces paramètres introduisent une régularisation L1 (alpha) et L2 (lambda) respectivement. La régularisation est essentielle pour prévenir le surajustement, en pénalisant les modèles trop complexes.
+
+Cette configuration a été soigneusement élaborée pour équilibrer la précision, la robustesse et la performance de calcul de notre modèle XGBoost.')
 
     
 if page == pages[3] :

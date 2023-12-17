@@ -124,7 +124,7 @@ def plot_knn_scores(X_train, y_train, X_test, y_test):
     return plt
 st.title('Projet : MARKETING BANCAIRE')
 st.sidebar.title("SOMMAIRE")
-pages=["Présentation du Projet", "Datavisualisation","Modélisation","Application pour un Conseiller", "Outil pour le Marketing Téléphonique ", "Conclusion"]
+pages=["Présentation du Projet", "Datavisualisation","Modélisation","Application pour un Conseiller", "Outil pour le telemarketing ", "Conclusion"]
 
 page=st.sidebar.radio("Aller vers", pages)
 
@@ -1414,7 +1414,7 @@ if page == pages[4] :
         """,
         unsafe_allow_html=True
     )
-  st.markdown('<p class="big-font">Prédiction pour le Marketing Téléphonique</p>', unsafe_allow_html=True)
+  st.markdown('<p class="big-font">Prédiction pour le Telemarketing</p>', unsafe_allow_html=True)
   #st.header("Utilisation professionnelle du projet")
   df = pd.read_csv('Banktest.csv')
   

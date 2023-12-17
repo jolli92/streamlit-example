@@ -1073,7 +1073,7 @@ if page == pages[2]:
 
     # On affiche la metric a selectionner
       selected_metric = st.selectbox("Sélectionnez une métrique d'évaluation du modèle choisi", 
-                                     options=['-- Sélectionnez une métrique --', 'Learning Curve', 'Confusion Matrix', 'Classification Report'])
+                                     options=['-- Sélectionnez une métrique --', 'Learning Curve', 'Confusion Matrix', 'Classification Report', 'Optimisation du modéle'])
 
       if selected_metric == 'Learning Curve':
         st.pyplot(plot_learning_curve(train_sizes, train_scores, test_scores, model_choisi))

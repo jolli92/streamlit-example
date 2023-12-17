@@ -1090,7 +1090,7 @@ if page == pages[2]:
       elif selected_metric == 'Classification Report':
         st.text(classification_report(y_test, y_pred_labels))
       elif selected_metric == 'Optimisation du modéle':
-        st.write("
+        st.write("""
         Dans l'optimisation de notre modèle XGBoost, nous avons méticuleusement ajusté plusieurs paramètres clés pour améliorer les performances et l'efficacité. Voici un aperçu des paramètres modifiés et de leur impact sur le modèle :
 
     colsample_bytree (0.8) : Ce paramètre définit la proportion de caractéristiques (colonnes) à utiliser pour chaque arbre. Un réglage de 0.8 signifie que 80% des caractéristiques sont sélectionnées aléatoirement, contribuant à la diversité des arbres et à la réduction du risque de surajustement.
@@ -1109,7 +1109,7 @@ if page == pages[2]:
 
     reg_alpha (0.1) & reg_lambda (1.0) : Ces paramètres introduisent une régularisation L1 (alpha) et L2 (lambda) respectivement. La régularisation est essentielle pour prévenir le surajustement, en pénalisant les modèles trop complexes.
 
-Cette configuration a été soigneusement élaborée pour équilibrer la précision, la robustesse et la performance de calcul de notre modèle XGBoost.")
+Cette configuration a été soigneusement élaborée pour équilibrer la précision, la robustesse et la performance de calcul de notre modèle XGBoost.""")
 
     
 if page == pages[3] :

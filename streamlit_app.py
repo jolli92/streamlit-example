@@ -1103,8 +1103,6 @@ if page == pages[2]:
 
     - **subsample (0.8)** : Chaque arbre est construit en utilisant 80% des données d'entraînement choisies au hasard. Cette technique, connue sous le nom de "sous-échantillonnage", aide à améliorer la robustesse du modèle en réduisant la variance.
 
-    - **use_label_encoder (False)** : Nous désactivons l'encodeur de label interne, une recommandation pour les dernières versions de XGBoost, en particulier lors de l'utilisation de données non numériques.
-
     - **eval_metric ('logloss')** : Nous utilisons la perte logarithmique comme métrique d'évaluation pour la validation des données. Cette métrique est particulièrement adaptée aux problèmes de classification binaire.
 
     - **reg_alpha (0.1) & reg_lambda (1.0)** : Ces paramètres introduisent une régularisation L1 (alpha) et L2 (lambda) respectivement. La régularisation est essentielle pour prévenir le surajustement, en pénalisant les modèles trop complexes.

@@ -1675,7 +1675,7 @@ if page == pages[5] :
         """,
         unsafe_allow_html=True
     )
-  st.markdown('<p class="highlight">Recherche des profils optimaux</p>', unsafe_allow_html=True)
+  st.markdown('<p class="highlight">Dataframe filtré avec une probabilité de souscription de 65%</p>', unsafe_allow_html=True)
   columns_to_exclude = ['age', 'balance', 'deposit']
   filtered_df_excluded = filtered_df.drop(columns=columns_to_exclude, errors='ignore')
   summary_excluded = summary.drop(columns=columns_to_exclude, errors='ignore')

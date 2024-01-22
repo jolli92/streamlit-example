@@ -5,7 +5,7 @@ seaborn
 matplotlib
 plotly
 xgboost
-scikit-learn
+scikit-learn==1.4.0
 joblib
 dill
 statsmodels
